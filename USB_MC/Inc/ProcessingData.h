@@ -1,0 +1,22 @@
+/*
+ * ProcessingData.h
+ *
+ *  Created on: 17 џэт. 2019 у.
+ *      Author: DimaS
+ */
+
+#ifndef PROCESSINGDATA_H_
+#define PROCESSINGDATA_H_
+
+#include "usbd_custom_hid_if.h"
+#include "stdint.h"
+#include "main.h"
+
+uint8_t dataToReceive[10];
+uint8_t dataToSend[10];
+
+extern USBD_HandleTypeDef hUsbDeviceFS;
+
+void ProcessingReceivedData(uint8_t dataToReceive[10]);
+
+#endif /* PROCESSINGDATA_H_ */
