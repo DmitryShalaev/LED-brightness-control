@@ -233,6 +233,7 @@ void MainWindow::on_B_REL2_clicked()
 
 void MainWindow::on_S_PWM1_valueChanged(int value)
 {
+    ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
     BufSend[3] = static_cast<uint8_t> (value);
     BufSend[1] = 0xFF;
     Send();
@@ -240,6 +241,7 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
 
 void MainWindow::on_S_PWM2_valueChanged(int value)
 {
+    ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
     BufSend[4] = static_cast<uint8_t> (value);
     BufSend[1] = 0xFF;
     Send();
@@ -247,6 +249,7 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
 
 void MainWindow::on_S_PWM3_valueChanged(int value)
 {
+    ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
     BufSend[5] = static_cast<uint8_t> (value);
     BufSend[1] = 0xFF;
     Send();
