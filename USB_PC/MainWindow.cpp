@@ -46,11 +46,12 @@ void MainWindow::on_B_Connect_clicked()
 
             ui->statusBar->showMessage("Connect");
 
-            RequestData();
+            BufSend[1] = 0x00;
+            Send(true);
 
             Timer = new QTimer;
-            connect(Timer, SIGNAL(timeout()), SLOT(RequestData()));
-            Timer->start(50);
+            connect(Timer, SIGNAL(timeout()), SLOT(SendingRequest()));
+            Timer->start(150);
 
             Connect = true;
 
@@ -88,16 +89,20 @@ void MainWindow::on_B_Connect_clicked()
     }
 }
 
-void MainWindow::Send()
+void MainWindow::Send(bool Request)
 {
     BufSend[0] = 0x01;        //REPORT ID
 
     Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 11, &ActualLength, 0);
+
+    if(Request){
+        RequestData();
+    }
+
     if (Res == 0 && ActualLength == 11)
     {
         ui->statusBar->showMessage("Successful data transfer");
-
-    }else{
+    }else if(Connect){
         on_B_Connect_clicked();
         QMessageBox::critical(this, tr("Error"), tr("Error data transfer"));
     }
@@ -105,152 +110,233 @@ void MainWindow::Send()
 
 void MainWindow::RequestData()
 {
-    BufSend[1] = 0xF;        //START BYTE
-
-    Send();
-
-    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 64, &ActualLength, 1000);
+    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 64, &ActualLength, 10);
     if (Res == 0 && ActualLength == 11)
     {
         qDebug() << "Reed successful! " << ActualLength;
 
         ProcessingReceivedData();
 
-    }else{
+    }else if(Connect){
         on_B_Connect_clicked();
         QMessageBox::critical(this, tr("Error"), tr("Error data receiving"));
     }
 
 }
 
-void MainWindow::ProcessingReceivedData()
+void MainWindow::SendingRequest()
 {
-    BufSend[2]=BufReceive[1];
+    memset(BufSend, 0, sizeof(BufSend));
 
-    if ((BufReceive[1] & 0x01) == 0x01) {
-        ui->L_LED1->setStyleSheet("QLabel { background-color : green; }");
-        LED1 = true;
-    } else {
-        ui->L_LED1->setStyleSheet("QLabel { background-color : red; }");
-        LED1 = false;
+    BufSend[1] = 0xF0;
+    Send(true);
+}
+
+void MainWindow::ProcessingReceivedData()
+{   
+    switch (BufReceive[1] & 0xF0) {
+
+    case 0x00:
+        if ((BufReceive[1] & 0x01) == 0x01) {
+            ui->L_LED1->setStyleSheet("QLabel { background-color : green; }");
+            LED1 = true;
+        } else {
+            ui->L_LED1->setStyleSheet("QLabel { background-color : red; }");
+            LED1 = false;
+        }
+
+        if ((BufReceive[1] & 0x02) == 0x02) {
+            ui->L_LED2->setStyleSheet("QLabel { background-color : green; }");
+            LED2 = true;
+        } else {
+            ui->L_LED2->setStyleSheet("QLabel { background-color : red; }");
+            LED2 = false;
+        }
+
+        if ((BufReceive[1] & 0x04) == 0x04) {
+            ui->L_REL1->setStyleSheet("QLabel { background-color : green; }");
+            REL1 = true;
+        } else {
+            ui->L_REL1->setStyleSheet("QLabel { background-color : red; }");
+            REL1 = false;
+        }
+
+        if ((BufReceive[1] & 0x08) == 0x08) {
+            ui->L_REL2->setStyleSheet("QLabel { background-color : green; }");
+            REL2 = true;
+        } else {
+            ui->L_REL2->setStyleSheet("QLabel { background-color : red; }");
+            REL2 = false;
+        }
+
+        //PWM
+
+
+        break;
+
+    case 0x80:
+        if ((BufReceive[1] & 0x01) == 0x01) {
+            ui->L_LED1->setStyleSheet("QLabel { background-color : green; }");
+            LED1 = true;
+        } else {
+            ui->L_LED1->setStyleSheet("QLabel { background-color : red; }");
+            LED1 = false;
+        }
+        break;
+
+    case 0x40:
+        if ((BufReceive[1] & 0x01) == 0x01) {
+            ui->L_LED2->setStyleSheet("QLabel { background-color : green; }");
+            LED2 = true;
+        } else {
+            ui->L_LED2->setStyleSheet("QLabel { background-color : red; }");
+            LED2 = false;
+        }
+        break;
+
+    case 0xC0:
+        if ((BufReceive[1] & 0x01) == 0x01) {
+            ui->L_REL1->setStyleSheet("QLabel { background-color : green; }");
+            REL1 = true;
+        } else {
+            ui->L_REL1->setStyleSheet("QLabel { background-color : red; }");
+            REL1 = false;
+        }
+        break;
+
+    case 0x20:
+        if ((BufReceive[1] & 0x01) == 0x01) {
+            ui->L_REL2->setStyleSheet("QLabel { background-color : green; }");
+            REL2 = true;
+        } else {
+            ui->L_REL2->setStyleSheet("QLabel { background-color : red; }");
+            REL2 = false;
+        }
+        break;
+
+    case 0xF0:
+
+        if ((BufReceive[1] & 0x01) != 0x01) {
+            ui->L_DK1->setStyleSheet("QLabel { background-color : green; }");
+        } else {
+            ui->L_DK1->setStyleSheet("QLabel { background-color : red; }");
+        }
+
+        if ((BufReceive[1] & 0x02) != 0x02) {
+            ui->L_DK2->setStyleSheet("QLabel { background-color : green; }");
+        } else {
+            ui->L_DK2->setStyleSheet("QLabel { background-color : red; }");
+        }
+
+        ui->L_ADC1->setText(QString::number((static_cast<double>(((BufReceive[2] & 0x0F) << 8) |
+                                             BufReceive[3])*3/4096),'f',3) + " V");
+
+        ui->L_ADC2->setText(QString::number((static_cast<double>(((BufReceive[2] & 0xF0) << 4) |
+                                             BufReceive[4])*3/4096),'f',3) + " V");
+        break;
+
     }
-
-    if ((BufReceive[1] & 0x02) == 0x02) {
-        ui->L_LED2->setStyleSheet("QLabel { background-color : green; }");
-        LED2 = true;
-    } else {
-        ui->L_LED2->setStyleSheet("QLabel { background-color : red; }");
-        LED2 = false;
-    }
-
-    if ((BufReceive[1] & 0x04) == 0x04) {
-        ui->L_REL1->setStyleSheet("QLabel { background-color : green; }");
-        REL1 = true;
-    } else {
-        ui->L_REL1->setStyleSheet("QLabel { background-color : red; }");
-        REL1 = false;
-    }
-
-    if ((BufReceive[1] & 0x08) == 0x08) {
-        ui->L_REL2->setStyleSheet("QLabel { background-color : green; }");
-        REL2 = true;
-    } else {
-        ui->L_REL2->setStyleSheet("QLabel { background-color : red; }");
-        REL2 = false;
-    }
-
-    if ((BufReceive[1] & 0x10) != 0x10) {
-        ui->L_DK1->setStyleSheet("QLabel { background-color : green; }");
-    } else {
-        ui->L_DK1->setStyleSheet("QLabel { background-color : red; }");
-    }
-
-    if ((BufReceive[1] & 0x20) != 0x20) {
-        ui->L_DK2->setStyleSheet("QLabel { background-color : green; }");
-    } else {
-        ui->L_DK2->setStyleSheet("QLabel { background-color : red; }");
-    }
-
-    ui->L_ADC1->setText(QString::number((static_cast<double>(((BufReceive[2] & 0x0F) << 8) |
-                                         BufReceive[3])*3/4096),'f',3) + " V");
-
-    ui->L_ADC2->setText(QString::number((static_cast<double>(((BufReceive[2] & 0xF0) << 4) |
-                                         BufReceive[4])*3/4096),'f',3) + " V");
 }
 
 
 void MainWindow::on_B_LED1_clicked()
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x80;
+
     if(LED1)
     {
-        BufSend[2] &= ~0x01;
+        BufSend[1] &= ~0x01;
     }else{
-        BufSend[2] |= 0x01;
+        BufSend[1] |= 0x01;
     }
 
-    BufSend[1] = 0xFF;        //START BYTE
-    Send();
+    Send(true);
 }
 
 void MainWindow::on_B_LED2_clicked()
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x40;
+
     if(LED2)
     {
-        BufSend[2] &= ~0x02;
+        BufSend[1] &= ~0x01;
     }else{
-        BufSend[2] |= 0x02;
+        BufSend[1] |= 0x01;
     }
 
-    BufSend[1] = 0xFF;        //START BYTE
-    Send();
+    Send(true);
 }
 
 void MainWindow::on_B_REL1_clicked()
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0xC0;
+
     if(REL1)
     {
-        BufSend[2] &= ~0x04;
+        BufSend[1] &= ~0x01;
     }else{
-        BufSend[2] |= 0x04;
+        BufSend[1] |= 0x01;
     }
 
-    BufSend[1] = 0xFF;        //START BYTE
-    Send();
+    Send(true);
 }
 
 void MainWindow::on_B_REL2_clicked()
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x20;
+
     if(REL2)
     {
-        BufSend[2] &= ~0x08;
+        BufSend[1] &= ~0x01;
     }else{
-        BufSend[2] |= 0x08;
+        BufSend[1] |= 0x01;
     }
 
-    BufSend[1] = 0xFF;        //START BYTE
-    Send();
+    Send(true);
 }
 
 void MainWindow::on_S_PWM1_valueChanged(int value)
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
     ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
-    BufSend[3] = static_cast<uint8_t> (value);
-    BufSend[1] = 0xFF;
-    Send();
+
+    BufSend[1] = 0xA0;
+    BufSend[2] = static_cast<uint8_t> (value);
+
+    Send(false);
 }
 
 void MainWindow::on_S_PWM2_valueChanged(int value)
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
     ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
-    BufSend[4] = static_cast<uint8_t> (value);
-    BufSend[1] = 0xFF;
-    Send();
+
+    BufSend[1] = 0x60;
+    BufSend[2] = static_cast<uint8_t> (value);
+
+    Send(false);
 }
 
 void MainWindow::on_S_PWM3_valueChanged(int value)
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
     ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
-    BufSend[5] = static_cast<uint8_t> (value);
-    BufSend[1] = 0xFF;
-    Send();
+
+    BufSend[1] = 0xE0;
+    BufSend[2] = static_cast<uint8_t> (value);
+
+    Send(false);
 }
+
+

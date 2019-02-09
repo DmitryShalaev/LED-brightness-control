@@ -30,9 +30,11 @@ public:
 private slots:
     void on_B_Connect_clicked();
 
-    void Send();
+    void Send(bool Request);
 
     void RequestData();
+
+    void SendingRequest();
 
     void ProcessingReceivedData();
 
