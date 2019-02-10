@@ -26,7 +26,8 @@ CONFIG += c++11
 
 SOURCES += \
         MainWindow.cpp \
-    Main.cpp
+    Main.cpp \
+    Processing.cpp
 
 HEADERS += \
         MainWindow.h
