@@ -412,6 +412,19 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0.00 %&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="RB_InvertPWM">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>380</y>
+      <width>84</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Invert PWM</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

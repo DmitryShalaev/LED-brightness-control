@@ -52,13 +52,15 @@ private slots:
 
     void on_S_PWM3_valueChanged(int value);
 
+    void on_RB_InvertPWM_clicked(bool checked);
+
 private:
     Ui::MainWindow *ui;
 
     libusb_device_handle *handle;
 
-    uint8_t BufSend[10] = {0};
-    uint8_t BufReceive[10] = {0};
+    uint8_t BufSend[5] = {0};
+    uint8_t BufReceive[5] = {0};
 
     int ActualLength;
     int Res;
@@ -69,6 +71,8 @@ private:
     bool LED2 = false;
     bool REL1 = false;
     bool REL2 = false;
+
+    bool InvertPWM = false;
 
 };
 

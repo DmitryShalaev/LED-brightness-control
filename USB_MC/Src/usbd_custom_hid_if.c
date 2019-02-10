@@ -63,7 +63,7 @@
 
 /* USER CODE BEGIN PV */
 
-uint8_t Data[10];
+uint8_t Data[5];
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -133,7 +133,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x85, 0x01,                    //   REPORT_ID (1)
 				0x09, 0x01,                    //   USAGE (Vendor Usage 1)
 				0x75, 0x08,                    //   REPORT_SIZE (8)
-				0x95, 10, 	                   //   REPORT_COUNT (4)
+				0x95, 4, 	                   //   REPORT_COUNT (4)
 				0xb1, 0x82,                    //   FEATURE (Data,Var,Abs,Vol)
 				0x85, 0x01,                    //   REPORT_ID (1)
 				0x09, 0x01,                    //   USAGE (Vendor Usage 1)
@@ -142,7 +142,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x85, 0x02,                    //   REPORT_ID (2)
 				0x09, 0x02,                    //   USAGE (Vendor Usage 4)
 				0x75, 0x08,                    //   REPORT_SIZE (8)
-				0x95, 10, 	                   //   REPORT_COUNT (4)
+				0x95, 4, 	                   //   REPORT_COUNT (4)
 				0x81, 0x82,                    //   INPUT (Data,Var,Abs,Vol)
   /* USER CODE END 0 */
   0xC0    /*     END_COLLECTION	             */
@@ -232,7 +232,9 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	USBD_CUSTOM_HID_HandleTypeDef *hhid =
 			(USBD_CUSTOM_HID_HandleTypeDef*) hUsbDeviceFS.pClassData;
 
-	for (uint8_t i = 1; i < 10; i++)
+	memset(Data, 0, sizeof(Data));
+
+	for (uint8_t i = 0; i <= 4; i++)
 		Data[i] = hhid->Report_buf[i];
 
 	ProcessingReceivedData(Data);

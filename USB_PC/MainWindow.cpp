@@ -93,13 +93,13 @@ void MainWindow::Send(bool Request)
 {
     BufSend[0] = 0x01;        //REPORT ID
 
-    Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 11, &ActualLength, 0);
+    Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 5, &ActualLength, 0);
 
     if(Request){
         RequestData();
     }
 
-    if (Res == 0 && ActualLength == 11)
+    if (Res == 0 && ActualLength == 5)
     {
         ui->statusBar->showMessage("Successful data transfer");
     }else if(Connect){
@@ -110,8 +110,8 @@ void MainWindow::Send(bool Request)
 
 void MainWindow::RequestData()
 {
-    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 64, &ActualLength, 10);
-    if (Res == 0 && ActualLength == 11)
+    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 5, &ActualLength, 1);
+    if (Res == 0 && ActualLength == 5)
     {
         qDebug() << "Reed successful! " << ActualLength;
 
@@ -169,8 +169,9 @@ void MainWindow::ProcessingReceivedData()
             REL2 = false;
         }
 
-        //PWM
-
+        ui->S_PWM1->setValue(BufReceive[2]);
+        ui->S_PWM2->setValue(BufReceive[3]);
+        ui->S_PWM3->setValue(BufReceive[4]);
 
         break;
 
@@ -194,7 +195,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0xC0:
+    case 0x90:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_REL1->setStyleSheet("QLabel { background-color : green; }");
             REL1 = true;
@@ -204,7 +205,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0x20:
+    case 0x50:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_REL2->setStyleSheet("QLabel { background-color : green; }");
             REL2 = true;
@@ -275,7 +276,7 @@ void MainWindow::on_B_REL1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0xC0;
+    BufSend[1] = 0x90;
 
     if(REL1)
     {
@@ -291,7 +292,7 @@ void MainWindow::on_B_REL2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x20;
+    BufSend[1] = 0x50;
 
     if(REL2)
     {
@@ -310,7 +311,12 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
     ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
 
     BufSend[1] = 0xA0;
-    BufSend[2] = static_cast<uint8_t> (value);
+
+    if(InvertPWM){
+        BufSend[2] = static_cast<uint8_t> (255 - value);
+    }else{
+        BufSend[2] = static_cast<uint8_t> (value);
+    }
 
     Send(false);
 }
@@ -322,7 +328,12 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
     ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
 
     BufSend[1] = 0x60;
-    BufSend[2] = static_cast<uint8_t> (value);
+
+    if(InvertPWM){
+        BufSend[2] = static_cast<uint8_t> (255 - value);
+    }else{
+        BufSend[2] = static_cast<uint8_t> (value);
+    }
 
     Send(false);
 }
@@ -334,9 +345,19 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
     ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
 
     BufSend[1] = 0xE0;
-    BufSend[2] = static_cast<uint8_t> (value);
+
+    if(InvertPWM){
+        BufSend[2] = static_cast<uint8_t> (255 - value);
+    }else{
+        BufSend[2] = static_cast<uint8_t> (value);
+    }
 
     Send(false);
 }
 
 
+
+void MainWindow::on_RB_InvertPWM_clicked(bool checked)
+{
+    InvertPWM = checked;
+}
