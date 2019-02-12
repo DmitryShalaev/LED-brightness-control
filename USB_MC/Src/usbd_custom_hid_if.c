@@ -48,12 +48,11 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-
+#include <DataProcessing.h>
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN INCLUDE */
 
-#include "ProcessingData.h"
 
 /* USER CODE END INCLUDE */
 
@@ -227,7 +226,7 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
   */
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
-	/* USER CODE BEGIN 6 */
+  /* USER CODE BEGIN 6 */
 
 	USBD_CUSTOM_HID_HandleTypeDef *hhid =
 			(USBD_CUSTOM_HID_HandleTypeDef*) hUsbDeviceFS.pClassData;
@@ -237,10 +236,10 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	for (uint8_t i = 0; i <= 4; i++)
 		Data[i] = hhid->Report_buf[i];
 
-	ProcessingReceivedData(Data);
+	ProcessingData(Data);
 
 	return (USBD_OK);
-	/* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 
 /* USER CODE BEGIN 7 */

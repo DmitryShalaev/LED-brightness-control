@@ -2,7 +2,7 @@
 
 void MainWindow::ProcessingReceivedData()
 {
-    switch (BufReceive[1] & 0xF0) {
+    switch (BufReceive[1] & 0xF8) {
 
     case 0x00:
         if ((BufReceive[1] & 0x01) == 0x01) {
@@ -43,7 +43,7 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x80:
+    case 0x08:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_LED1->setStyleSheet("QLabel { background-color : green; }");
             LED1 = true;
@@ -53,7 +53,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0x40:
+    case 0x10:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_LED2->setStyleSheet("QLabel { background-color : green; }");
             LED2 = true;
@@ -63,7 +63,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0x90:
+    case 0x18:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_REL1->setStyleSheet("QLabel { background-color : green; }");
             REL1 = true;
@@ -73,7 +73,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0x50:
+    case 0x20:
         if ((BufReceive[1] & 0x01) == 0x01) {
             ui->L_REL2->setStyleSheet("QLabel { background-color : green; }");
             REL2 = true;
@@ -83,7 +83,7 @@ void MainWindow::ProcessingReceivedData()
         }
         break;
 
-    case 0xF0:
+    case 0xF8:
 
         if ((BufReceive[1] & 0x01) != 0x01) {
             ui->L_DK1->setStyleSheet("QLabel { background-color : green; }");
@@ -105,4 +105,12 @@ void MainWindow::ProcessingReceivedData()
         break;
 
     }
+}
+
+void MainWindow::SendingRequest()
+{
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0xF8;
+    Send(true);
 }

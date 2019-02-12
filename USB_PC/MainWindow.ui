@@ -415,15 +415,41 @@
    <widget class="QRadioButton" name="RB_InvertPWM">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>380</y>
-      <width>84</width>
+      <x>421</x>
+      <y>381</y>
+      <width>82</width>
       <height>19</height>
      </rect>
     </property>
     <property name="text">
      <string>Invert PWM</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>410</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Activation Threshold</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
