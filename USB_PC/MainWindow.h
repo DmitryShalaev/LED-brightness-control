@@ -52,8 +52,6 @@ private slots:
 
     void on_S_PWM3_valueChanged(int value);
 
-    void on_RB_InvertPWM_clicked(bool checked);
-
 private:
     Ui::MainWindow *ui;
 
@@ -71,8 +69,6 @@ private:
     bool LED2 = false;
     bool REL1 = false;
     bool REL2 = false;
-
-    bool InvertPWM = false;
 
 };
 

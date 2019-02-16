@@ -21,8 +21,6 @@ uint8_t PWM1;
 uint8_t PWM2;
 uint8_t PWM3;
 
-uint16_t TimeThresholdActivation;
-
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 void ProcessingData(uint8_t dataToReceive[5]);

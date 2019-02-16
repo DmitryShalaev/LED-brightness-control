@@ -18,14 +18,14 @@ void MainWindow::Send(bool Request)
 {
     BufSend[0] = 0x01;        //REPORT ID
 
-    Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 5, &ActualLength, 0);
+    Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 5, &ActualLength, 100);
 
-    if(Request){
-        RequestData();
-    }
+    if (Res == 0 && ActualLength == 5){
 
-    if (Res == 0 && ActualLength == 5)
-    {
+        if(Request){
+            RequestData();
+        }
+
         ui->statusBar->showMessage("Successful data transfer");
 
     }else if(Connect){
@@ -37,9 +37,10 @@ void MainWindow::Send(bool Request)
 
 void MainWindow::RequestData()
 {
-    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 5, &ActualLength, 1);
-    if (Res == 0 && ActualLength == 5)
-    {
+    Res =  libusb_bulk_transfer(handle, EP_IN, BufReceive, 5, &ActualLength, 100);
+
+    if (Res == 0 && ActualLength == 5){
+
         qDebug() << "Reed successful! " << ActualLength;
 
         ProcessingReceivedData();
@@ -51,3 +52,4 @@ void MainWindow::RequestData()
     }
 
 }
+

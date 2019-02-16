@@ -4,12 +4,12 @@ void MainWindow::on_B_Connect_clicked()
 {
     static  QTimer* Timer = nullptr;
 
-    if(!Connect)
-    {
+    if(!Connect){
+
         handle = libusb_open_device_with_vid_pid(nullptr, VID, PID);
 
-        if(handle)
-        {
+        if(handle){
+
             if (libusb_kernel_driver_active(handle,0))
                 if(libusb_detach_kernel_driver(handle, 0) == 0)
                     qDebug() << "Detach device";
@@ -27,13 +27,11 @@ void MainWindow::on_B_Connect_clicked()
             ui->S_PWM1->setEnabled(true);
             ui->S_PWM2->setEnabled(true);
             ui->S_PWM3->setEnabled(true);
-            ui->spinBox->setEnabled(false);
             ui->B_Connect->setText("Disconnect");
 
             ui->statusBar->showMessage("Connect");
 
             BufSend[1] = 0x00;
-            BufSend[2] = static_cast<uint8_t> (ui->spinBox->value());
             Send(true);
 
             Timer = new QTimer;
@@ -55,7 +53,6 @@ void MainWindow::on_B_Connect_clicked()
         ui->S_PWM1->setEnabled(false);
         ui->S_PWM2->setEnabled(false);
         ui->S_PWM3->setEnabled(false);
-        ui->spinBox->setEnabled(true);
         ui->B_Connect->setText("Connect");
 
         ui->statusBar->showMessage("Disconnect");
@@ -81,10 +78,9 @@ void MainWindow::on_B_LED1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x08;
+    BufSend[1] = 0x10;
 
-    if(LED1)
-    {
+    if(LED1){
         BufSend[1] &= ~0x01;
     }else{
         BufSend[1] |= 0x01;
@@ -97,10 +93,9 @@ void MainWindow::on_B_LED2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x10;
+    BufSend[1] = 0x20;
 
-    if(LED2)
-    {
+    if(LED2){
         BufSend[1] &= ~0x01;
     }else{
         BufSend[1] |= 0x01;
@@ -113,10 +108,9 @@ void MainWindow::on_B_REL1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x18;
+    BufSend[1] = 0x30;
 
-    if(REL1)
-    {
+    if(REL1){
         BufSend[1] &= ~0x01;
     }else{
         BufSend[1] |= 0x01;
@@ -129,10 +123,9 @@ void MainWindow::on_B_REL2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x20;
+    BufSend[1] = 0x40;
 
-    if(REL2)
-    {
+    if(REL2){
         BufSend[1] &= ~0x01;
     }else{
         BufSend[1] |= 0x01;
@@ -147,13 +140,9 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
 
     ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x28;
+    BufSend[1] = 0x50;
 
-    if(InvertPWM){
-        BufSend[2] = static_cast<uint8_t> (255 - value);
-    }else{
-        BufSend[2] = static_cast<uint8_t> (value);
-    }
+    BufSend[2] = static_cast<uint8_t> (255 - value);
 
     Send(false);
 }
@@ -164,13 +153,9 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
 
     ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x30;
+    BufSend[1] = 0x60;
 
-    if(InvertPWM){
-        BufSend[2] = static_cast<uint8_t> (255 - value);
-    }else{
-        BufSend[2] = static_cast<uint8_t> (value);
-    }
+    BufSend[2] = static_cast<uint8_t> (255 - value);
 
     Send(false);
 }
@@ -181,18 +166,11 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
 
     ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x38;
+    BufSend[1] = 0x70;
 
-    if(InvertPWM){
-        BufSend[2] = static_cast<uint8_t> (255 - value);
-    }else{
-        BufSend[2] = static_cast<uint8_t> (value);
-    }
+    BufSend[2] = static_cast<uint8_t> (255 - value);
+
 
     Send(false);
 }
 
-void MainWindow::on_RB_InvertPWM_clicked(bool checked)
-{
-    InvertPWM = checked;
-}

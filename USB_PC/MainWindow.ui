@@ -39,6 +39,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QSplitter" name="splitter">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -47,8 +50,20 @@
       <height>391</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
+    </property>
+    <property name="opaqueResize">
+     <bool>true</bool>
+    </property>
+    <property name="childrenCollapsible">
+     <bool>true</bool>
     </property>
     <widget class="QPushButton" name="B_LED1">
      <property name="enabled">
@@ -127,6 +142,9 @@
            <height>15</height>
           </size>
          </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
@@ -169,6 +187,9 @@
            <height>15</height>
           </size>
          </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
@@ -207,6 +228,9 @@
            <width>172</width>
            <height>15</height>
           </size>
+         </property>
+         <property name="minimum">
+          <number>0</number>
          </property>
          <property name="maximum">
           <number>255</number>
@@ -275,86 +299,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget2">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>180</y>
-      <width>141</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QLabel" name="L_DK1">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 0, 0);</string>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;DK1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="L_DK2">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 0, 0);</string>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;DK2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget3">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>20</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>ADC 1</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="L_ADC1">
-         <property name="text">
-          <string>0.000 V</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>ADC 2</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="L_ADC2">
-         <property name="text">
-          <string>0.000 V</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="L_PWM1">
     <property name="geometry">
      <rect>
@@ -412,44 +356,145 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0.00 %&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="RB_InvertPWM">
+   <widget class="QRadioButton" name="RB_DK1">
     <property name="geometry">
      <rect>
-      <x>421</x>
-      <y>381</y>
-      <width>82</width>
+      <x>330</x>
+      <y>150</y>
+      <width>90</width>
       <height>19</height>
      </rect>
     </property>
     <property name="text">
-     <string>Invert PWM</string>
+     <string>DK1 Update</string>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="RB_DK2">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>150</y>
+      <width>90</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DK2 Update</string>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>410</y>
-      <width>161</width>
-      <height>25</height>
+      <x>341</x>
+      <y>20</y>
+      <width>175</width>
+      <height>50</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QSpinBox" name="spinBox">
-       <property name="maximum">
-        <number>255</number>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>ADC 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="L_ADC1">
+           <property name="text">
+            <string>0.000 V</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="RB_ADC1">
+         <property name="text">
+          <string>ADC1 Update</string>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Activation Threshold</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>ADC 2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="L_ADC2">
+           <property name="text">
+            <string>0.000 V</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="RB_ADC2">
+         <property name="text">
+          <string>ADC2 Update</string>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="L_DK1">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>170</y>
+      <width>69</width>
+      <height>72</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;DK1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="L_DK2">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>170</y>
+      <width>69</width>
+      <height>72</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;DK2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
