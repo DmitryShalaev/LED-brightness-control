@@ -52,6 +52,10 @@ private slots:
 
     void on_S_PWM3_valueChanged(int value);
 
+    void on_B_Max_clicked();
+
+    void on_B_Min_clicked();
+
 private:
     Ui::MainWindow *ui;
 

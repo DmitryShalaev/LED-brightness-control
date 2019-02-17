@@ -133,22 +133,19 @@ void ProcessingData(uint8_t dataToReceive[4]) {
 
 	case 0x50:
 
-		PWM1 = dataToReceive[2];
-		TIM3->CCR1 = PWM1;
+		NewPWM1 = dataToReceive[2];
 
 		break;
 
 	case 0x60:
 
-		PWM2 = dataToReceive[2];
-		TIM3->CCR2 = PWM2;
+		NewPWM2 = dataToReceive[2];
 
 		break;
 
 	case 0x70:
 
-		PWM3 = dataToReceive[2];
-		TIM3->CCR3 = PWM3;
+		NewPWM3 = dataToReceive[2];
 
 		break;
 

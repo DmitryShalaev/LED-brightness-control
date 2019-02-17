@@ -9,6 +9,7 @@
 #define DATAPROCESSING_H_
 
 #include "usbd_custom_hid_if.h"
+#include "stdbool.h"
 #include "stdint.h"
 #include "main.h"
 
@@ -20,6 +21,10 @@ uint8_t ActivationThreshold;
 uint8_t PWM1;
 uint8_t PWM2;
 uint8_t PWM3;
+
+uint8_t NewPWM1;
+uint8_t NewPWM2;
+uint8_t NewPWM3;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 

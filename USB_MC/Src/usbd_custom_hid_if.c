@@ -48,7 +48,6 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include <DataProcessing.h>
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN INCLUDE */

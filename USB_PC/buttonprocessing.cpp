@@ -174,3 +174,20 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
     Send(false);
 }
 
+//Test
+void MainWindow::on_B_Max_clicked()
+{
+    BufSend[1] = 0x50;
+    BufSend[2] = 0;
+
+    Send(false);
+}
+
+void MainWindow::on_B_Min_clicked()
+{
+    BufSend[1] = 0x50;
+    BufSend[2] = 255;
+
+    Send(false);
+}
+
