@@ -1,9 +1,8 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * File Name          : stm32f1xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
-  *                      and de-Initialization codes.
+  * File Name          : I2C.h
+  * Description        : This file provides code for the configuration
+  *                      of the I2C instances.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -47,72 +46,47 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __i2c_H
+#define __i2c_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN TD */
+extern I2C_HandleTypeDef hi2c1;
 
-/* USER CODE END TD */
+/* USER CODE BEGIN Private defines */
 
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN Define */
- 
-/* USER CODE END Define */
+uint8_t I2C_Buffer[2];
 
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN Macro */
+/* USER CODE END Private defines */
 
-/* USER CODE END Macro */
+void MX_I2C1_Init(void);
 
-/* Private variables ---------------------------------------------------------*/
-/* USER CODE BEGIN PV */
+/* USER CODE BEGIN Prototypes */
 
-/* USER CODE END PV */
+void I2C_ReadBuffer(void);
 
-/* Private function prototypes -----------------------------------------------*/
-/* USER CODE BEGIN PFP */
+/* USER CODE END Prototypes */
 
-/* USER CODE END PFP */
-
-/* External functions --------------------------------------------------------*/
-/* USER CODE BEGIN ExternalFunctions */
-
-/* USER CODE END ExternalFunctions */
-
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-/**
-  * Initializes the Global MSP.
-  */
-void HAL_MspInit(void)
-{
-  /* USER CODE BEGIN MspInit 0 */
-
-  /* USER CODE END MspInit 0 */
-
-  __HAL_RCC_AFIO_CLK_ENABLE();
-  __HAL_RCC_PWR_CLK_ENABLE();
-
-  /* System interrupt init*/
-
-  /**NOJTAG: JTAG-DP Disabled and SW-DP Enabled 
-  */
-  __HAL_AFIO_REMAP_SWJ_NOJTAG();
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
+#ifdef __cplusplus
 }
+#endif
+#endif /*__ i2c_H */
 
-/* USER CODE BEGIN 1 */
+/**
+  * @}
+  */
 
-/* USER CODE END 1 */
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -63,10 +63,13 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "I2C.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+
 volatile uint16_t ADC_Data[2];
 
 /* USER CODE END ET */
@@ -80,8 +83,6 @@ volatile uint16_t ADC_Data[2];
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
-
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);

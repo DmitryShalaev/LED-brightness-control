@@ -8,23 +8,16 @@
 #ifndef DATAPROCESSING_H_
 #define DATAPROCESSING_H_
 
-#include "usbd_custom_hid_if.h"
-#include "stdbool.h"
-#include "stdint.h"
-#include "main.h"
+#include "usbd_customhid.h"
 
 uint8_t dataToReceive[5];
 uint8_t dataToSend[5];
 
 uint8_t ActivationThreshold;
 
-uint8_t PWM1;
-uint8_t PWM2;
-uint8_t PWM3;
+uint8_t PWM1, PWM2, PWM3;
 
-uint8_t NewPWM1;
-uint8_t NewPWM2;
-uint8_t NewPWM3;
+uint8_t NewPWM1, NewPWM2, NewPWM3;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 

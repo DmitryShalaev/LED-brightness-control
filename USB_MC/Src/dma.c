@@ -1,9 +1,8 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * File Name          : stm32f1xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
-  *                      and de-Initialization codes.
+  * File Name          : dma.c
+  * Description        : This file provides code for the configuration
+  *                      of all the requested memory to memory DMA transfers.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -47,72 +46,46 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN TD */
-
-/* USER CODE END TD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN Define */
- 
-/* USER CODE END Define */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN Macro */
-
-/* USER CODE END Macro */
-
-/* Private variables ---------------------------------------------------------*/
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* External functions --------------------------------------------------------*/
-/* USER CODE BEGIN ExternalFunctions */
-
-/* USER CODE END ExternalFunctions */
+#include "dma.h"
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-/**
-  * Initializes the Global MSP.
-  */
-void HAL_MspInit(void)
-{
-  /* USER CODE BEGIN MspInit 0 */
 
-  /* USER CODE END MspInit 0 */
-
-  __HAL_RCC_AFIO_CLK_ENABLE();
-  __HAL_RCC_PWR_CLK_ENABLE();
-
-  /* System interrupt init*/
-
-  /**NOJTAG: JTAG-DP Disabled and SW-DP Enabled 
-  */
-  __HAL_AFIO_REMAP_SWJ_NOJTAG();
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
-}
+/*----------------------------------------------------------------------------*/
+/* Configure DMA                                                              */
+/*----------------------------------------------------------------------------*/
 
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
+
+/** 
+  * Enable DMA controller clock
+  */
+void MX_DMA_Init(void) 
+{
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+
+}
+
+/* USER CODE BEGIN 2 */
+
+/* USER CODE END 2 */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

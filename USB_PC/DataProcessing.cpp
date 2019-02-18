@@ -95,13 +95,13 @@ void MainWindow::ProcessingReceivedData()
     case 0x80:
 
         ui->L_ADC1->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
-                                             BufReceive[3])*3/4096),'f',3) + " V");
+                                             BufReceive[3])*3/4096),'f',3) + " V.");
         break;
 
     case 0x90:
 
         ui->L_ADC2->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
-                                             BufReceive[3])*3/4096),'f',3) + " V");
+                                             BufReceive[3])*3/4096),'f',3) + " V.");
         break;
 
     case 0xA0:
@@ -126,7 +126,8 @@ void MainWindow::ProcessingReceivedData()
 
     case 0xC0:
 
-        //BH1750
+        ui->L_BH1750->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
+                                               BufReceive[3])/1.2),'f',2) + " lx.");
 
         break;
 
@@ -138,26 +139,31 @@ void MainWindow::SendingRequest()
     memset(BufSend, 0, sizeof(BufSend));
 
     if(ui->RB_ADC1->isChecked()){
-    BufSend[1] = 0x80;
-    Send(true);
+        BufSend[1] = 0x80;
+        Send(true);
     }
 
     if(ui->RB_ADC2->isChecked()){
-    BufSend[1] = 0x90;
-    Send(true);
+        BufSend[1] = 0x90;
+        Send(true);
     }
 
     if(ui->RB_DK1->isChecked()){
-    BufSend[1] = 0xA0;
-    Send(true);
+        BufSend[1] = 0xA0;
+        Send(true);
     }
 
     if(ui->RB_DK2->isChecked()){
-    BufSend[1] = 0xB0;
-    Send(true);
+        BufSend[1] = 0xB0;
+        Send(true);
     }
 
-//    BufSend[1] = 0xC0;
+    if(ui->RB_BH1750->isChecked()){
+        BufSend[1] = 0xC0;
+        Send(true);
+    }
 
 }
+
+
 

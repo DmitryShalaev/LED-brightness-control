@@ -388,12 +388,12 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget3">
     <property name="geometry">
      <rect>
       <x>341</x>
       <y>20</y>
-      <width>175</width>
+      <width>179</width>
       <height>50</height>
      </rect>
     </property>
@@ -412,7 +412,7 @@
          <item>
           <widget class="QLabel" name="L_ADC1">
            <property name="text">
-            <string>0.000 V</string>
+            <string>0.000 V.</string>
            </property>
           </widget>
          </item>
@@ -444,7 +444,7 @@
          <item>
           <widget class="QLabel" name="L_ADC2">
            <property name="text">
-            <string>0.000 V</string>
+            <string>0.000 V.</string>
            </property>
           </widget>
          </item>
@@ -521,6 +521,46 @@
     <property name="text">
      <string>MIN</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>80</y>
+      <width>204</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>BH1750</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="L_BH1750">
+         <property name="text">
+          <string>00.00 lx.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="RB_BH1750">
+       <property name="text">
+        <string>BH1750 Update</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

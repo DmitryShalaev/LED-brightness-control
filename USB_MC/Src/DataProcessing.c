@@ -201,7 +201,12 @@ void ProcessingData(uint8_t dataToReceive[4]) {
 
 	case 0xC0:
 
-		//BH1750
+		dataToSend[1] = 0xC0;
+
+		I2C_ReadBuffer();
+
+		dataToSend[2] = I2C_Buffer[0];
+		dataToSend[3] = I2C_Buffer[1];
 
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 5);
 
@@ -214,4 +219,5 @@ void ProcessingData(uint8_t dataToReceive[4]) {
 	}
 
 }
+
 
