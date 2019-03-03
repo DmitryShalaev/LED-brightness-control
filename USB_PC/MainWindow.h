@@ -24,17 +24,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+
     void on_B_Connect_clicked();
 
-    void Send(bool Request);
+    void Send();
 
     void RequestData();
-
-    void SendingRequest();
 
     void ProcessingReceivedData();
 
@@ -52,17 +52,16 @@ private slots:
 
     void on_S_PWM3_valueChanged(int value);
 
-    void on_B_Max_clicked();
-
-    void on_B_Min_clicked();
+    void on_TE_SpeedOnOffLight_editingFinished();
 
 private:
+
     Ui::MainWindow *ui;
 
     libusb_device_handle *handle;
 
-    uint8_t BufSend[5] = {0};
-    uint8_t BufReceive[5] = {0};
+    uint8_t BufSend[6] = {0};
+    uint8_t BufReceive[6] = {0};
 
     int ActualLength;
     int Res;

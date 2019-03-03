@@ -215,6 +215,20 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line4 interrupt.
+  */
+void EXTI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_IRQn 0 */
+
+  /* USER CODE END EXTI4_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
+  /* USER CODE BEGIN EXTI4_IRQn 1 */
+
+  /* USER CODE END EXTI4_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA1 channel1 global interrupt.
   */
 void DMA1_Channel1_IRQHandler(void)
@@ -243,56 +257,83 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles EXTI line[9:5] interrupts.
+  */
+void EXTI9_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
+
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
+
+  /* USER CODE END EXTI9_5_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM4 global interrupt.
   */
 void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
 
+	if (NewPWM1 != PWM1) {
+
+			if (NewPWM1 > PWM1) {
+
+				if (PWM1 < 255)
+					PWM1++;
+
+				TIM3->CCR1 = PWM1;
+
+			} else {
+
+				if (PWM1 > 0)
+					PWM1--;
+
+				TIM3->CCR1 = PWM1;
+			}
+		}
+
+		if (NewPWM2 != PWM2) {
+
+			if (NewPWM2 > PWM2) {
+
+				if (PWM2 < 255)
+					PWM2++;
+
+				TIM3->CCR2 = PWM2;
+
+			} else {
+
+				if (PWM2 > 0)
+					PWM2--;
+
+				TIM3->CCR2 = PWM2;
+			}
+		}
+		if (NewPWM3 != PWM3) {
+
+			if (NewPWM3 > PWM3) {
+
+				if (PWM3 < 255)
+					PWM3++;
+
+				TIM3->CCR3 = PWM3;
+
+			} else {
+
+				if (PWM3 > 0)
+					PWM3--;
+
+				TIM3->CCR3 = PWM3;
+			}
+		}
+
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
 
-	if (NewPWM1 != PWM1) {
-
-		if (NewPWM1 >= PWM1) {
-
-			PWM1++;
-			TIM3->CCR1 = PWM1;
-
-		} else {
-
-			PWM1--;
-			TIM3->CCR1 = PWM1;
-		}
-	}
-
-	if (NewPWM2 != PWM2) {
-
-		if (NewPWM2 >= PWM2) {
-
-			PWM2++;
-			TIM3->CCR2 = PWM2;
-
-		} else {
-
-			PWM2--;
-			TIM3->CCR2 = PWM2;
-		}
-	}
-	if (NewPWM3 != PWM3) {
-
-		if (NewPWM3 >= PWM3) {
-
-			PWM3++;
-			TIM3->CCR3 = PWM3;
-
-		} else {
-
-			PWM3--;
-			TIM3->CCR3 = PWM3;
-		}
-	}
   /* USER CODE END TIM4_IRQn 1 */
 }
 

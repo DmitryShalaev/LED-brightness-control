@@ -72,7 +72,9 @@ void MX_I2C1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
-void I2C_ReadBuffer(void);
+void I2C_launchBH1750(void);
+
+void I2C_ReadBH1750(void);
 
 /* USER CODE END Prototypes */
 

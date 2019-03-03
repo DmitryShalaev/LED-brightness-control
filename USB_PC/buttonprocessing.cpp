@@ -32,11 +32,11 @@ void MainWindow::on_B_Connect_clicked()
             ui->statusBar->showMessage("Connect");
 
             BufSend[1] = 0x00;
-            Send(true);
+            Send();
 
             Timer = new QTimer;
-            connect(Timer, SIGNAL(timeout()), SLOT(SendingRequest()));
-            Timer->start(150);
+            connect(Timer, SIGNAL(timeout()), SLOT(RequestData()));
+            Timer->start(100);
 
             Connect = true;
 
@@ -78,60 +78,60 @@ void MainWindow::on_B_LED1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x10;
+    BufSend[1] = 0x01;
 
     if(LED1){
-        BufSend[1] &= ~0x01;
+        BufSend[2] = 0x00;
     }else{
-        BufSend[1] |= 0x01;
+        BufSend[2] = 0x01;
     }
 
-    Send(true);
+    Send();
 }
 
 void MainWindow::on_B_LED2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x20;
+    BufSend[1] = 0x02;
 
     if(LED2){
-        BufSend[1] &= ~0x01;
+        BufSend[2] = 0x00;
     }else{
-        BufSend[1] |= 0x01;
+        BufSend[2] = 0x01;
     }
 
-    Send(true);
+    Send();
 }
 
 void MainWindow::on_B_REL1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x30;
+    BufSend[1] = 0x03;
 
     if(REL1){
-        BufSend[1] &= ~0x01;
+        BufSend[2] = 0x00;
     }else{
-        BufSend[1] |= 0x01;
+        BufSend[2] = 0x01;
     }
 
-    Send(true);
+    Send();
 }
 
 void MainWindow::on_B_REL2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x40;
+    BufSend[1] = 0x04;
 
     if(REL2){
-        BufSend[1] &= ~0x01;
+        BufSend[2] = 0x00;
     }else{
-        BufSend[1] |= 0x01;
+        BufSend[2] = 0x01;
     }
 
-    Send(true);
+    Send();
 }
 
 void MainWindow::on_S_PWM1_valueChanged(int value)
@@ -140,11 +140,11 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
 
     ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x50;
+    BufSend[1] = 0x05;
 
     BufSend[2] = static_cast<uint8_t> (255 - value);
 
-    Send(false);
+    Send();
 }
 
 void MainWindow::on_S_PWM2_valueChanged(int value)
@@ -153,11 +153,11 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
 
     ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x60;
+    BufSend[1] = 0x06;
 
     BufSend[2] = static_cast<uint8_t> (255 - value);
 
-    Send(false);
+    Send();
 }
 
 void MainWindow::on_S_PWM3_valueChanged(int value)
@@ -166,28 +166,21 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
 
     ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
 
-    BufSend[1] = 0x70;
+    BufSend[1] = 0x07;
 
     BufSend[2] = static_cast<uint8_t> (255 - value);
 
-
-    Send(false);
+    Send();
 }
 
-//Test
-void MainWindow::on_B_Max_clicked()
+void MainWindow::on_TE_SpeedOnOffLight_editingFinished()
 {
-    BufSend[1] = 0x50;
-    BufSend[2] = 0;
+    memset(BufSend, 0, sizeof(BufSend));
 
-    Send(false);
+    BufSend[1] = 0x0D;
+
+    BufSend[2] = static_cast<uint8_t> (ui->TE_SpeedOnOffLight->time().minute());
+    BufSend[3] = static_cast<uint8_t> (ui->TE_SpeedOnOffLight->time().second());
+
+    Send();
 }
-
-void MainWindow::on_B_Min_clicked()
-{
-    BufSend[1] = 0x50;
-    BufSend[2] = 255;
-
-    Send(false);
-}
-
