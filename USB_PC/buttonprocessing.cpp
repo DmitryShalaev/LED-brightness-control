@@ -2,8 +2,6 @@
 
 void MainWindow::on_B_Connect_clicked()
 {
-    static  QTimer* Timer = nullptr;
-
     if(!Connect){
 
         handle = libusb_open_device_with_vid_pid(nullptr, VID, PID);
@@ -34,8 +32,6 @@ void MainWindow::on_B_Connect_clicked()
             BufSend[1] = 0x00;
             Send();
 
-            Timer = new QTimer;
-            connect(Timer, SIGNAL(timeout()), SLOT(RequestData()));
             Timer->start(100);
 
             Connect = true;
@@ -58,9 +54,6 @@ void MainWindow::on_B_Connect_clicked()
         ui->statusBar->showMessage("Disconnect");
 
         Timer->stop();
-        disconnect(Timer);
-        delete Timer;
-        Timer = nullptr;
 
         if(libusb_attach_kernel_driver(handle, 0) == 0)
             qDebug() << "Attach device";
@@ -184,3 +177,61 @@ void MainWindow::on_TE_SpeedOnOffLight_editingFinished()
 
     Send();
 }
+
+void MainWindow::on_RB_ADC1_clicked(bool checked)
+{
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x08;
+
+    if(checked){
+
+        BufSend[2] = 0x01;
+
+    }else{
+
+        BufSend[2] = 0x00;
+
+    }
+
+    Send();
+}
+
+void MainWindow::on_RB_ADC2_clicked(bool checked)
+{
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x09;
+
+    if(checked){
+
+        BufSend[2] = 0x01;
+
+    }else{
+
+        BufSend[2] = 0x00;
+
+    }
+
+    Send();
+}
+
+void MainWindow::on_RB_BH1750_clicked(bool checked)
+{
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x0C;
+
+    if(checked){
+
+        BufSend[2] = 0x01;
+
+    }else{
+
+        BufSend[2] = 0x00;
+
+    }
+
+    Send();
+}
+

@@ -28,7 +28,9 @@ SOURCES += \
         MainWindow.cpp \
     Main.cpp \
     DataProcessing.cpp \
-    ButtonProcessing.cpp
+    ButtonProcessing.cpp \
+    LuxProcessing.cpp \
+    MotionProcessing.cpp
 
 HEADERS += \
         MainWindow.h

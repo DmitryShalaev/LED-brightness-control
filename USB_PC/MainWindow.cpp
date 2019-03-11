@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
+    TimerInit();
+
     libusb_init(nullptr);
 }
 
@@ -50,4 +52,14 @@ void MainWindow::RequestData()
     }
 
     qApp->processEvents();
+}
+
+void MainWindow::TimerInit()
+{
+    MotionTimer = new QTimer;
+    MotionTimer->setSingleShot(true);
+    connect(MotionTimer, SIGNAL(timeout()), SLOT(TurningOffTheLights()));
+
+    Timer = new QTimer;
+    connect(Timer, SIGNAL(timeout()), SLOT(RequestData()));
 }

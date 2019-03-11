@@ -30,13 +30,19 @@ public:
 
 private slots:
 
-    void on_B_Connect_clicked();
+    void TimerInit();
 
     void Send();
 
     void RequestData();
 
     void ProcessingReceivedData();
+
+    void MotionDetection(bool MotionDetected);
+
+    void TurningOffTheLights();
+
+    void on_B_Connect_clicked();
 
     void on_B_LED1_clicked();
 
@@ -54,11 +60,20 @@ private slots:
 
     void on_TE_SpeedOnOffLight_editingFinished();
 
+    void on_RB_ADC1_clicked(bool checked);
+
+    void on_RB_ADC2_clicked(bool checked);
+
+    void on_RB_BH1750_clicked(bool checked);
+
 private:
 
     Ui::MainWindow *ui;
 
     libusb_device_handle *handle;
+
+    QTimer *Timer = nullptr;
+    QTimer *MotionTimer = nullptr;
 
     uint8_t BufSend[6] = {0};
     uint8_t BufReceive[6] = {0};

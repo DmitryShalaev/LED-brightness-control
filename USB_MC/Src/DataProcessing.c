@@ -189,7 +189,17 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 
 	case 0x0D:
 
+		Period = ((dataToReceive[2] * 60 + dataToReceive[3]) / 0.001 / 255) - 1;
+		TIM4->CNT = 0;
+		TIM4->ARR = Period;
 
+		break;
+
+	case 0x0E:
+
+		NewPWM1 = dataToReceive[2];
+		NewPWM2 = dataToReceive[2];
+		NewPWM3 = dataToReceive[2];
 
 		break;
 

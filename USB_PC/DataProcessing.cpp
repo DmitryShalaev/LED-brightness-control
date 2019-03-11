@@ -95,21 +95,25 @@ void MainWindow::ProcessingReceivedData()
     case 0x08:
 
         ui->L_ADC1->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
-                                             BufReceive[3])*3/4096),'f',3) + " V.");
+                                             BufReceive[3])*3/4096),'f',3) + " V.");       
+
         break;
 
     case 0x09:
 
         ui->L_ADC2->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
                                              BufReceive[3])*3/4096),'f',3) + " V.");
+
         break;
 
     case 0x0A:
 
         if (BufReceive[2] == 0x01) {
             ui->L_DK1->setStyleSheet("QLabel { background-color : green; }");
+            MotionDetection(true);
         } else {
             ui->L_DK1->setStyleSheet("QLabel { background-color : red; }");
+            MotionDetection(false);
         }
 
         break;
