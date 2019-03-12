@@ -16,9 +16,8 @@ void MainWindow::MotionDetection(bool MotionDetected)
 
         }else {
 
-            MotionTimer->start(ui->TE_TurnOffLight->time().minute() * 60000
-                               + ui->TE_TurnOffLight->time().second() * 1000);
-
+            MotionTimer->start(ui->TE_TurnOffLight->time().minute() * 60000 +
+                               ui->TE_TurnOffLight->time().second() * 1000);
         }
     }
 }

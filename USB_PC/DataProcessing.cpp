@@ -38,9 +38,13 @@ void MainWindow::ProcessingReceivedData()
             REL2 = false;
         }
 
-        ui->S_PWM1->setValue(255 - BufReceive[3]);
-        ui->S_PWM2->setValue(255 - BufReceive[4]);
-        ui->S_PWM3->setValue(255 - BufReceive[5]);
+        PWM1 = BufReceive[3];
+        PWM2 = BufReceive[4];
+        PWM3 = BufReceive[5];
+
+        ui->S_PWM1->setValue(PWM1);
+        ui->S_PWM2->setValue(PWM2);
+        ui->S_PWM3->setValue(PWM3);
 
         break;
 
@@ -95,7 +99,7 @@ void MainWindow::ProcessingReceivedData()
     case 0x08:
 
         ui->L_ADC1->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
-                                             BufReceive[3])*3/4096),'f',3) + " V.");       
+                                             BufReceive[3])*3/4096),'f',3) + " V.");
 
         break;
 
@@ -132,6 +136,9 @@ void MainWindow::ProcessingReceivedData()
 
         ui->L_BH1750->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
                                                BufReceive[3])/1.2),'f',2) + " lx.");
+
+        if(MaintainLux)
+            MaintainLuxLevel(((BufReceive[2] << 8) | BufReceive[3]) / 1.2);
 
         break;
 

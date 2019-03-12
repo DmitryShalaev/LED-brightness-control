@@ -40,6 +40,10 @@ private slots:
 
     void MotionDetection(bool MotionDetected);
 
+    void MaintainLuxLevel(double value);
+
+    void RequestLuxLevel();
+
     void TurningOffTheLights();
 
     void on_B_Connect_clicked();
@@ -60,11 +64,19 @@ private slots:
 
     void on_TE_SpeedOnOffLight_editingFinished();
 
-    void on_RB_ADC1_clicked(bool checked);
+    void on_SB_PWM1_editingFinished();
 
-    void on_RB_ADC2_clicked(bool checked);
+    void on_SB_PWM2_editingFinished();
 
-    void on_RB_BH1750_clicked(bool checked);
+    void on_SB_PWM3_editingFinished();
+
+    void on_RB_MaintainLuxLevel_clicked(bool checked);
+
+    void on_RB_ADC1_clicked();
+
+    void on_RB_ADC2_clicked();
+
+    void on_RB_BH1750_clicked();
 
 private:
 
@@ -72,8 +84,9 @@ private:
 
     libusb_device_handle *handle;
 
-    QTimer *Timer = nullptr;
-    QTimer *MotionTimer = nullptr;
+    QTimer *RequestTimer = new QTimer;
+    QTimer *MotionTimer = new QTimer;
+    QTimer *RequestLuxTimer = new QTimer;
 
     uint8_t BufSend[6] = {0};
     uint8_t BufReceive[6] = {0};
@@ -87,6 +100,16 @@ private:
     bool LED2 = false;
     bool REL1 = false;
     bool REL2 = false;
+
+    uint8_t PWM1 = 0;
+    uint8_t PWM2 = 0;
+    uint8_t PWM3 = 0;
+
+    uint8_t MeanPWM = 0;
+
+    uint8_t MaintainLuxLevelStep = 5;
+
+    bool MaintainLux = false;
 
 };
 

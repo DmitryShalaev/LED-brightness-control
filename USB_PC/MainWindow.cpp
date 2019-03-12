@@ -32,7 +32,7 @@ void MainWindow::Send()
         QMessageBox::critical(this, tr("Error"), tr("Error data transfer"));
     }
 
-     qApp->processEvents();
+    qApp->processEvents();
 }
 
 void MainWindow::RequestData()
@@ -56,10 +56,10 @@ void MainWindow::RequestData()
 
 void MainWindow::TimerInit()
 {
-    MotionTimer = new QTimer;
     MotionTimer->setSingleShot(true);
     connect(MotionTimer, SIGNAL(timeout()), SLOT(TurningOffTheLights()));
 
-    Timer = new QTimer;
-    connect(Timer, SIGNAL(timeout()), SLOT(RequestData()));
+    connect(RequestTimer, SIGNAL(timeout()), SLOT(RequestData()));
+
+    connect(RequestLuxTimer, SIGNAL(timeout()), SLOT(RequestLuxLevel()));
 }

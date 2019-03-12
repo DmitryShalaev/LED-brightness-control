@@ -44,9 +44,9 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 			dataToSend[2] &= ~0x08;
 		}
 
-		dataToSend[3] = PWM1;
-		dataToSend[4] = PWM2;
-		dataToSend[5] = PWM3;
+		dataToSend[3] = 255 - PWM1;
+		dataToSend[4] = 255 - PWM2;
+		dataToSend[5] = 255 - PWM3;
 
 		I2C_launchBH1750();
 
@@ -136,19 +136,19 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 
 	case 0x05:
 
-		NewPWM1 = dataToReceive[2];
+		NewPWM1 = 255 - dataToReceive[2];
 
 		break;
 
 	case 0x06:
 
-		NewPWM2 = dataToReceive[2];
+		NewPWM2 = 255 - dataToReceive[2];
 
 		break;
 
 	case 0x07:
 
-		NewPWM3 = dataToReceive[2];
+		NewPWM3 = 255 - dataToReceive[2];
 
 		break;
 

@@ -25,6 +25,18 @@ void MainWindow::on_B_Connect_clicked()
             ui->S_PWM1->setEnabled(true);
             ui->S_PWM2->setEnabled(true);
             ui->S_PWM3->setEnabled(true);
+            ui->RB_ADC1->setEnabled(true);
+            ui->RB_ADC2->setEnabled(true);
+            ui->SB_PWM1->setEnabled(true);
+            ui->SB_PWM2->setEnabled(true);
+            ui->SB_PWM3->setEnabled(true);
+            ui->RB_BH1750->setEnabled(true);
+            ui->TE_TurnOffLight->setEnabled(true);
+            ui->RB_TurnOffLight->setEnabled(true);
+            ui->TE_SpeedOnOffLight->setEnabled(true);
+            ui->SB_MaintainLuxLevel->setEnabled(true);
+            ui->RB_MaintainLuxLevel->setEnabled(true);
+
             ui->B_Connect->setText("Disconnect");
 
             ui->statusBar->showMessage("Connect");
@@ -32,7 +44,7 @@ void MainWindow::on_B_Connect_clicked()
             BufSend[1] = 0x00;
             Send();
 
-            Timer->start(100);
+            RequestTimer->start(100);
 
             Connect = true;
 
@@ -49,11 +61,25 @@ void MainWindow::on_B_Connect_clicked()
         ui->S_PWM1->setEnabled(false);
         ui->S_PWM2->setEnabled(false);
         ui->S_PWM3->setEnabled(false);
+        ui->RB_ADC1->setEnabled(false);
+        ui->RB_ADC2->setEnabled(false);
+        ui->SB_PWM1->setEnabled(false);
+        ui->SB_PWM2->setEnabled(false);
+        ui->SB_PWM3->setEnabled(false);
+        ui->RB_BH1750->setEnabled(false);
+        ui->TE_TurnOffLight->setEnabled(false);
+        ui->RB_TurnOffLight->setEnabled(false);
+        ui->TE_SpeedOnOffLight->setEnabled(false);
+        ui->SB_MaintainLuxLevel->setEnabled(false);
+        ui->RB_MaintainLuxLevel->setEnabled(false);
+
         ui->B_Connect->setText("Connect");
 
         ui->statusBar->showMessage("Disconnect");
 
-        Timer->stop();
+        RequestTimer->stop();
+        MotionTimer->stop();
+        RequestLuxTimer->stop();
 
         if(libusb_attach_kernel_driver(handle, 0) == 0)
             qDebug() << "Attach device";
@@ -131,11 +157,13 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    ui->L_PWM1->setText(QString::number((value/2.55),'f',2) + " %");
+    ui->SB_PWM1->setValue(value/2.55);
 
     BufSend[1] = 0x05;
 
-    BufSend[2] = static_cast<uint8_t> (255 - value);
+    PWM1 = static_cast<uint8_t> (value);
+
+    BufSend[2] = PWM1;
 
     Send();
 }
@@ -144,11 +172,13 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    ui->L_PWM2->setText(QString::number((value/2.55),'f',2) + " %");
+    ui->SB_PWM2->setValue(value/2.55);
 
     BufSend[1] = 0x06;
 
-    BufSend[2] = static_cast<uint8_t> (255 - value);
+    PWM2 = static_cast<uint8_t> (value);
+
+    BufSend[2] = PWM2;
 
     Send();
 }
@@ -157,11 +187,13 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    ui->L_PWM3->setText(QString::number((value/2.55),'f',2) + " %");
+    ui->SB_PWM3->setValue(value/2.55);
 
     BufSend[1] = 0x07;
 
-    BufSend[2] = static_cast<uint8_t> (255 - value);
+    PWM3 = static_cast<uint8_t> (value);
+
+    BufSend[2] = PWM3;
 
     Send();
 }
@@ -178,60 +210,73 @@ void MainWindow::on_TE_SpeedOnOffLight_editingFinished()
     Send();
 }
 
-void MainWindow::on_RB_ADC1_clicked(bool checked)
+void MainWindow::on_RB_ADC1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
     BufSend[1] = 0x08;
 
-    if(checked){
-
-        BufSend[2] = 0x01;
-
-    }else{
-
-        BufSend[2] = 0x00;
-
-    }
-
     Send();
 }
 
-void MainWindow::on_RB_ADC2_clicked(bool checked)
+void MainWindow::on_RB_ADC2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
     BufSend[1] = 0x09;
 
-    if(checked){
-
-        BufSend[2] = 0x01;
-
-    }else{
-
-        BufSend[2] = 0x00;
-
-    }
-
     Send();
 }
 
-void MainWindow::on_RB_BH1750_clicked(bool checked)
+void MainWindow::on_RB_BH1750_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
     BufSend[1] = 0x0C;
 
+    Send();
+}
+
+void MainWindow::on_RB_MaintainLuxLevel_clicked(bool checked)
+{
     if(checked){
 
-        BufSend[2] = 0x01;
+        ui->SB_PWM1->setEnabled(false);
+        ui->SB_PWM2->setEnabled(false);
+        ui->SB_PWM3->setEnabled(false);
+        ui->S_PWM1->setEnabled(false);
+        ui->S_PWM2->setEnabled(false);
+        ui->S_PWM3->setEnabled(false);
 
-    }else{
+        MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
 
-        BufSend[2] = 0x00;
+        RequestLuxTimer->start(ui->TE_SpeedOnOffLight->time().minute() * 60000 +
+                               ui->TE_SpeedOnOffLight->time().second() * 1000);
+    }else {
 
+        RequestLuxTimer->stop();
+
+        ui->SB_PWM1->setEnabled(true);
+        ui->SB_PWM2->setEnabled(true);
+        ui->SB_PWM3->setEnabled(true);
+        ui->S_PWM1->setEnabled(true);
+        ui->S_PWM2->setEnabled(true);
+        ui->S_PWM3->setEnabled(true);
     }
+}
 
-    Send();
+void MainWindow::on_SB_PWM1_editingFinished()
+{
+    ui->S_PWM1->setValue(static_cast<int> (2.56 * (ui->SB_PWM1->value())));
+}
+
+void MainWindow::on_SB_PWM2_editingFinished()
+{
+    ui->S_PWM2->setValue(static_cast<int> (2.56 * (ui->SB_PWM2->value())));
+}
+
+void MainWindow::on_SB_PWM3_editingFinished()
+{
+    ui->S_PWM3->setValue(static_cast<int> (2.56 * (ui->SB_PWM3->value())));
 }
 
