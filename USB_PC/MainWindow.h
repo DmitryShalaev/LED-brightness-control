@@ -78,6 +78,8 @@ private slots:
 
     void on_RB_BH1750_clicked();
 
+    void on_SB_MaintainLuxLevelstep_valueChanged(int arg1);
+
 private:
 
     Ui::MainWindow *ui;

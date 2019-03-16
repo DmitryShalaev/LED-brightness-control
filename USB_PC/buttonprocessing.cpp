@@ -36,6 +36,7 @@ void MainWindow::on_B_Connect_clicked()
             ui->TE_SpeedOnOffLight->setEnabled(true);
             ui->SB_MaintainLuxLevel->setEnabled(true);
             ui->RB_MaintainLuxLevel->setEnabled(true);
+            ui->SB_MaintainLuxLevelstep->setEnabled(true);
 
             ui->B_Connect->setText("Disconnect");
 
@@ -72,6 +73,7 @@ void MainWindow::on_B_Connect_clicked()
         ui->TE_SpeedOnOffLight->setEnabled(false);
         ui->SB_MaintainLuxLevel->setEnabled(false);
         ui->RB_MaintainLuxLevel->setEnabled(false);
+        ui->SB_MaintainLuxLevelstep->setEnabled(false);
 
         ui->B_Connect->setText("Connect");
 
@@ -248,10 +250,13 @@ void MainWindow::on_RB_MaintainLuxLevel_clicked(bool checked)
         ui->S_PWM2->setEnabled(false);
         ui->S_PWM3->setEnabled(false);
 
-        MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
+        if(!ui->RB_TurnOffLight->isChecked()){
 
-        RequestLuxTimer->start(ui->TE_SpeedOnOffLight->time().minute() * 60000 +
-                               ui->TE_SpeedOnOffLight->time().second() * 1000);
+            MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
+
+            RequestLuxTimer->start(ui->TE_SpeedOnOffLight->time().minute() * 60000 +
+                                   ui->TE_SpeedOnOffLight->time().second() * 1000);
+        }
     }else {
 
         RequestLuxTimer->stop();
@@ -279,4 +284,10 @@ void MainWindow::on_SB_PWM3_editingFinished()
 {
     ui->S_PWM3->setValue(static_cast<int> (2.56 * (ui->SB_PWM3->value())));
 }
+
+void MainWindow::on_SB_MaintainLuxLevelstep_valueChanged(int arg1)
+{
+    MaintainLuxLevelStep = static_cast<uint8_t>(arg1);
+}
+
 

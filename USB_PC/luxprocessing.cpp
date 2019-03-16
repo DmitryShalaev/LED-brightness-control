@@ -41,7 +41,7 @@ void MainWindow::MaintainLuxLevel(double value)
         }
     }
 
-    ui->SB_PWM1->setValue( MeanPWM/2.55); //Test
+    ui->SB_PWM1->setValue((255 - MeanPWM)/2.55); //Test
 }
 
 
