@@ -30,13 +30,19 @@ SOURCES += \
     DataProcessing.cpp \
     ButtonProcessing.cpp \
     LuxProcessing.cpp \
-    MotionProcessing.cpp
+    MotionProcessing.cpp \
+    CustomLabel.cpp \
+    SettingWindow.cpp \
+    MainWindowMenu.cpp
 
 HEADERS += \
-        MainWindow.h
+        MainWindow.h \
+    CustomLabel.h \
+    SettingWindow.h
 
 FORMS += \
-        MainWindow.ui
+        MainWindow.ui \
+    SettingWindow.ui
 
 CONFIG += mobility
 MOBILITY = 
@@ -51,3 +57,6 @@ win32: LIBS += -L$$PWD/Lib/libusb-1.0.22/MinGW64/dll/ -llibusb-1.0.dll
 
 INCLUDEPATH += $$PWD/Lib/libusb-1.0.22/include/libusb-1.0
 DEPENDPATH += $$PWD/Lib/libusb-1.0.22/include/libusb-1.0
+
+RESOURCES += \
+    Resource.qrc

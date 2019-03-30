@@ -109,7 +109,7 @@ void MX_TIM3_Init(void)
 
 }
 /* TIM4 init function */
-void MX_TIM4_Init()
+void MX_TIM4_Init(void)
 {
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};

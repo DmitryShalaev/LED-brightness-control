@@ -159,24 +159,16 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 		dataToSend[2] = (uint8_t) ((ADC_Data[0] & 0xFF00) >> 8);
 		dataToSend[3] = (uint8_t) (ADC_Data[0] & 0x00FF);
 
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
-
-		break;
-
-	case 0x09:
-
-		dataToSend[1] = 0x09;
-
-		dataToSend[2] = (uint8_t) ((ADC_Data[1] & 0xFF00) >> 8);
-		dataToSend[3] = (uint8_t) (ADC_Data[1] & 0x00FF);
+		dataToSend[2] = (uint8_t) (((ADC_Data[1] & 0xFF00) >> 4) | dataToSend[2]);
+		dataToSend[4] = (uint8_t) (ADC_Data[1] & 0x00FF);
 
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
-	case 0x0C:
+	case 0x0B:
 
-		dataToSend[1] = 0x0C;
+		dataToSend[1] = 0x0B;
 
 		I2C_ReadBH1750();
 
@@ -187,7 +179,7 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 
 		break;
 
-	case 0x0D:
+	case 0x0C:
 
 		Period = ((dataToReceive[2] * 60 + dataToReceive[3]) / 0.001 / 255) - 1;
 		TIM4->CNT = 0;
@@ -195,11 +187,11 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 
 		break;
 
-	case 0x0E:
+	case 0x0D:
 
-		NewPWM1 = dataToReceive[2];
-		NewPWM2 = dataToReceive[2];
-		NewPWM3 = dataToReceive[2];
+		NewPWM1 = 255 - dataToReceive[2];
+		NewPWM2 = 255 - dataToReceive[2];
+		NewPWM3 = 255 - dataToReceive[2];
 
 		break;
 

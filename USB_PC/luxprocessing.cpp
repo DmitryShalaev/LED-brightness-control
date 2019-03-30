@@ -3,22 +3,27 @@
 void MainWindow::RequestLuxLevel()
 {
     MaintainLux = true;
-    on_RB_BH1750_clicked();
+
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = 0x0B;
+
+    Send();
 }
 
 void MainWindow::MaintainLuxLevel(double value)
 {
     MaintainLux = false;
 
-    if(abs(ui->SB_MaintainLuxLevel->value() - value) > 50){
+    if(abs(MaintainLuxLevelValue - value) > 50){
 
-        if((ui->SB_MaintainLuxLevel->value() - value) < 0) {
+        if((MaintainLuxLevelValue - value) > 0) {
 
             if((MeanPWM + MaintainLuxLevelStep) <= 255){
 
                 MeanPWM += MaintainLuxLevelStep;
 
-                BufSend[1] = 0x0E;
+                BufSend[1] = 0x0D;
 
                 BufSend[2] = MeanPWM;
 
@@ -31,7 +36,7 @@ void MainWindow::MaintainLuxLevel(double value)
 
                 MeanPWM -= MaintainLuxLevelStep;
 
-                BufSend[1] = 0x0E;
+                BufSend[1] = 0x0D;
 
                 BufSend[2] = MeanPWM;
 
@@ -40,8 +45,6 @@ void MainWindow::MaintainLuxLevel(double value)
             }
         }
     }
-
-    ui->SB_PWM1->setValue((255 - MeanPWM)/2.55); //Test
 }
 
 

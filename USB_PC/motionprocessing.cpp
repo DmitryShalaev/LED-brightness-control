@@ -2,14 +2,11 @@
 
 void MainWindow::MotionDetection(bool MotionDetected)
 {
-    if(ui->RB_TurnOffLight->isChecked()){
+    if(TurnOffLightIsChecked){
 
         if(MotionDetected){
 
-            if(!ui->RB_MaintainLuxLevel->isChecked())
-                MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
-
-            BufSend[1] = 0x0E;
+            BufSend[1] = 0x0D;
 
             BufSend[2] = static_cast<uint8_t> (MeanPWM);
 
@@ -17,13 +14,17 @@ void MainWindow::MotionDetection(bool MotionDetected)
 
             MotionTimer->stop();
 
-            RequestLuxTimer->start(ui->TE_SpeedOnOffLight->time().minute() * 60000 +
-                                   ui->TE_SpeedOnOffLight->time().second() * 1000);
+            if(MaintainLuxLevelIsChecked){
+
+                RequestLuxTimer->start(RequestLuxTime);
+            }else {
+
+                MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
+            }
 
         }else {
 
-            MotionTimer->start(ui->TE_TurnOffLight->time().minute() * 60000 +
-                               ui->TE_TurnOffLight->time().second() * 1000);
+            MotionTimer->start(MotionTime);
         }
     }
 }
@@ -32,9 +33,9 @@ void MainWindow::TurningOffTheLights()
 {    
     RequestLuxTimer->stop();
 
-    BufSend[1] = 0x0E;
+    BufSend[1] = 0x0D;
 
-    BufSend[2] = static_cast<uint8_t> (255);
+    BufSend[2] = static_cast<uint8_t> (0);
 
     Send();
 }
