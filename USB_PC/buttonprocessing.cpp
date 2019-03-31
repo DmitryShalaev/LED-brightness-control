@@ -24,6 +24,7 @@ void MainWindow::on_B_Connect_clicked()
             ui->S_ALLPWM->setEnabled(true);
             ui->RB_Update->setEnabled(true);
             ui->RB_AutomaticControl->setEnabled(true);
+            ui->actionAutomatic_control_setting->setEnabled(true);
 
             connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
             connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
@@ -36,6 +37,30 @@ void MainWindow::on_B_Connect_clicked()
 
             BufSend[1] = 0x00;
             Send();
+
+            QSettings Settings("USBProtocol", "Main");
+
+            if(Settings.value("Save").toBool()){
+
+                MaintainLuxLevelValue = Settings.value("SB_MaintainLuxLevel").toInt();
+                MaintainLuxLevelStep = static_cast<uint8_t>(Settings.value("SB_MaintainLuxLevelstep").toInt());
+                MotionTime = Settings.value("TE_TurnOffLight").toTime().minute() * 60000 + Settings.value("TE_TurnOffLight").toTime().second() * 1000;
+                RequestLuxTime = Settings.value("TE_SpeedOnOffLight").toTime().minute() * 60000 + Settings.value("TE_SpeedOnOffLight").toTime().second() * 1000;
+                TurnOffLightIsChecked = Settings.value("RB_TurnOffLight").toBool();
+                MaintainLuxLevelIsChecked = Settings.value("RB_MaintainLuxLevel").toBool();
+
+                memset(BufSend, 0, sizeof(BufSend));
+
+                BufSend[1] = 0x0C;
+
+                BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
+                BufSend[3] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
+
+                Send();
+
+            }else {
+                on_actionAutomatic_control_setting_triggered();
+            }
 
             RequestTimer->start(100);
 
@@ -53,6 +78,7 @@ void MainWindow::on_B_Connect_clicked()
         ui->S_ALLPWM->setEnabled(false);
         ui->RB_Update->setEnabled(false);
         ui->RB_AutomaticControl->setEnabled(false);
+        ui->actionAutomatic_control_setting->setEnabled(false);
 
         disconnect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
         disconnect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
@@ -228,6 +254,7 @@ void MainWindow::on_RB_Update_clicked(bool checked)
 
 void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 {
+    AutomaticControlActivated = checked;
 
     if(checked){
 
@@ -238,7 +265,19 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
         MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
 
-        RequestLuxTimer->start(RequestLuxTime);
+        if(MaintainLuxLevelIsChecked && !TurnOffLightIsChecked){
+
+            RequestLuxTimer->start(RequestLuxTime);
+
+        }else if (TurnOffLightIsChecked) {
+
+            BufSend[1] = 0x0D;
+
+            BufSend[2] = 0;
+
+            Send();
+
+        }
 
     }else {
 

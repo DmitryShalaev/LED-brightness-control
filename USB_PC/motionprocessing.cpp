@@ -2,13 +2,13 @@
 
 void MainWindow::MotionDetection(bool MotionDetected)
 {
-    if(TurnOffLightIsChecked){
+    if(TurnOffLightIsChecked && AutomaticControlActivated){
 
         if(MotionDetected){
 
             BufSend[1] = 0x0D;
 
-            BufSend[2] = static_cast<uint8_t> (MeanPWM);
+            BufSend[2] = MeanPWM;
 
             Send();
 
@@ -35,7 +35,7 @@ void MainWindow::TurningOffTheLights()
 
     BufSend[1] = 0x0D;
 
-    BufSend[2] = static_cast<uint8_t> (0);
+    BufSend[2] = 0;
 
     Send();
 }

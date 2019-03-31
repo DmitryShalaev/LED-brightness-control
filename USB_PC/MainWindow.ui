@@ -733,6 +733,9 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAutomatic_control_setting">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Automatic control setting</string>
    </property>

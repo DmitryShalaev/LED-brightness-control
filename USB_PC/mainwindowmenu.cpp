@@ -24,16 +24,12 @@ void MainWindow::SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxL
     Send();
 
     RequestLuxTime = TE_SpeedOnOffLight.minute() * 60000 + TE_SpeedOnOffLight.second() * 1000;
-
     MotionTime = TE_TurnOffLight.minute() * 60000 + TE_TurnOffLight.second() * 1000;
-
-    MaintainLuxLevelValue = SB_MaintainLuxLevel;
 
     TurnOffLightIsChecked = RB_TurnOffLight;
     MaintainLuxLevelIsChecked =  RB_MaintainLuxLevel;
 
     MaintainLuxLevelStep = static_cast<uint8_t>(SB_MaintainLuxLevelStep);
-
-    ui->RB_AutomaticControl->setEnabled(true);
+    MaintainLuxLevelValue = SB_MaintainLuxLevel;
 }
 

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTime>
+#include <QSettings>
 
 namespace Ui {
 class SettingWindow;

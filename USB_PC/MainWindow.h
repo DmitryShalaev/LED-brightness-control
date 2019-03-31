@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QPixmap>
+#include <QSettings>
 
 #include "libusb.h"
 #include "CustomLabel.h"
@@ -123,6 +124,8 @@ private:
 
     bool TurnOffLightIsChecked = false;
     bool MaintainLuxLevelIsChecked = false;
+
+    bool AutomaticControlActivated = false;
 
 };
 
