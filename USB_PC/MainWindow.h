@@ -44,6 +44,8 @@ private slots:
 
     void ProcessingReceivedData();
 
+    void TimeCheck();
+
     void MotionDetection(bool MotionDetected);
 
     void MaintainLuxLevel(double value);
@@ -78,7 +80,8 @@ private slots:
 
     void SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxLevelStep,
                              QTime TE_TurnOffLight, QTime TE_SpeedOnOffLight,
-                             bool RB_TurnOffLight, bool RB_MaintainLuxLevel);
+                             bool RB_TurnOffLight, bool RB_MaintainLuxLevel,
+                             QTime TE_OnTime, QTime TE_OFFTime, bool RB_OnOffTime);
 
 private:
 
@@ -86,10 +89,13 @@ private:
 
     libusb_device_handle *handle;
 
+    QTime CurrentTime = QTime::currentTime();
+
     QTimer *RequestTimer = new QTimer;
     QTimer *MotionTimer = new QTimer;
     QTimer *RequestLuxTimer = new QTimer;
     QTimer *UpdateDataTimer = new QTimer;
+    QTimer *OnOffTimer = new QTimer;
 
     uint8_t BufSend[6] = {0};
     uint8_t BufReceive[6] = {0};
@@ -126,6 +132,13 @@ private:
     bool MaintainLuxLevelIsChecked = false;
 
     bool AutomaticControlActivated = false;
+
+    bool OnOffTimeIsChecked = false;
+
+    bool TheTimeHasCome = false;
+
+    QTime OnTime;
+    QTime OffTime;
 
 };
 

@@ -26,7 +26,8 @@ private:
 signals:
     void Signal(int SB_MaintainLuxLevel,int SB_MaintainLuxLevelStep,
                 QTime TE_TurnOffLight, QTime TE_SpeedOnOffLight,
-                bool RB_TurnOffLight, bool RB_MaintainLuxLevel);
+                bool RB_TurnOffLight, bool RB_MaintainLuxLevel,
+                QTime TE_OnTime, QTime TE_OFFTime, bool RB_OnOffTime);
 };
 
 #endif // SETTINGWINDOW_H

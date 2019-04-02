@@ -12,7 +12,8 @@ void MainWindow::on_actionAutomatic_control_setting_triggered()
 
 void MainWindow::SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxLevelStep,
                                      QTime TE_TurnOffLight, QTime TE_SpeedOnOffLight,
-                                     bool RB_TurnOffLight, bool RB_MaintainLuxLevel)
+                                     bool RB_TurnOffLight, bool RB_MaintainLuxLevel,
+                                     QTime TE_OnTime, QTime TE_OFFTime, bool RB_OnOffTime)
 {
     memset(BufSend, 0, sizeof(BufSend));
 
@@ -28,8 +29,14 @@ void MainWindow::SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxL
 
     TurnOffLightIsChecked = RB_TurnOffLight;
     MaintainLuxLevelIsChecked =  RB_MaintainLuxLevel;
+    OnOffTimeIsChecked = RB_OnOffTime;
+
+    OnTime = TE_OnTime;
+    OffTime = TE_OFFTime;
 
     MaintainLuxLevelStep = static_cast<uint8_t>(SB_MaintainLuxLevelStep);
     MaintainLuxLevelValue = SB_MaintainLuxLevel;
+
+    ui->RB_AutomaticControl->setEnabled(true);
 }
 

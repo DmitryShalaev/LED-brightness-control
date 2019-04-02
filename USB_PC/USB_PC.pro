@@ -33,7 +33,8 @@ SOURCES += \
     MotionProcessing.cpp \
     CustomLabel.cpp \
     SettingWindow.cpp \
-    MainWindowMenu.cpp
+    MainWindowMenu.cpp \
+    TimeProcessing.cpp
 
 HEADERS += \
         MainWindow.h \

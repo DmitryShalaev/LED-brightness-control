@@ -51,11 +51,6 @@ void MainWindow::RequestData()
         qDebug() << "Reed successful! " << ActualLength;
 
         ProcessingReceivedData();
-
-    }else{
-
-        qDebug() << "No Reed! ";
-
     }
 
     qApp->processEvents();
@@ -95,4 +90,6 @@ void MainWindow::TimerInit()
     connect(RequestLuxTimer, SIGNAL(timeout()), SLOT(RequestLuxLevel()));
 
     connect(UpdateDataTimer, SIGNAL(timeout()), SLOT(RequestUpdateData()));
+
+    connect(OnOffTimer, SIGNAL(timeout()), SLOT(TimeCheck()));
 }

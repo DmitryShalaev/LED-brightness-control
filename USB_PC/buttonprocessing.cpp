@@ -23,7 +23,6 @@ void MainWindow::on_B_Connect_clicked()
             ui->S_PWM3->setEnabled(true);
             ui->S_ALLPWM->setEnabled(true);
             ui->RB_Update->setEnabled(true);
-            ui->RB_AutomaticControl->setEnabled(true);
             ui->actionAutomatic_control_setting->setEnabled(true);
 
             connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
@@ -48,6 +47,9 @@ void MainWindow::on_B_Connect_clicked()
                 RequestLuxTime = Settings.value("TE_SpeedOnOffLight").toTime().minute() * 60000 + Settings.value("TE_SpeedOnOffLight").toTime().second() * 1000;
                 TurnOffLightIsChecked = Settings.value("RB_TurnOffLight").toBool();
                 MaintainLuxLevelIsChecked = Settings.value("RB_MaintainLuxLevel").toBool();
+                OnOffTimeIsChecked = Settings.value("RB_OnOffTime").toBool();
+                OnTime = Settings.value("TE_OnTime").toTime();
+                OffTime = Settings.value("TE_OffTime").toTime();
 
                 memset(BufSend, 0, sizeof(BufSend));
 
@@ -57,6 +59,8 @@ void MainWindow::on_B_Connect_clicked()
                 BufSend[3] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
 
                 Send();
+
+                ui->RB_AutomaticControl->setEnabled(true);
 
             }else {
                 on_actionAutomatic_control_setting_triggered();
@@ -77,7 +81,9 @@ void MainWindow::on_B_Connect_clicked()
         ui->S_PWM3->setEnabled(false);
         ui->S_ALLPWM->setEnabled(false);
         ui->RB_Update->setEnabled(false);
+        ui->RB_Update->setChecked(false);
         ui->RB_AutomaticControl->setEnabled(false);
+        ui->RB_AutomaticControl->setChecked(false);
         ui->actionAutomatic_control_setting->setEnabled(false);
 
         disconnect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
@@ -92,6 +98,8 @@ void MainWindow::on_B_Connect_clicked()
         RequestTimer->stop();
         MotionTimer->stop();
         RequestLuxTimer->stop();
+        UpdateDataTimer->stop();
+        OnOffTimer->stop();
 
         if(libusb_attach_kernel_driver(handle, 0) == 0)
             qDebug() << "Attach device";
@@ -265,9 +273,9 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
         MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
 
-        if(MaintainLuxLevelIsChecked && !TurnOffLightIsChecked){
+        if(OnOffTimeIsChecked){
 
-            RequestLuxTimer->start(RequestLuxTime);
+            OnOffTimer->start(60000);
 
         }else if (TurnOffLightIsChecked) {
 
@@ -277,6 +285,9 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
             Send();
 
+        }else if(MaintainLuxLevelIsChecked){
+
+            RequestLuxTimer->start(RequestLuxTime);
         }
 
     }else {
@@ -286,6 +297,9 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
         ui->S_PWM3->setEnabled(true);
         ui->S_ALLPWM->setEnabled(true);
 
+        TheTimeHasCome = false;
+
         RequestLuxTimer->stop();
+        OnOffTimer->stop();
     }
 }
