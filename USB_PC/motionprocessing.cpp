@@ -2,7 +2,7 @@
 
 void MainWindow::MotionDetection(bool MotionDetected)
 {
-    if(TurnOffLightIsChecked && AutomaticControlActivated){
+    if(TurnOffLightIsChecked && AutomaticControlActivated && TheTimeHasCome){
 
         if(MotionDetected){
 

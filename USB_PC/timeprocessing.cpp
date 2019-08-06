@@ -2,21 +2,15 @@
 
 void MainWindow::TimeCheck()
 {
-    if((CurrentTime >= OnTime) && (CurrentTime <= OffTime)){
+    if((QTime::currentTime() >= OnTime) && (QTime::currentTime() <= OffTime)){
 
         if(!TheTimeHasCome){
 
             TheTimeHasCome = true;
 
-            if (TurnOffLightIsChecked) {
+            qDebug() << "TheTimeHasCome";
 
-                BufSend[1] = 0x0D;
-
-                BufSend[2] = 0;
-
-                Send();
-
-            }else if(MaintainLuxLevelIsChecked){
+            if(MaintainLuxLevelIsChecked && !TurnOffLightIsChecked){
 
                 RequestLuxTimer->start(RequestLuxTime);
             }
@@ -24,10 +18,17 @@ void MainWindow::TimeCheck()
 
     }else{
 
+        qDebug() << "TheTimeNotCome";
+
+        BufSend[1] = 0x0D;
+
+        BufSend[2] = 0;
+
+        Send();
+
         RequestLuxTimer->stop();
 
         TheTimeHasCome = false;
 
     }
-
 }

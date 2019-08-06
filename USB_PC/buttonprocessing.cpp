@@ -273,11 +273,7 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
         MeanPWM = (PWM1 + PWM2 + PWM3) / 3;
 
-        if(OnOffTimeIsChecked){
-
-            OnOffTimer->start(60000);
-
-        }else if (TurnOffLightIsChecked) {
+        if (TurnOffLightIsChecked) {
 
             BufSend[1] = 0x0D;
 
@@ -285,9 +281,20 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
             Send();
 
-        }else if(MaintainLuxLevelIsChecked){
+        }
+
+        if(OnOffTimeIsChecked){
+
+            TheTimeHasCome = false;
+            OnOffTimer->start(10000);
+
+        }else if(MaintainLuxLevelIsChecked && !TurnOffLightIsChecked){
 
             RequestLuxTimer->start(RequestLuxTime);
+
+        }else {
+
+            TheTimeHasCome = true;
         }
 
     }else {

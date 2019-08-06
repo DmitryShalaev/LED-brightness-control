@@ -89,8 +89,6 @@ private:
 
     libusb_device_handle *handle;
 
-    QTime CurrentTime = QTime::currentTime();
-
     QTimer *RequestTimer = new QTimer;
     QTimer *MotionTimer = new QTimer;
     QTimer *RequestLuxTimer = new QTimer;
