@@ -12,15 +12,10 @@
 
 #include "libusb.h"
 #include "CustomLabel.h"
-
-#define VID 0x483
-#define PID 0x5750
-
-#define EP_OUT 0x01
-#define EP_IN 0x81
+#include "../GENERAL/ID.h"
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -35,49 +30,27 @@ public:
 private slots:
 
     void TimerInit();
-
     void Send();
-
     void RequestData();
-
     void RequestUpdateData();
-
     void ProcessingReceivedData();
-
     void TimeCheck();
-
     void MotionDetection(bool MotionDetected);
-
     void MaintainLuxLevel(double value);
-
     void RequestLuxLevel();
-
     void TurningOffTheLights();
-
     void on_B_Connect_clicked();
-
     void L_LED1_clicked();
-
     void L_LED2_clicked();
-
     void L_REL1_clicked();
-
     void L_REL2_clicked();
-
     void on_S_PWM1_valueChanged(int value);
-
     void on_S_PWM2_valueChanged(int value);
-
     void on_S_PWM3_valueChanged(int value);
-
     void on_RB_Update_clicked(bool checked);
-
     void on_S_ALLPWM_valueChanged(int value);
-
     void on_RB_AutomaticControl_clicked(bool checked);
-
     void on_actionAutomatic_control_setting_triggered();
-
     void SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxLevelStep,
                              QTime TE_TurnOffLight, QTime TE_SpeedOnOffLight,
                              bool RB_TurnOffLight, bool RB_MaintainLuxLevel,

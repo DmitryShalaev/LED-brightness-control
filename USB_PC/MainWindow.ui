@@ -116,7 +116,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget111">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -171,7 +171,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="L_DK3">
+      <widget class="QLabel" name="L_MOTION">
        <property name="minimumSize">
         <size>
          <width>69</width>
@@ -188,7 +188,7 @@
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;DK3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;MOTION&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -213,7 +213,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget212">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -460,7 +460,7 @@
      <string>Connect</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget131313">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -568,7 +568,7 @@
             </size>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;LED1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;LED2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -703,7 +703,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>460</x>
       <y>40</y>
       <width>111</width>
       <height>19</height>

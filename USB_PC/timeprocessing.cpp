@@ -20,7 +20,7 @@ void MainWindow::TimeCheck()
 
         qDebug() << "TheTimeNotCome";
 
-        BufSend[1] = 0x0D;
+        BufSend[1] = ALLPWM;
 
         BufSend[2] = 0;
 

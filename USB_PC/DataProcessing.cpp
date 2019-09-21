@@ -4,7 +4,7 @@ void MainWindow::ProcessingReceivedData()
 {
     switch (BufReceive[1]) {
 
-    case 0x00:
+    case INIT:
 
         if ((BufReceive[2] & 0x01) == 0x01) {
             ui->L_LED1->setPixmap(QPixmap(":/IMG/Resource/lamp_on.png").scaled(ui->L_LED1->width(),ui->L_LED1->height(),Qt::KeepAspectRatio));
@@ -48,9 +48,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x01:
+    case LED_1:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_LED1->setPixmap(QPixmap(":/IMG/Resource/lamp_on.png").scaled(ui->L_LED1->width(),ui->L_LED1->height(),Qt::KeepAspectRatio));
             LED1 = true;
         } else {
@@ -60,9 +60,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x02:
+    case LED_2:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_LED2->setPixmap(QPixmap(":/IMG/Resource/lamp_on.png").scaled(ui->L_LED2->width(),ui->L_LED2->height(),Qt::KeepAspectRatio));
             LED2 = true;
         } else {
@@ -72,9 +72,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x03:
+    case REL_1:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_REL1->setPixmap(QPixmap(":/IMG/Resource/Relay_on.png").scaled(ui->L_REL1->width(),ui->L_REL1->height(),Qt::KeepAspectRatio));
             REL1 = true;
         } else {
@@ -84,9 +84,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x04:
+    case REL_2:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_REL2->setPixmap(QPixmap(":/IMG/Resource/Relay_on.png").scaled(ui->L_REL2->width(),ui->L_REL2->height(),Qt::KeepAspectRatio));
             REL2 = true;
         } else {
@@ -96,7 +96,7 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x08:
+    case ADC:
 
         ui->L_ADC1->setText(QString::number((static_cast<double>(((BufReceive[2] & 0x0F) << 8) |
                                              BufReceive[3])*3/4096),'f',3) + " V");
@@ -106,9 +106,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x09:
+    case DK_1:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_DK1->setPixmap(QPixmap(":/IMG/Resource/Button_on.png").scaled(ui->L_DK1->width(),ui->L_DK1->height(),Qt::KeepAspectRatio));
         } else {
             ui->L_DK1->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK1->width(),ui->L_DK1->height(),Qt::KeepAspectRatio));
@@ -116,9 +116,9 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x0A:
+    case DK_2:
 
-        if (BufReceive[2] == 0x01) {
+        if (BufReceive[2] == ON) {
             ui->L_DK2->setPixmap(QPixmap(":/IMG/Resource/Button_on.png").scaled(ui->L_DK2->width(),ui->L_DK2->height(),Qt::KeepAspectRatio));
         } else {
             ui->L_DK2->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK2->width(),ui->L_DK2->height(),Qt::KeepAspectRatio));
@@ -126,7 +126,7 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x0B:
+    case LUX:
 
         ui->L_BH1750->setText(QString::number((static_cast<double>((BufReceive[2] << 8) |
                                                BufReceive[3])/1.2),'f',2) + " lx.");
@@ -136,13 +136,13 @@ void MainWindow::ProcessingReceivedData()
 
         break;
 
-    case 0x0E:
+    case MOTION:
 
-        if (BufReceive[2] == 0x01) {
-            ui->L_DK3->setPixmap(QPixmap(":/IMG/Resource/Open_eye.png").scaled(ui->L_DK3->width(),ui->L_DK3->height(),Qt::KeepAspectRatio));
+        if (BufReceive[2] == ON) {
+            ui->L_MOTION->setPixmap(QPixmap(":/IMG/Resource/Open_eye.png").scaled(ui->L_MOTION->width(),ui->L_MOTION->height(),Qt::KeepAspectRatio));
             MotionDetection(true);
         } else {
-            ui->L_DK3->setPixmap(QPixmap(":/IMG/Resource/Closed_eye.png").scaled(ui->L_DK3->width(),ui->L_DK3->height(),Qt::KeepAspectRatio));
+            ui->L_MOTION->setPixmap(QPixmap(":/IMG/Resource/Closed_eye.png").scaled(ui->L_MOTION->width(),ui->L_MOTION->height(),Qt::KeepAspectRatio));
             MotionDetection(false);
         }
 

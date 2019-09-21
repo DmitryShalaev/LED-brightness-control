@@ -6,7 +6,7 @@ void MainWindow::MotionDetection(bool MotionDetected)
 
         if(MotionDetected){
 
-            BufSend[1] = 0x0D;
+            BufSend[1] = ALLPWM;
 
             BufSend[2] = MeanPWM;
 
@@ -33,7 +33,7 @@ void MainWindow::TurningOffTheLights()
 {    
     RequestLuxTimer->stop();
 
-    BufSend[1] = 0x0D;
+    BufSend[1] = ALLPWM;
 
     BufSend[2] = 0;
 

@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
-    ui->L_DK3->setPixmap(QPixmap(":/IMG/Resource/Closed_eye.png").scaled(ui->L_DK3->width(),ui->L_DK3->height(),Qt::KeepAspectRatio));
+    ui->L_MOTION->setPixmap(QPixmap(":/IMG/Resource/Closed_eye.png").scaled(ui->L_MOTION->width(),ui->L_MOTION->height(),Qt::KeepAspectRatio));
     ui->L_LED1->setPixmap(QPixmap(":/IMG/Resource/lamp_off.png").scaled(ui->L_LED1->width(),ui->L_LED1->height(),Qt::KeepAspectRatio));
     ui->L_LED2->setPixmap(QPixmap(":/IMG/Resource/lamp_off.png").scaled(ui->L_LED2->width(),ui->L_LED2->height(),Qt::KeepAspectRatio));
     ui->L_REL1->setPixmap(QPixmap(":/IMG/Resource/Relay_off.png").scaled(ui->L_REL1->width(),ui->L_REL1->height(),Qt::KeepAspectRatio));
@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::Send()
 {
-    BufSend[0] = 0x01;        //REPORT ID
+    BufSend[0] = 0x01;
 
     Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 6, &ActualLength, 0);
 
@@ -62,7 +62,7 @@ void MainWindow::RequestUpdateData()
 
         memset(BufSend, 0, sizeof(BufSend));
 
-        BufSend[1] = 0x0B;
+        BufSend[1] = LUX;
 
         Send();
 
@@ -72,7 +72,7 @@ void MainWindow::RequestUpdateData()
 
         memset(BufSend, 0, sizeof(BufSend));
 
-        BufSend[1] = 0x08;
+        BufSend[1] = ADC;
 
         Send();
 

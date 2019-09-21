@@ -17,7 +17,7 @@ void MainWindow::SettingWindowSignal(int SB_MaintainLuxLevel,int SB_MaintainLuxL
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x0C;
+    BufSend[1] = TIME;
 
     BufSend[2] = static_cast<uint8_t> (TE_SpeedOnOffLight.minute());
     BufSend[3] = static_cast<uint8_t> (TE_SpeedOnOffLight.second());

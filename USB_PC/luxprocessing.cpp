@@ -6,7 +6,7 @@ void MainWindow::RequestLuxLevel()
 
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x0B;
+    BufSend[1] = LUX;
 
     Send();
 }
@@ -25,7 +25,7 @@ void MainWindow::MaintainLuxLevel(double value)
 
                 MeanPWM += MaintainLuxLevelStep;
 
-                BufSend[1] = 0x0D;
+                BufSend[1] = ALLPWM;
 
                 BufSend[2] = MeanPWM;
 
@@ -38,7 +38,7 @@ void MainWindow::MaintainLuxLevel(double value)
 
                 MeanPWM -= MaintainLuxLevelStep;
 
-                BufSend[1] = 0x0D;
+                BufSend[1] = ALLPWM;
 
                 BufSend[2] = MeanPWM;
 

@@ -34,7 +34,7 @@ void MainWindow::on_B_Connect_clicked()
 
             ui->statusBar->showMessage("Connect");
 
-            BufSend[1] = 0x00;
+            BufSend[1] = INIT;
             Send();
 
             QSettings Settings("USBProtocol", "Main");
@@ -53,7 +53,7 @@ void MainWindow::on_B_Connect_clicked()
 
                 memset(BufSend, 0, sizeof(BufSend));
 
-                BufSend[1] = 0x0C;
+                BufSend[1] = TIME;
 
                 BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
                 BufSend[3] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
@@ -117,12 +117,12 @@ void MainWindow::L_LED1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x01;
+    BufSend[1] = LED_1;
 
     if(LED1){
-        BufSend[2] = 0x00;
+        BufSend[2] = OFF;
     }else{
-        BufSend[2] = 0x01;
+        BufSend[2] = ON;
     }
 
     Send();
@@ -132,12 +132,12 @@ void MainWindow::L_LED2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x02;
+    BufSend[1] = LED_2;
 
     if(LED2){
-        BufSend[2] = 0x00;
+        BufSend[2] = OFF;
     }else{
-        BufSend[2] = 0x01;
+        BufSend[2] = ON;
     }
 
     Send();
@@ -147,12 +147,12 @@ void MainWindow::L_REL1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x03;
+    BufSend[1] = REL_1;
 
     if(REL1){
-        BufSend[2] = 0x00;
+        BufSend[2] = OFF;
     }else{
-        BufSend[2] = 0x01;
+        BufSend[2] = ON;
     }
 
     Send();
@@ -162,12 +162,12 @@ void MainWindow::L_REL2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = 0x04;
+    BufSend[1] = REL_2;
 
     if(REL2){
-        BufSend[2] = 0x00;
+        BufSend[2] = OFF;
     }else{
-        BufSend[2] = 0x01;
+        BufSend[2] = ON;
     }
 
     Send();
@@ -185,7 +185,7 @@ void MainWindow::on_S_PWM1_valueChanged(int value)
 
     }else {
 
-        BufSend[1] = 0x05;
+        BufSend[1] = PWM_1;
         BufSend[2] = PWM1;
 
         Send();
@@ -204,7 +204,7 @@ void MainWindow::on_S_PWM2_valueChanged(int value)
 
     }else {
 
-        BufSend[1] = 0x06;
+        BufSend[1] = PWM_2;
         BufSend[2] = PWM2;
 
         Send();
@@ -223,7 +223,7 @@ void MainWindow::on_S_PWM3_valueChanged(int value)
 
     }else {
 
-        BufSend[1] = 0x07;
+        BufSend[1] = PWM_3;
         BufSend[2] = PWM3;
 
         Send();
@@ -244,7 +244,7 @@ void MainWindow::on_S_ALLPWM_valueChanged(int value)
     ALLPWMChanged = true;
     ui->S_PWM3->setValue(value);
 
-    BufSend[1] = 0x0D;
+    BufSend[1] = ALLPWM;
     BufSend[2] = static_cast<uint8_t> (value);
 
     Send();
@@ -275,7 +275,7 @@ void MainWindow::on_RB_AutomaticControl_clicked(bool checked)
 
         if (TurnOffLightIsChecked) {
 
-            BufSend[1] = 0x0D;
+            BufSend[1] = ALLPWM;
 
             BufSend[2] = 0;
 
