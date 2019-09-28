@@ -1,6 +1,6 @@
 #include "DataProcessing.h"
 
-void ProcessingData(uint8_t dataToReceive[6]) {
+void ProcessingData(uint8_t dataToReceive[]) {
 
 	memset(dataToSend, 0, sizeof(dataToSend));
 

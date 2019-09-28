@@ -195,12 +195,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
   /* USER CODE BEGIN 6 */
 	USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef*) hUsbDeviceFS.pClassData;
 
-	memset(Data, 0, sizeof(Data));
-
-	for (uint8_t i = 0; i <= 5; i++)
-		Data[i] = hhid->Report_buf[i];
-
-	ProcessingData(Data);
+	ProcessingData(hhid->Report_buf);
 
 	return (USBD_OK);
   /* USER CODE END 6 */

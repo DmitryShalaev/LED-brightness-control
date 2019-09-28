@@ -19,6 +19,6 @@ uint8_t NewPWM1, NewPWM2, NewPWM3;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
-void ProcessingData(uint8_t dataToReceive[6]);
+void ProcessingData(uint8_t dataToReceive[]);
 
 #endif /* DATAPROCESSING_H_ */

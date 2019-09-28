@@ -94,7 +94,7 @@
 extern USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
-uint8_t Data[6];
+
 /* USER CODE END EXPORTED_VARIABLES */
 
 /**
