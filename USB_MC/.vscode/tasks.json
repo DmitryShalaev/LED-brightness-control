@@ -1,0 +1,216 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build project",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "command": "C:\\STM32\\BuildTools\\bin\\make.EXE",
+            "args": [
+                "GCC_PATH=C:/STM32/ARMEmbeddedGCC/bin",
+                "-j12"
+            ],
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "presentation": {
+                "focus": true
+            }
+        },
+        {
+            "label": "Compile current file",
+            "type": "shell",
+            "command": "C:\\STM32\\ARMEmbeddedGCC\\bin\\arm-none-eabi-gcc.EXE",
+            "args": [
+                "-c",
+                "-DUSE_HAL_DRIVER",
+                "-DSTM32F103xB",
+                "-DUSE_HAL_DRIVER",
+                "-DSTM32F103xB",
+                "-ICore/Inc",
+                "-IUSB_DEVICE/App",
+                "-IUSB_DEVICE/Target",
+                "-IDrivers/STM32F1xx_HAL_Driver/Inc",
+                "-IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "-IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "-IMiddlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc",
+                "-IDrivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "-IDrivers/CMSIS/Include",
+                "-IDrivers/CMSIS/Include",
+                "-mcpu=cortex-m3",
+                "-mthumb",
+                "-DUSE_HAL_DRIVER",
+                "-DSTM32F103xB",
+                "-DUSE_HAL_DRIVER",
+                "-DSTM32F103xB",
+                "-ICore/Inc",
+                "-IUSB_DEVICE/App",
+                "-IUSB_DEVICE/Target",
+                "-IDrivers/STM32F1xx_HAL_Driver/Inc",
+                "-IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "-IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "-IMiddlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc",
+                "-IDrivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "-IDrivers/CMSIS/Include",
+                "-IDrivers/CMSIS/Include",
+                "-Og",
+                "-Wall",
+                "-fdata-sections",
+                "-ffunction-sections",
+                "-g",
+                "-gdwarf-2",
+                "-MMD",
+                "-MP",
+                "-MF'build/${fileBasenameNoExtension}.d'",
+                "'${relativeFile}'",
+                "-o",
+                "'build/${fileBasenameNoExtension}.o'"
+            ],
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "presentation": {
+                "focus": true
+            }
+        },
+        {
+            "label": "Delete build folder",
+            "type": "shell",
+            "command": "C:\\STM32\\BuildTools\\bin\\make.EXE",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "focus": false
+            }
+        },
+        {
+            "label": "CPU: Build, Download and run",
+            "type": "shell",
+            "command": "C:/STM32/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-f",
+                "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",
+                "-f",
+                ".vscode/stm32f1x.cfg",
+                "-c",
+                "program build/USB_MC.elf verify reset exit"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Build project"
+        },
+        {
+            "label": "CPU: Download and run",
+            "type": "shell",
+            "command": "C:/STM32/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-f",
+                "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",
+                "-f",
+                ".vscode/stm32f1x.cfg",
+                "-c",
+                "program build/USB_MC.elf verify reset exit"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Reset and run",
+            "type": "shell",
+            "command": "C:/STM32/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-f",
+                "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",
+                "-f",
+                ".vscode/stm32f1x.cfg",
+                "-c init",
+                "-c reset",
+                "-c exit"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Halt",
+            "type": "shell",
+            "command": "C:/STM32/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-f",
+                "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",
+                "-f",
+                ".vscode/stm32f1x.cfg",
+                "-c init",
+                "-c halt",
+                "-c exit"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Run",
+            "type": "shell",
+            "command": "C:/STM32/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-f",
+                "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",
+                "-f",
+                ".vscode/stm32f1x.cfg",
+                "-c init",
+                "-c resume",
+                "-c exit"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Python file",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${file}"
+            ],
+            "presentation": {
+                "focus": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Open CubeMX project",
+            "type": "shell",
+            "command": "start",
+            "args": [
+                "USB_MC.ioc"
+            ],
+            "presentation": {
+                "focus": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Update workspace",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/ideScripts/update.py"
+            ],
+            "presentation": {
+                "focus": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

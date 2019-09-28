@@ -59,7 +59,7 @@ void ProcessingData(uint8_t dataToReceive[6]) {
 			} else {
 				dataToSend[2] = 0x00;
 			}
-
+			
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
