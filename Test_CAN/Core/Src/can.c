@@ -128,11 +128,19 @@ void CAN_Config(void)
   sFilterConfig.FilterActivation = ENABLE;
   sFilterConfig.SlaveStartFilterBank = 14;
 
-  HAL_CAN_ConfigFilter(&hcan, &sFilterConfig); 
-
-  HAL_CAN_Start(&hcan); 
-
-  HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING); 
+  if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  
+  if (HAL_CAN_Start(&hcan) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  
+  if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+  {
+  } 
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback (CAN_HandleTypeDef * hcan)
