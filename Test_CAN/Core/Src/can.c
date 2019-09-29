@@ -140,6 +140,7 @@ void CAN_Config(void)
   
   if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
   {
+    Error_Handler();
   } 
 }
 
