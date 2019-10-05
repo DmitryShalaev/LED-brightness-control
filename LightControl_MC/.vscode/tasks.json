@@ -38,12 +38,8 @@
                 "-DUSE_HAL_DRIVER",
                 "-DSTM32F103xB",
                 "-ICore/Inc",
-                "-IUSB_DEVICE/App",
-                "-IUSB_DEVICE/Target",
                 "-IDrivers/STM32F1xx_HAL_Driver/Inc",
                 "-IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy",
-                "-IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc",
-                "-IMiddlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc",
                 "-IDrivers/CMSIS/Device/ST/STM32F1xx/Include",
                 "-IDrivers/CMSIS/Include",
                 "-IDrivers/CMSIS/Include",
@@ -54,12 +50,8 @@
                 "-DUSE_HAL_DRIVER",
                 "-DSTM32F103xB",
                 "-ICore/Inc",
-                "-IUSB_DEVICE/App",
-                "-IUSB_DEVICE/Target",
                 "-IDrivers/STM32F1xx_HAL_Driver/Inc",
                 "-IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy",
-                "-IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc",
-                "-IMiddlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc",
                 "-IDrivers/CMSIS/Device/ST/STM32F1xx/Include",
                 "-IDrivers/CMSIS/Include",
                 "-IDrivers/CMSIS/Include",
@@ -112,7 +104,7 @@
                 "-f",
                 ".vscode/stm32f1x.cfg",
                 "-c",
-                "program build/USB_MC.elf verify reset exit"
+                "program build/LightControl.elf verify reset exit"
             ],
             "problemMatcher": [],
             "dependsOn": "Build project"
@@ -127,7 +119,7 @@
                 "-f",
                 ".vscode/stm32f1x.cfg",
                 "-c",
-                "program build/USB_MC.elf verify reset exit"
+                "program build/LightControl.elf verify reset exit"
             ],
             "problemMatcher": []
         },

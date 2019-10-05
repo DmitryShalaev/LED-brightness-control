@@ -113,6 +113,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+
 void CAN_Config(void)
 {
   CAN_FilterTypeDef sFilterConfig;
@@ -144,11 +145,12 @@ void CAN_Config(void)
   } 
 }
 
-void HAL_CAN_RxFifo0MsgPendingCallback (CAN_HandleTypeDef * hcan)
+void HAL_CAN_RxFifo0MsgPendingCallback (CAN_HandleTypeDef *hcan)
 {
   HAL_CAN_GetRxMessage (hcan, CAN_RX_FIFO0, &RxHeader, RxData);
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 }
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

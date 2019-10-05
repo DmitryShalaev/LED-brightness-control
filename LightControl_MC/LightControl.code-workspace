@@ -6,6 +6,9 @@
     ],
     "settings": {
         "cortex-debug.armToolchainPath": "C:/STM32/ARMEmbeddedGCC/bin",
-        "cortex-debug.openocdPath": "C:/STM32/OpenOCD/bin/openocd.exe"
+        "cortex-debug.openocdPath": "C:/STM32/OpenOCD/bin/openocd.exe",
+        "files.associations": {
+            "adc.h": "c"
+        }
     }
 }

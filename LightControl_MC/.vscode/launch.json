@@ -7,7 +7,7 @@
             "request": "launch",
             "servertype": "openocd",
             "cwd": "${workspaceFolder}",
-            "executable": "build/USB_MC.elf",
+            "executable": "build/LightControl.elf",
             "svdFile": ".vscode/STM32F103xx.svd",
             "configFiles": [
                 "C:/STM32/OpenOCD/scripts/interface/stlink.cfg",

@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "can.h"
 #include "dma.h"
 #include "i2c.h"
 #include "tim.h"
@@ -97,7 +98,10 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM4_Init();
   MX_I2C1_Init();
+  MX_CAN_Init();
   /* USER CODE BEGIN 2 */
+
+  CAN_Config();
 
 	I2C_launchBH1750();
 
@@ -108,7 +112,7 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &ADC_Data, 2);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Data, 2);
 
   /* USER CODE END 2 */
 
@@ -119,6 +123,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    TxHeader.StdId = 0x1; 
+    TxHeader.ExtId = 0x0; 
+    TxHeader.RTR = CAN_RTR_DATA; 
+    TxHeader.IDE = CAN_ID_STD; 
+    TxHeader.DLC = 8; 
+    TxHeader.TransmitGlobalTime = DISABLE;
+
+    HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox);
+
+    HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
@@ -160,7 +174,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV4;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV8;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -179,6 +193,12 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+  
+  while (1)
+  {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    HAL_Delay(250);
+  }
 
   /* USER CODE END Error_Handler_Debug */
 }

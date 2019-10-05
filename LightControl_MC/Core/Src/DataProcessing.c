@@ -40,7 +40,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[4] = 255 - PWM2;
 			dataToSend[5] = 255 - PWM3;
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -60,7 +60,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[2] = 0x00;
 			}
 			
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -80,7 +80,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[2] &= ~0x01;
 			}
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -100,7 +100,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[2] = 0x00;
 			}
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -120,7 +120,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[2] = 0x00;
 			}
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -152,7 +152,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[2] = (uint8_t) (((ADC_Data[1] & 0xFF00) >> 4) | dataToSend[2]);
 			dataToSend[4] = (uint8_t) (ADC_Data[1] & 0x00FF);
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 
@@ -165,7 +165,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[2] = I2C_Buffer[0];
 			dataToSend[3] = I2C_Buffer[1];
 
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+			// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 		break;
 

@@ -40,7 +40,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			dataToSend[2] = 0x00;
 		}
 
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 	}else if(GPIO_Pin == GPIO_PIN_4){
 
@@ -52,7 +52,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			dataToSend[2] = 0x00;
 		}
 
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 	}else if(GPIO_Pin == GPIO_PIN_5){
 
@@ -64,7 +64,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			dataToSend[2] = 0x00;
 		}
 
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
+		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
 
 	}else{
 		__NOP();
@@ -128,11 +128,9 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB1 PB12 PB13 PB14 
-                           PB15 PB3 PB4 PB5 
-                           PB8 PB9 */
+                           PB15 PB3 PB4 PB5 */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
-                          |GPIO_PIN_15|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5 
-                          |GPIO_PIN_8|GPIO_PIN_9;
+                          |GPIO_PIN_15|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 

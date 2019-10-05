@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : gpio.h
-  * Description        : This file contains all the functions prototypes for 
-  *                      the gpio  
+  * File Name          : CAN.h
+  * Description        : This file provides code for the configuration
+  *                      of the CAN instances.
   ******************************************************************************
   * @attention
   *
@@ -16,10 +16,9 @@
   *
   ******************************************************************************
   */
-
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __gpio_H
-#define __gpio_H
+#ifndef __can_H
+#define __can_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -31,20 +30,30 @@
 
 /* USER CODE END Includes */
 
+extern CAN_HandleTypeDef hcan;
+
 /* USER CODE BEGIN Private defines */
+
+CAN_TxHeaderTypeDef TxHeader;
+CAN_RxHeaderTypeDef RxHeader;
+uint8_t RxData[8];
+uint8_t TxData[8];
+uint32_t TxMailbox;
 
 /* USER CODE END Private defines */
 
-void MX_GPIO_Init(void);
+void MX_CAN_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+
+void CAN_Config(void);
 
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ pinoutConfig_H */
+#endif /*__ can_H */
 
 /**
   * @}
