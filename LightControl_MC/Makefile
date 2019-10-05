@@ -7,7 +7,7 @@
 ######################################
 # target
 ######################################
-TARGET = USB_MC
+TARGET = LightControl
 
 
 ######################################
@@ -39,14 +39,7 @@ Core/Src/i2c.c \
 Core/Src/tim.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
-USB_DEVICE/App/usb_device.c \
-USB_DEVICE/App/usbd_desc.c \
-USB_DEVICE/App/usbd_custom_hid_if.c \
-USB_DEVICE/Target/usbd_conf.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c \
@@ -62,11 +55,7 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c \
-Core/Src/system_stm32f1xx.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
-Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Src/usbd_customhid.c  
+Core/Src/system_stm32f1xx.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -115,7 +104,7 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F103xB \
+-DSTM32F103xB
 -DUSE_HAL_DRIVER \
 -DSTM32F103xB
 
@@ -126,14 +115,10 @@ AS_INCLUDES =
 # C includes
 C_INCLUDES =  \
 -ICore/Inc \
--IUSB_DEVICE/App \
--IUSB_DEVICE/Target \
 -IDrivers/STM32F1xx_HAL_Driver/Inc \
 -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
--IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
--IMiddlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
--IDrivers/CMSIS/Include \
+-IDrivers/CMSIS/Include
 -IDrivers/CMSIS/Include
 
 
