@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -43,8 +43,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
-
-win32: LIBS += -L$$PWD/Lib/libusb-1.0.22/MinGW64/dll/ -llibusb-1.0.dll
-
-INCLUDEPATH += $$PWD/Lib/libusb-1.0.22/include/libusb-1.0
-DEPENDPATH += $$PWD/Lib/libusb-1.0.22/include/libusb-1.0

@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "DataProcessing.h"
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim3;
@@ -35,9 +35,9 @@ void MX_TIM3_Init(void)
   TIM_OC_InitTypeDef sConfigOC = {0};
 
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 92;
+  htim3.Init.Prescaler = 141;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 256;
+  htim3.Init.Period = 255;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -216,7 +216,44 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (NewPWM1 != PWM1) {
+		if (NewPWM1 > PWM1) {
+			if (PWM1 < 255)
+				PWM1++;
+			TIM3->CCR1 = PWM1;
+		} else {
+			if (PWM1 > 0)
+				PWM1--;
+			TIM3->CCR1 = PWM1;
+		}
+	}
 
+	if (NewPWM2 != PWM2) {
+		if (NewPWM2 > PWM2) {
+			if (PWM2 < 255)
+				PWM2++;
+			TIM3->CCR2 = PWM2;
+		} else {
+			if (PWM2 > 0)
+				PWM2--;
+			TIM3->CCR2 = PWM2;
+		}
+	}
+
+	if (NewPWM3 != PWM3) {
+		if (NewPWM3 > PWM3) {
+			if (PWM3 < 255)
+				PWM3++;
+			TIM3->CCR3 = PWM3;
+		} else {
+			if (PWM3 > 0)
+				PWM3--;
+			TIM3->CCR3 = PWM3;
+		}
+	}
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

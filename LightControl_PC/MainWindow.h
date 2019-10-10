@@ -9,8 +9,9 @@
 #include <QTime>
 #include <QPixmap>
 #include <QSettings>
+#include <QSerialPortInfo>
+#include <QSerialPort>
 
-#include "libusb.h"
 #include "CustomLabel.h"
 #include "../GENERAL/ID.h"
 
@@ -29,11 +30,11 @@ public:
 
 private slots:
 
-    void TimerInit();
+    void Init();
     void Send();
     void RequestData();
     void RequestUpdateData();
-    void ProcessingReceivedData();
+    void ProcessingReceivedData(uint8_t Data[]);
     void TimeCheck();
     void MotionDetection(bool MotionDetected);
     void MaintainLuxLevel(double value);
@@ -52,24 +53,21 @@ private slots:
     void on_RB_AutomaticControl_clicked(bool checked);
     void on_actionAutomatic_control_setting_triggered();
     void SettingWindowSignal();
+    void on_B_Scan_clicked();
+    void Connected();
 
 private:
 
     Ui::MainWindow *ui;
 
-    libusb_device_handle *handle;
-
-    QTimer *RequestTimer = new QTimer;
     QTimer *MotionTimer = new QTimer;
     QTimer *RequestLuxTimer = new QTimer;
     QTimer *UpdateDataTimer = new QTimer;
     QTimer *OnOffTimer = new QTimer;
 
-    uint8_t BufSend[6] = {0};
-    uint8_t BufReceive[6] = {0};
+    QSerialPort *Serial = new QSerialPort;
 
-    int ActualLength;
-    int Res;
+    uint8_t BufSend[8] = {0};
 
     bool Connect = false;
 

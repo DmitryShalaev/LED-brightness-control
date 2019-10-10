@@ -3,10 +3,11 @@
 
 #include "i2c.h"
 #include "tim.h"
+#include "usart.h"
+#include "adc.h"
 #include "../../../GENERAL/ID.h"
 
-uint8_t dataToReceive[6];
-uint8_t dataToSend[6];
+uint8_t dataToSend[8];
 
 uint32_t Period;
 

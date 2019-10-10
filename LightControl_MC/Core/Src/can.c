@@ -31,7 +31,7 @@ void MX_CAN_Init(void)
 {
 
   hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 6;
+  hcan.Init.Prescaler = 9;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan.Init.TimeSeg1 = CAN_BS1_13TQ;
@@ -145,10 +145,10 @@ void CAN_Config(void)
   } 
 }
 
-void HAL_CAN_RxFifo0MsgPendingCallback (CAN_HandleTypeDef *hcan)
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
   HAL_CAN_GetRxMessage (hcan, CAN_RX_FIFO0, &RxHeader, RxData);
-  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+  ProcessingData(RxData);
 }
 
 /* USER CODE END 1 */

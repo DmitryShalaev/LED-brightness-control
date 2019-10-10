@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : ADC.h
+  * File Name          : USART.h
   * Description        : This file provides code for the configuration
-  *                      of the ADC instances.
+  *                      of the USART instances.
   ******************************************************************************
   * @attention
   *
@@ -17,8 +17,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __adc_H
-#define __adc_H
+#ifndef __usart_H
+#define __usart_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -27,18 +27,18 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "can.h"
 /* USER CODE END Includes */
 
-extern ADC_HandleTypeDef hadc1;
+extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
 
-volatile uint16_t ADC_Data[2];
+uint8_t dataReceive[8];
 
 /* USER CODE END Private defines */
 
-void MX_ADC1_Init(void);
+void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -47,7 +47,7 @@ void MX_ADC1_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ adc_H */
+#endif /*__ usart_H */
 
 /**
   * @}

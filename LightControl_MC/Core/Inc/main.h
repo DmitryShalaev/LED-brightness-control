@@ -38,8 +38,6 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
-volatile uint16_t ADC_Data[2];
-
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

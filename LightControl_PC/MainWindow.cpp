@@ -13,56 +13,49 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->L_DK1->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK1->width(),ui->L_DK1->height(),Qt::KeepAspectRatio));
     ui->L_DK2->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK2->width(),ui->L_DK2->height(),Qt::KeepAspectRatio));
 
-    TimerInit();
-    libusb_init(nullptr);
+    on_B_Scan_clicked();
+
+    Init();
 }
 
 MainWindow::~MainWindow()
 {
-    libusb_exit(nullptr);
+    if (Serial->isOpen())
+        Serial->close();
+
     delete ui;
 }
 
 void MainWindow::Send()
 {
-    BufSend[0] = 0x01;
+    if (Serial->isOpen()){
 
-    Res =  libusb_bulk_transfer(handle, EP_OUT, BufSend, 6, &ActualLength, 0);
-
-    if (Res == 0 && ActualLength == 6){
-
-        ui->statusBar->showMessage("Successful data transfer");
-
-    }else if(Connect){
-
-        on_B_Connect_clicked();
-        QMessageBox::critical(this, tr("Error"), tr("Error data transfer"));
+        QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
+        Serial->write(Data);
+        qApp->processEvents();
     }
-
-    qApp->processEvents();
 }
 
 void MainWindow::RequestData()
 {
-    Res = libusb_bulk_transfer(handle, EP_IN, BufReceive, 6, &ActualLength, 1);
+    if (Serial->isOpen()){
 
-    if (Res == 0 && ActualLength == 6){
+        QByteArray Data = Serial->readAll();
 
-        qDebug() << "Reed successful! " << ActualLength;
+        std::vector<unsigned char> buffer(Data.begin(), Data.end());
+        ProcessingReceivedData(buffer.data());
 
-        ProcessingReceivedData();
+        qApp->processEvents();
     }
-
-    qApp->processEvents();
 }
 
 void MainWindow::RequestUpdateData()
 {
+    memset(BufSend, 0, sizeof(BufSend));
+
     if (RequestUpdateDataFlag){
 
-        memset(BufSend, 0, sizeof(BufSend));
-
-        BufSend[1] = LUX;
+        BufSend[0] = LUX;
 
         Send();
 
@@ -70,9 +63,7 @@ void MainWindow::RequestUpdateData()
 
     }else {
 
-        memset(BufSend, 0, sizeof(BufSend));
-
-        BufSend[1] = ADC;
+        BufSend[0] = ADC;
 
         Send();
 
@@ -80,16 +71,74 @@ void MainWindow::RequestUpdateData()
     }
 }
 
-void MainWindow::TimerInit()
+void MainWindow::Connected()
+{
+    ui->S_PWM1->setEnabled(true);
+    ui->S_PWM2->setEnabled(true);
+    ui->S_PWM3->setEnabled(true);
+    ui->S_ALLPWM->setEnabled(true);
+    ui->RB_Update->setEnabled(true);
+    ui->actionAutomatic_control_setting->setEnabled(true);
+    ui->B_Scan->setEnabled(false);
+    ui->CB_SerialPort->setEnabled(false);
+
+    connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
+    connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
+    connect(ui->L_REL1, SIGNAL(Clicked()), this, SLOT(L_REL1_clicked()));
+    connect(ui->L_REL2, SIGNAL(Clicked()), this, SLOT(L_REL2_clicked()));
+
+    ui->B_Connect->setText("Disconnect");
+
+    ui->statusBar->showMessage("Connect");
+
+    memset(BufSend, 0, sizeof(BufSend));
+    BufSend[0] = INIT;
+    Send();
+
+    QSettings Settings("LightControl", "Main");
+
+    if(Settings.value("Save").toBool()){
+
+        MaintainLuxLevelValue = Settings.value("SB_MaintainLuxLevel").toInt();
+        MaintainLuxLevelStep = static_cast<uint8_t>(Settings.value("SB_MaintainLuxLevelstep").toInt());
+        MotionTime = Settings.value("TE_TurnOffLight").toTime().minute() * 60000 + Settings.value("TE_TurnOffLight").toTime().second() * 1000;
+        RequestLuxTime = Settings.value("TE_SpeedOnOffLight").toTime().minute() * 60000 + Settings.value("TE_SpeedOnOffLight").toTime().second() * 1000;
+        TurnOffLightIsChecked = Settings.value("RB_TurnOffLight").toBool();
+        MaintainLuxLevelIsChecked = Settings.value("RB_MaintainLuxLevel").toBool();
+        OnOffTimeIsChecked = Settings.value("RB_OnOffTime").toBool();
+        OnTime = Settings.value("TE_OnTime").toTime();
+        OffTime = Settings.value("TE_OffTime").toTime();
+
+        memset(BufSend, 0, sizeof(BufSend));
+
+        BufSend[0] = TIME;
+
+        BufSend[1] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
+        BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
+
+        Send();
+
+        ui->RB_AutomaticControl->setEnabled(true);
+
+    }else{
+
+        on_actionAutomatic_control_setting_triggered();
+    }
+
+    Connect = true;
+}
+
+
+void MainWindow::Init()
 {
     MotionTimer->setSingleShot(true);
     connect(MotionTimer, SIGNAL(timeout()), SLOT(TurningOffTheLights()));
-
-    connect(RequestTimer, SIGNAL(timeout()), SLOT(RequestData()));
 
     connect(RequestLuxTimer, SIGNAL(timeout()), SLOT(RequestLuxLevel()));
 
     connect(UpdateDataTimer, SIGNAL(timeout()), SLOT(RequestUpdateData()));
 
     connect(OnOffTimer, SIGNAL(timeout()), SLOT(TimeCheck()));
+
+    connect(Serial, SIGNAL(readyRead()), this, SLOT(RequestData()));
 }

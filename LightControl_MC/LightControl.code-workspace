@@ -8,7 +8,13 @@
         "cortex-debug.armToolchainPath": "C:/STM32/ARMEmbeddedGCC/bin",
         "cortex-debug.openocdPath": "C:/STM32/OpenOCD/bin/openocd.exe",
         "files.associations": {
-            "adc.h": "c"
+            "adc.h": "c",
+            "dataprocessing.h": "c",
+            "usart.h": "c",
+            "id.h": "c",
+            "can.h": "c",
+            "gpio.h": "c",
+            "main.h": "c"
         }
     }
 }

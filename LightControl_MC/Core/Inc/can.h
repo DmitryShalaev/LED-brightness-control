@@ -27,7 +27,7 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "DataProcessing.h"
 /* USER CODE END Includes */
 
 extern CAN_HandleTypeDef hcan;

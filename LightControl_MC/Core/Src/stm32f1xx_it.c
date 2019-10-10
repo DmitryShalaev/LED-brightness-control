@@ -59,6 +59,7 @@
 extern DMA_HandleTypeDef hdma_adc1;
 extern CAN_HandleTypeDef hcan;
 extern TIM_HandleTypeDef htim4;
+extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -276,42 +277,6 @@ void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
 
-	if (NewPWM1 != PWM1) {
-		if (NewPWM1 > PWM1) {
-			if (PWM1 < 255)
-				PWM1++;
-			TIM3->CCR1 = PWM1;
-		} else {
-			if (PWM1 > 0)
-				PWM1--;
-			TIM3->CCR1 = PWM1;
-		}
-	}
-
-	if (NewPWM2 != PWM2) {
-		if (NewPWM2 > PWM2) {
-			if (PWM2 < 255)
-				PWM2++;
-			TIM3->CCR2 = PWM2;
-		} else {
-			if (PWM2 > 0)
-				PWM2--;
-			TIM3->CCR2 = PWM2;
-		}
-	}
-
-	if (NewPWM3 != PWM3) {
-		if (NewPWM3 > PWM3) {
-			if (PWM3 < 255)
-				PWM3++;
-			TIM3->CCR3 = PWM3;
-		} else {
-			if (PWM3 > 0)
-				PWM3--;
-			TIM3->CCR3 = PWM3;
-		}
-	}
-
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
@@ -319,7 +284,20 @@ void TIM4_IRQHandler(void)
   /* USER CODE END TIM4_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
 
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
