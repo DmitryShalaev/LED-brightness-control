@@ -56,6 +56,8 @@ private slots:
     void on_B_Scan_clicked();
     void Connected();
 
+    void on_B_SendError_clicked(); //TEST
+
 private:
 
     Ui::MainWindow *ui;

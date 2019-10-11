@@ -154,8 +154,6 @@ void ProcessingData(uint8_t dataToReceive[]) {
 
 		break;
 
-		
-
 		case LUX:
 
 			dataToSend[0] = LUX;

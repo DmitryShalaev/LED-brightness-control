@@ -82,6 +82,8 @@ void MainWindow::Connected()
     ui->B_Scan->setEnabled(false);
     ui->CB_SerialPort->setEnabled(false);
 
+    ui->B_SendError->setEnabled(true); //TEST
+
     connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
     connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
     connect(ui->L_REL1, SIGNAL(Clicked()), this, SLOT(L_REL1_clicked()));

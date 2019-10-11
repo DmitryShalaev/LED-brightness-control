@@ -28,49 +28,6 @@
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	if(GPIO_Pin == GPIO_PIN_2){
-
-		dataToSend[1] = MOTION;
-
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2)) {
-			dataToSend[2] = 0x01;
-		} else {
-			dataToSend[2] = 0x00;
-		}
-
-		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
-
-	}else if(GPIO_Pin == GPIO_PIN_4){
-
-		dataToSend[1] = DK_1;
-
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4)) {
-			dataToSend[2] = 0x01;
-		} else {
-			dataToSend[2] = 0x00;
-		}
-
-		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
-
-	}else if(GPIO_Pin == GPIO_PIN_5){
-
-		dataToSend[1] = DK_2;
-
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
-			dataToSend[2] = 0x01;
-		} else {
-			dataToSend[2] = 0x00;
-		}
-
-		// USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, dataToSend, 6);
-
-	}else{
-		__NOP();
-	}
-}
-
 /* USER CODE END 1 */
 
 /** Configure pins as 
@@ -114,8 +71,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA2 PA4 PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5;
+  /*Configure GPIO pin : PA2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -125,6 +82,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA4 PA5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB1 PB12 PB13 PB14 
@@ -150,15 +113,84 @@ void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
 }
 
 /* USER CODE BEGIN 2 */
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  memset(dataToSend, 0, sizeof(dataToSend));
+
+	if(GPIO_Pin == GPIO_PIN_2){
+
+		dataToSend[0] = MOTION;
+
+		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2)) {
+			dataToSend[1] = ON;
+		} else {
+			dataToSend[1] = OFF;
+		}
+
+    HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+  }
+}
+
+void Button(void)
+{
+  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4)) {
+    if (DK1.State == false){
+     if (DK1.Count < 512){
+        DK1.Count++;
+      } else {
+        DK1.State = true;
+        DK1.Count = 0;
+
+        dataToSend[0] = DK_1;
+        dataToSend[1] = ON;
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+      }
+    }
+  } else {
+    if (DK1.State == true){
+      if(DK1.Count > 0){
+        DK1.Count--;
+      } else {
+        DK1.State = false;
+
+        dataToSend[0] = DK_1;
+        dataToSend[1] = OFF;
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+      }
+    }
+  }
+
+  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5)) {
+    if (DK2.State == false){
+     if (DK2.Count < 512){
+        DK2.Count++;
+      } else {
+        DK2.State = true;
+        DK2.Count = 0;
+
+        dataToSend[0] = DK_2;
+        dataToSend[1] = ON;
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+      }
+    }
+  } else {
+    if (DK2.State == true){
+      if(DK2.Count > 0){
+        DK2.Count--;
+      } else {
+        DK2.State = false;
+
+        dataToSend[0] = DK_2;
+        dataToSend[1] = OFF;
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+      }
+    }
+  }
+}
 
 /* USER CODE END 2 */
 

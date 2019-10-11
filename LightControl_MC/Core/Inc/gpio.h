@@ -35,11 +35,19 @@
 
 /* USER CODE BEGIN Private defines */
 
+struct buttonState
+{
+  bool State; 
+  uint16_t Count; 
+}DK1, DK2 ;
+
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+
+void Button(void);
 
 /* USER CODE END Prototypes */
 
