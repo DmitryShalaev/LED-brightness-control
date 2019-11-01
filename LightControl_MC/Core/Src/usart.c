@@ -22,6 +22,9 @@
 
 /* USER CODE BEGIN 0 */
 
+#include "can.h"
+#include "DataProcessing.h"
+
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -109,23 +112,17 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-
-}
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  ProcessingData(dataReceive);
+  Master = true;
 
-  TxHeader.StdId = 0x1; 
-  TxHeader.ExtId = 0x0; 
-  TxHeader.RTR = CAN_RTR_DATA; 
-  TxHeader.IDE = CAN_ID_STD; 
-  TxHeader.DLC = 8; 
-  TxHeader.TransmitGlobalTime = DISABLE;
+  uint16_t ReceiveID = (dataReceive[6] << 8) | dataReceive[7];
 
-  HAL_CAN_AddTxMessage(&hcan, &TxHeader, dataReceive, &TxMailbox);
+  if ((ReceiveID != ID) || (ReceiveID == 0x000))
+    Send_CAN(ReceiveID, dataReceive);
+
+  if((ReceiveID == ID) || (ReceiveID == 0x000))
+    ProcessingData(dataReceive);
 
   HAL_UART_Receive_IT(&huart1, (uint8_t*)dataReceive, 8);
 }

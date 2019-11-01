@@ -13,8 +13,6 @@ void MainWindow::RequestLuxLevel()
 
 void MainWindow::MaintainLuxLevel(double value)
 {
-    qDebug() << MeanPWM;
-
     MaintainLux = false;
 
     if(abs(MaintainLuxLevelValue - value) > 50){

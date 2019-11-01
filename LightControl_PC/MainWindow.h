@@ -56,8 +56,6 @@ private slots:
     void on_B_Scan_clicked();
     void Connected();
 
-    void on_B_SendError_clicked(); //TEST
-
 private:
 
     Ui::MainWindow *ui;
@@ -68,6 +66,8 @@ private:
     QTimer *OnOffTimer = new QTimer;
 
     QSerialPort *Serial = new QSerialPort;
+
+    uint16_t MasterID = 0x0;
 
     uint8_t BufSend[8] = {0};
 

@@ -27,7 +27,7 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include "DataProcessing.h"
+
 /* USER CODE END Includes */
 
 extern CAN_HandleTypeDef hcan;
@@ -47,6 +47,7 @@ void MX_CAN_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 void CAN_Config(void);
+void Send_CAN(uint16_t GetID, uint8_t Data[]);
 
 /* USER CODE END Prototypes */
 

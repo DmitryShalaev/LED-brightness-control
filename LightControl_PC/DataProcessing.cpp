@@ -2,6 +2,8 @@
 
 void MainWindow::ProcessingReceivedData(uint8_t Data[])
 {
+    ui->statusBar->showMessage("Taken from: " + QString().setNum((Data[6] << 8) | Data[7]));
+
     switch (Data[0]) {
 
     case INIT:
@@ -150,8 +152,8 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
     case CONNECTED:
 
-        if (Data[1] == CONNECTED)
-            Connected();
+         MasterID = static_cast<uint16_t>((Data[1] << 8) | Data[2]);
+         Connected();
 
         break;
 

@@ -28,7 +28,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::Send()
 {
+    QSerialPortInfo *PortCheck = new QSerialPortInfo(ui->CB_SerialPort->currentText());
+    if(PortCheck->isNull())
+        on_B_Connect_clicked();
+
     if (Serial->isOpen()){
+
+        BufSend[6] = static_cast<uint8_t>((ui->SB_ID->value() & 0xFF00) >> 8);
+        BufSend[7] = static_cast<uint8_t>(ui->SB_ID->value() & 0x00FF);
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
         Serial->write(Data);
@@ -80,9 +87,8 @@ void MainWindow::Connected()
     ui->RB_Update->setEnabled(true);
     ui->actionAutomatic_control_setting->setEnabled(true);
     ui->B_Scan->setEnabled(false);
+    ui-> SB_ID->setEnabled(true);
     ui->CB_SerialPort->setEnabled(false);
-
-    ui->B_SendError->setEnabled(true); //TEST
 
     connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
     connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
@@ -95,6 +101,9 @@ void MainWindow::Connected()
 
     memset(BufSend, 0, sizeof(BufSend));
     BufSend[0] = INIT;
+    BufSend[1] = (MasterID & 0xF00) >> 8;
+    BufSend[2] = MasterID & 0x0FF;
+
     Send();
 
     QSettings Settings("LightControl", "Main");
@@ -129,7 +138,6 @@ void MainWindow::Connected()
 
     Connect = true;
 }
-
 
 void MainWindow::Init()
 {

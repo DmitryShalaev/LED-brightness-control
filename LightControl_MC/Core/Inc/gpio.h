@@ -35,7 +35,7 @@
 
 /* USER CODE BEGIN Private defines */
 
-struct buttonState
+struct
 {
   bool State; 
   uint16_t Count; 

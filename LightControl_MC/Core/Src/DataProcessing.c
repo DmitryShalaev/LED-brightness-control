@@ -1,10 +1,14 @@
 #include "DataProcessing.h"
+#include "can.h"
 
-void ProcessingData(uint8_t dataToReceive[]) {
-
+void ProcessingData(uint8_t Data[]) 
+{
 	memset(dataToSend, 0, sizeof(dataToSend));
 
-	switch (dataToReceive[0]) {
+	dataToSend[6] = (ID & 0xF00) >> 8;
+   dataToSend[7] = ID & 0x0FF;
+
+	switch (Data[0]) {
 
 		case INIT:
 
@@ -38,13 +42,16 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[3] = 255 - PWM2;
 			dataToSend[4] = 255 - PWM3;
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			if (!Master)
+				MasterID = (Data[1] << 8) | Data[2];
+
+			SendData(dataToSend);
 
 		break;
 
 		case LED_1:
 
-			if (dataToReceive[1] == 0x01) {
+			if (Data[1] == 0x01) {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
 			} else {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
@@ -58,13 +65,13 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[1] = OFF;
 			}
 			
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
 		case LED_2:
 
-			if (dataToReceive[1] == 0x01) {
+			if (Data[1] == 0x01) {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, GPIO_PIN_SET);
 			} else {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, GPIO_PIN_RESET);
@@ -78,13 +85,13 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[1] = OFF;
 			}
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
 		case REL_1:
 
-			if (dataToReceive[1] == 0x01) {
+			if (Data[1] == 0x01) {
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
 			} else {
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
@@ -98,13 +105,13 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[1] = OFF;
 			}
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
 		case REL_2:
 
-			if (dataToReceive[1] == 0x01) {
+			if (Data[1] == 0x01) {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
 			} else {
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
@@ -118,25 +125,25 @@ void ProcessingData(uint8_t dataToReceive[]) {
 				dataToSend[1] = OFF;
 			}
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
 		case PWM_1:
 
-			NewPWM1 = 255 - dataToReceive[1];
+			NewPWM1 = 255 - Data[1];
 
 		break;
 
 		case PWM_2:
 
-			NewPWM2 = 255 - dataToReceive[1];
+			NewPWM2 = 255 - Data[1];
 
 		break;
 
 		case PWM_3:
 
-			NewPWM3 = 255 - dataToReceive[1];
+			NewPWM3 = 255 - Data[1];
 
 		break;
 
@@ -150,7 +157,7 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[1] = dataToSend[1] | ((ADC_Data[1] & 0xFF00) >> 8);
 			dataToSend[3] = ADC_Data[1] & 0x00FF;
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
@@ -163,13 +170,13 @@ void ProcessingData(uint8_t dataToReceive[]) {
 			dataToSend[1] = I2C_Buffer[0];
 			dataToSend[2] = I2C_Buffer[1];
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+			SendData(dataToSend);
 
 		break;
 
 		case TIME:
 
-			Period = ((dataToReceive[1] * 60 + dataToReceive[2]) / 0.001 / 255) - 1;
+			Period = ((Data[1] * 60 + Data[2]) / 0.001 / 255) - 1;
 			TIM4->CNT = 0;
 			TIM4->ARR = Period;
 
@@ -177,26 +184,38 @@ void ProcessingData(uint8_t dataToReceive[]) {
 
 		case ALLPWM:
 
-			NewPWM1 = 255 - dataToReceive[1];
-			NewPWM2 = 255 - dataToReceive[1];
-			NewPWM3 = 255 - dataToReceive[1];
+			NewPWM1 = 255 - Data[1];
+			NewPWM2 = 255 - Data[1];
+			NewPWM3 = 255 - Data[1];
 
 		break;
 		
 		case CONNECTED:
 
-			dataToSend[0] = dataToSend[1] = CONNECTED;
+			if (Master){
+				dataToSend[0] = CONNECTED;
+				dataToSend[1] = (ID & 0xF00) >> 8;
+				dataToSend[2] = ID & 0x0FF;
 
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+				SendData(dataToSend);
+			}
 
 		break;
 
 		default:
 
 			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-
 	}
 
+}
+
+void SendData(uint8_t Data[]) 
+{
+	if (Master){
+		HAL_UART_Transmit_IT(&huart1, (uint8_t*)Data, 8);
+	} else {
+		Send_CAN(MasterID, Data);
+	}
 }
 
 

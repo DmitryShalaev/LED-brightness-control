@@ -27,7 +27,7 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include "can.h"
+
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;

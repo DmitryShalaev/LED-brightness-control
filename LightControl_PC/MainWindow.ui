@@ -736,20 +736,20 @@
      <string>Scan</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="B_SendError">
+   <widget class="QSpinBox" name="SB_ID">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>490</x>
       <y>80</y>
-      <width>80</width>
-      <height>21</height>
+      <width>61</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>SEND ERROR</string>
+    <property name="maximum">
+     <number>2047</number>
     </property>
    </widget>
   </widget>

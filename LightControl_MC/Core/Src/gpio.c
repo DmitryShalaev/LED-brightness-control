@@ -131,7 +131,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			dataToSend[1] = OFF;
 		}
 
-    HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+    SendData(dataToSend);
   }
 }
 
@@ -147,7 +147,7 @@ void Button(void)
 
         dataToSend[0] = DK_1;
         dataToSend[1] = ON;
-        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+        SendData(dataToSend);
       }
     }
   } else {
@@ -159,7 +159,7 @@ void Button(void)
 
         dataToSend[0] = DK_1;
         dataToSend[1] = OFF;
-        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+        SendData(dataToSend);
       }
     }
   }
@@ -174,7 +174,7 @@ void Button(void)
 
         dataToSend[0] = DK_2;
         dataToSend[1] = ON;
-        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+        SendData(dataToSend);
       }
     }
   } else {
@@ -186,7 +186,7 @@ void Button(void)
 
         dataToSend[0] = DK_2;
         dataToSend[1] = OFF;
-        HAL_UART_Transmit_IT(&huart1, (uint8_t*)dataToSend, 8);
+        SendData(dataToSend);
       }
     }
   }

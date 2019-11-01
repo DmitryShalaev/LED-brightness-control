@@ -22,6 +22,8 @@
 
 /* USER CODE BEGIN 0 */
 
+#include "DataProcessing.h"
+
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan;
@@ -119,15 +121,15 @@ void CAN_Config(void)
   CAN_FilterTypeDef sFilterConfig;
 
   sFilterConfig.FilterBank = 0;
-  sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-  sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-  sFilterConfig.FilterIdHigh = 0x0; 
-  sFilterConfig.FilterIdLow = 0x0;
-  sFilterConfig.FilterMaskIdHigh = 0x0; 
-  sFilterConfig.FilterMaskIdLow = 0x0;
+  sFilterConfig.FilterMode = CAN_FILTERMODE_IDLIST;
+  sFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;
+  sFilterConfig.FilterIdHigh = ID<<5; 
+  sFilterConfig.FilterIdLow = 0x000<<5;
+  sFilterConfig.FilterMaskIdHigh = 0x000<<5; 
+  sFilterConfig.FilterMaskIdLow = 0x000<<5;
   sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
   sFilterConfig.FilterActivation = ENABLE;
-  sFilterConfig.SlaveStartFilterBank = 14;
+  sFilterConfig.SlaveStartFilterBank = 0;
 
   if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK)
   {
@@ -147,8 +149,24 @@ void CAN_Config(void)
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-  HAL_CAN_GetRxMessage (hcan, CAN_RX_FIFO0, &RxHeader, RxData);
-  ProcessingData(RxData);
+  HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
+
+  if (Master){
+    HAL_UART_Transmit_IT(&huart1, (uint8_t*)RxData, 8);
+  } else {
+    ProcessingData(RxData);
+  }
+}
+
+void Send_CAN(uint16_t GetID, uint8_t Data[]) 
+{
+  TxHeader.StdId = GetID;
+  TxHeader.RTR = CAN_RTR_DATA; 
+  TxHeader.IDE = CAN_ID_STD; 
+  TxHeader.DLC = 8; 
+  TxHeader.TransmitGlobalTime = DISABLE;
+
+  HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox);
 }
 
 /* USER CODE END 1 */

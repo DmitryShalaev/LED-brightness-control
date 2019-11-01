@@ -41,8 +41,8 @@ void MainWindow::on_B_Connect_clicked()
         ui->actionAutomatic_control_setting->setEnabled(false);
         ui->B_Scan->setEnabled(true);
         ui->CB_SerialPort->setEnabled(true);
-
-        ui->B_SendError->setEnabled(false); //TEST
+        ui-> SB_ID->setEnabled(false);
+        ui-> SB_ID->setValue(0);
 
         disconnect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
         disconnect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
@@ -264,15 +264,7 @@ void MainWindow::on_B_Scan_clicked()
 {
     ui->CB_SerialPort->clear();
     const QList<QSerialPortInfo> infos = QSerialPortInfo::availablePorts();
+
     for (const QSerialPortInfo &info : infos)
         ui->CB_SerialPort->addItem(info.portName());
-}
-
-void MainWindow::on_B_SendError_clicked()
-{
-    memset(BufSend, 0, sizeof(BufSend));
-
-    BufSend[0] = 0xF1;
-
-    Send();
 }
