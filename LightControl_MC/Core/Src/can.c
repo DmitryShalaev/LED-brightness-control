@@ -149,10 +149,12 @@ void CAN_Config(void)
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-  HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
+  if(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
+    Error_Handler();
+  }
 
   if (Master){
-    HAL_UART_Transmit_IT(&huart1, (uint8_t*)RxData, 8);
+    HAL_UART_Transmit_IT(&huart1, RxData, 8);
   } else {
     ProcessingData(RxData);
   }
@@ -166,7 +168,9 @@ void Send_CAN(uint16_t GetID, uint8_t Data[])
   TxHeader.DLC = 8; 
   TxHeader.TransmitGlobalTime = DISABLE;
 
-  HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox);
+  if(HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox) != HAL_OK){
+    Error_Handler();
+  }
 }
 
 /* USER CODE END 1 */

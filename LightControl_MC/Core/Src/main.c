@@ -72,7 +72,8 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  Slave = false;
+  Master = false;
   /* USER CODE END 1 */
   
 
@@ -82,7 +83,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -117,7 +117,7 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc1);
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Data, 2);
 
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)dataReceive, 8);
+  HAL_UART_Receive_IT(&huart1, dataReceive, 8);
 
   /* USER CODE END 2 */
 
@@ -194,7 +194,7 @@ void Error_Handler(void)
   while (1)
   {
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-    HAL_Delay(250);
+    HAL_Delay(500);
   }
 
   /* USER CODE END Error_Handler_Debug */

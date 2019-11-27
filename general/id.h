@@ -17,7 +17,7 @@
 #define ALLPWM      0x0D
 #define MOTION      0x0E
 
-#define CONNECTED   0xFF
+#define CONNECTED   0x1F
 
 
 

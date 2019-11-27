@@ -34,8 +34,8 @@ void MainWindow::Send()
 
     if (Serial->isOpen()){
 
-        BufSend[6] = static_cast<uint8_t>((ui->SB_ID->value() & 0xFF00) >> 8);
-        BufSend[7] = static_cast<uint8_t>(ui->SB_ID->value() & 0x00FF);
+        BufSend[0] = static_cast<uint8_t>(ui->SB_ID->value() & 0x00FF);
+        BufSend[1] |= static_cast<uint8_t>((ui->SB_ID->value() & 0x0F00) >> 3);
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
         Serial->write(Data);
@@ -62,7 +62,7 @@ void MainWindow::RequestUpdateData()
 
     if (RequestUpdateDataFlag){
 
-        BufSend[0] = LUX;
+        BufSend[1] = LUX;
 
         Send();
 
@@ -70,7 +70,7 @@ void MainWindow::RequestUpdateData()
 
     }else {
 
-        BufSend[0] = ADC;
+        BufSend[1] = ADC;
 
         Send();
 
@@ -100,9 +100,10 @@ void MainWindow::Connected()
     ui->statusBar->showMessage("Connect");
 
     memset(BufSend, 0, sizeof(BufSend));
-    BufSend[0] = INIT;
-    BufSend[1] = (MasterID & 0xF00) >> 8;
+
+    BufSend[1] = INIT;
     BufSend[2] = MasterID & 0x0FF;
+    BufSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
 
     Send();
 
@@ -122,10 +123,10 @@ void MainWindow::Connected()
 
         memset(BufSend, 0, sizeof(BufSend));
 
-        BufSend[0] = TIME;
+        BufSend[1] = TIME;
 
-        BufSend[1] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
-        BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
+        BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
+        BufSend[3] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
 
         Send();
 

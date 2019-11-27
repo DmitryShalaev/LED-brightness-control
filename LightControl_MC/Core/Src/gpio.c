@@ -123,12 +123,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 	if(GPIO_Pin == GPIO_PIN_2){
 
-		dataToSend[0] = MOTION;
+		dataToSend[1] = MOTION;
 
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2)) {
-			dataToSend[1] = ON;
+			dataToSend[2] = ON;
 		} else {
-			dataToSend[1] = OFF;
+			dataToSend[2] = OFF;
 		}
 
     SendData(dataToSend);
@@ -145,8 +145,8 @@ void Button(void)
         DK1.State = true;
         DK1.Count = 0;
 
-        dataToSend[0] = DK_1;
-        dataToSend[1] = ON;
+        dataToSend[1] = DK_1;
+        dataToSend[2] = ON;
         SendData(dataToSend);
       }
     }
@@ -157,8 +157,8 @@ void Button(void)
       } else {
         DK1.State = false;
 
-        dataToSend[0] = DK_1;
-        dataToSend[1] = OFF;
+        dataToSend[1] = DK_1;
+        dataToSend[2] = OFF;
         SendData(dataToSend);
       }
     }
@@ -172,8 +172,8 @@ void Button(void)
         DK2.State = true;
         DK2.Count = 0;
 
-        dataToSend[0] = DK_2;
-        dataToSend[1] = ON;
+        dataToSend[1] = DK_2;
+        dataToSend[2] = ON;
         SendData(dataToSend);
       }
     }
@@ -184,8 +184,8 @@ void Button(void)
       } else {
         DK2.State = false;
 
-        dataToSend[0] = DK_2;
-        dataToSend[1] = OFF;
+        dataToSend[1] = DK_2;
+        dataToSend[2] = OFF;
         SendData(dataToSend);
       }
     }
