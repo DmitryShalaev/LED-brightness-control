@@ -2,8 +2,6 @@
 
 void MainWindow::ProcessingReceivedData(uint8_t Data[])
 {
-    ui->statusBar->showMessage("Taken from: " + QString().setNum(((Data[1] & 0xE0) << 3) | Data[0]));
-
     switch (Data[1] & 0x1F) {
 
     case INIT:

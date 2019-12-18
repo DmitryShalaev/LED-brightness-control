@@ -16,13 +16,15 @@ void MainWindow::on_B_Connect_clicked()
 
         if (Serial->open(QIODevice::ReadWrite)) {
 
+            ui->TE_Log->clear();
+
             memset(BufSend, 0, sizeof(BufSend));
             BufSend[1] = CONNECTED;
             Send();
 
         }else{
 
-             ui->statusBar->showMessage("Connect error");
+            ui->TE_Log->append("Connect error");
         }
 
     }else{
@@ -51,7 +53,7 @@ void MainWindow::on_B_Connect_clicked()
 
         ui->B_Connect->setText("Connect");
 
-        ui->statusBar->showMessage("Disconnect");
+        ui->TE_Log->append("Disconnect");
 
         MotionTimer->stop();
         RequestLuxTimer->stop();
@@ -122,79 +124,52 @@ void MainWindow::L_REL2_clicked()
     Send();
 }
 
-void MainWindow::on_S_PWM1_valueChanged(int value)
+void MainWindow::on_S_PWM1_sliderReleased()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    PWM1 = static_cast<uint8_t> (value);
+    PWM1 = static_cast<uint8_t> (ui->S_PWM1->value());
 
-    if(ALLPWMChanged){
+    BufSend[1] = PWM_1;
+    BufSend[2] = PWM1;
 
-        ALLPWMChanged = false;
-
-    }else {
-
-        BufSend[1] = PWM_1;
-        BufSend[2] = PWM1;
-
-        Send();
-    }
+    Send();
 }
 
-void MainWindow::on_S_PWM2_valueChanged(int value)
+void MainWindow::on_S_PWM2_sliderReleased()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    PWM2 = static_cast<uint8_t> (value);
+    PWM2 = static_cast<uint8_t> (ui->S_PWM2->value());
 
-    if(ALLPWMChanged){
+    BufSend[1] = PWM_2;
+    BufSend[2] = PWM2;
 
-        ALLPWMChanged = false;
-
-    }else {
-
-        BufSend[1] = PWM_2;
-        BufSend[2] = PWM2;
-
-        Send();
-    }
+    Send();
 }
 
-void MainWindow::on_S_PWM3_valueChanged(int value)
+void MainWindow::on_S_PWM3_sliderReleased()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    PWM3 = static_cast<uint8_t> (value);
+    PWM3 = static_cast<uint8_t> (ui->S_PWM3->value());
 
-    if(ALLPWMChanged){
+    BufSend[1] = PWM_3;
+    BufSend[2] = PWM3;
 
-        ALLPWMChanged = false;
-
-    }else {
-
-        BufSend[1] = PWM_3;
-        BufSend[2] = PWM3;
-
-        Send();
-    }
-
+    Send();
 }
 
-void MainWindow::on_S_ALLPWM_valueChanged(int value)
+void MainWindow::on_S_ALLPWM_sliderReleased()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    ALLPWMChanged = true;
-    ui->S_PWM1->setValue(value);
-
-    ALLPWMChanged = true;
-    ui->S_PWM2->setValue(value);
-
-    ALLPWMChanged = true;
-    ui->S_PWM3->setValue(value);
+    ui->S_PWM1->setValue(ui->S_ALLPWM->value());
+    ui->S_PWM2->setValue(ui->S_ALLPWM->value());
+    ui->S_PWM3->setValue(ui->S_ALLPWM->value());
 
     BufSend[1] = ALLPWM;
-    BufSend[2] = static_cast<uint8_t> (value);
+    BufSend[2] = static_cast<uint8_t> (ui->S_ALLPWM->value());
 
     Send();
 }

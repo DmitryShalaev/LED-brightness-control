@@ -131,27 +131,16 @@ void CAN_Config(void)
   sFilterConfig.FilterActivation = ENABLE;
   sFilterConfig.SlaveStartFilterBank = 0;
 
-  if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  if (HAL_CAN_Start(&hcan) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
-  {
-    Error_Handler();
-  } 
+  HAL_CAN_ConfigFilter(&hcan, &sFilterConfig);
+    
+  HAL_CAN_Start(&hcan);
+    
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-  if(HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK) {
-    Error_Handler();
-  }
+  HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 
   if (Master){
     HAL_UART_Transmit_IT(&huart1, RxData, 8);
@@ -168,11 +157,8 @@ void Send_CAN(uint16_t GetID, uint8_t Data[])
   TxHeader.DLC = 8; 
   TxHeader.TransmitGlobalTime = DISABLE;
 
-  if(HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox) != HAL_OK){
-    Error_Handler();
-  }
+  HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox);
 }
-
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

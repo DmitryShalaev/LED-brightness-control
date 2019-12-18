@@ -38,7 +38,15 @@ void MainWindow::Send()
         BufSend[1] |= static_cast<uint8_t>((ui->SB_ID->value() & 0x0F00) >> 3);
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
+
+        QString str;
+        for (int i = 0; i < 8; i++) {
+            str += static_cast<QString>(BufSend[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
+        }
+        ui->TE_Log->append("Sent to : " + QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) + "  Message: " + str);
+
         Serial->write(Data);
+
         qApp->processEvents();
     }
 }
@@ -50,6 +58,13 @@ void MainWindow::RequestData()
         QByteArray Data = Serial->readAll();
 
         std::vector<unsigned char> buffer(Data.begin(), Data.end());
+
+        QString str;
+        for (int i = 0; i < 8; i++) {
+            str += static_cast<QString>(buffer.data()[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
+        }
+        ui->TE_Log->append("Taken from: " + QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) + "  Message: " + str);
+
         ProcessingReceivedData(buffer.data());
 
         qApp->processEvents();
@@ -97,7 +112,7 @@ void MainWindow::Connected()
 
     ui->B_Connect->setText("Disconnect");
 
-    ui->statusBar->showMessage("Connect");
+    ui->TE_Log->append("Connect");
 
     memset(BufSend, 0, sizeof(BufSend));
 

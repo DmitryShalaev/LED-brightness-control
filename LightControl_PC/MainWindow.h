@@ -45,11 +45,11 @@ private slots:
     void L_LED2_clicked();
     void L_REL1_clicked();
     void L_REL2_clicked();
-    void on_S_PWM1_valueChanged(int value);
-    void on_S_PWM2_valueChanged(int value);
-    void on_S_PWM3_valueChanged(int value);
+    void on_S_PWM1_sliderReleased();
+    void on_S_PWM2_sliderReleased();
+    void on_S_PWM3_sliderReleased();
     void on_RB_Update_clicked(bool checked);
-    void on_S_ALLPWM_valueChanged(int value);
+    void on_S_ALLPWM_sliderReleased();
     void on_RB_AutomaticControl_clicked(bool checked);
     void on_actionAutomatic_control_setting_triggered();
     void SettingWindowSignal();
@@ -83,8 +83,6 @@ private:
     uint8_t PWM1 = 0;
     uint8_t PWM2 = 0;
     uint8_t PWM3 = 0;
-
-    bool ALLPWMChanged = false;
 
     uint8_t MeanPWM = 0;
 

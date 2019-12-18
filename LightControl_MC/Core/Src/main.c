@@ -126,7 +126,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    
+
     /* USER CODE BEGIN 3 */
 
     Button();
@@ -191,12 +191,6 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   
-  while (1)
-  {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-    HAL_Delay(500);
-  }
-
   /* USER CODE END Error_Handler_Debug */
 }
 
