@@ -1,3 +1,2 @@
-LightControl_MC/build/*
-Test_CAN/build/*
-LightControl_PC-Build/*
+Control_MC/build/*
+Control_PC-Build/*
