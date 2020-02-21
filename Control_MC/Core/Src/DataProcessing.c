@@ -175,8 +175,8 @@ void ProcessingData(uint8_t Data[])
 
 		case TIME:
 
-			TIM4->CNT = 0;
-			TIM4->ARR = (uint32_t)((Data[2] * 60 + Data[3]) / 0.001 / 255) - 1;
+			PWMSpeed = Data[2] * 60 + Data[3];
+			PWMStep = 0;
 
 		break;
 
@@ -196,8 +196,7 @@ void ProcessingData(uint8_t Data[])
 			} else {
 				Slave = true;
 			}
-			
-
+		
 		break;
 
 		default:

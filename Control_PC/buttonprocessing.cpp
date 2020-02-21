@@ -16,15 +16,14 @@ void MainWindow::on_B_Connect_clicked()
 
         if (Serial->open(QIODevice::ReadWrite)) {
 
-            ui->TE_Log->clear();
-
             memset(BufSend, 0, sizeof(BufSend));
+
             BufSend[1] = CONNECTED;
             Send();
 
         }else{
 
-            ui->TE_Log->append("Connect error");
+            qDebug() << "Connect error";
         }
 
     }else{
@@ -32,26 +31,25 @@ void MainWindow::on_B_Connect_clicked()
         if (Serial->isOpen())
             Serial->close();
 
+        ui->SB_ID->setValue(0);
+        ui->SB_ID->setEnabled(false);
+        ui->B_Scan->setEnabled(true);
+        ui->L_LED1->setEnabled(false);
+        ui->L_LED2->setEnabled(false);
+        ui->L_REL1->setEnabled(false);
+        ui->L_REL2->setEnabled(false);
         ui->S_PWM1->setEnabled(false);
         ui->S_PWM2->setEnabled(false);
         ui->S_PWM3->setEnabled(false);
         ui->S_ALLPWM->setEnabled(false);
         ui->RB_Update->setEnabled(false);
         ui->RB_Update->setChecked(false);
-        ui->actionSetting->setEnabled(false);
-        ui->B_Scan->setEnabled(true);
+        ui->TE_PWMSpeed->setEnabled(false);
         ui->CB_SerialPort->setEnabled(true);
-        ui-> SB_ID->setEnabled(false);
-        ui-> SB_ID->setValue(0);
-
-        disconnect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
-        disconnect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
-        disconnect(ui->L_REL1, SIGNAL(Clicked()), this, SLOT(L_REL1_clicked()));
-        disconnect(ui->L_REL2, SIGNAL(Clicked()), this, SLOT(L_REL2_clicked()));
 
         ui->B_Connect->setText("Connect");
 
-        ui->TE_Log->append("Disconnect");
+        qDebug() << "Disconnect";
 
         UpdateDataTimer->stop();
 
@@ -169,6 +167,21 @@ void MainWindow::on_S_ALLPWM_sliderReleased()
     Send();
 }
 
+void MainWindow::on_TE_PWMSpeed_userTimeChanged(const QTime &time)
+{
+    QSettings Settings("Control", "Main");
+
+    Settings.setValue("TE_PWMSpeed", time);
+
+    memset(BufSend, 0, sizeof(BufSend));
+
+    BufSend[1] = TIME;
+    BufSend[2] = static_cast<uint8_t> (time.minute());
+    BufSend[3] = static_cast<uint8_t> (time.second());
+
+    Send();
+}
+
 void MainWindow::on_RB_Update_clicked(bool checked)
 {
     if(checked){
@@ -176,14 +189,15 @@ void MainWindow::on_RB_Update_clicked(bool checked)
     }else {
         UpdateDataTimer->stop();
     }
-
 }
 
 void MainWindow::on_B_Scan_clicked()
-{
+{              
     ui->CB_SerialPort->clear();
     const QList<QSerialPortInfo> infos = QSerialPortInfo::availablePorts();
 
-    for (const QSerialPortInfo &info : infos)
+    for (const QSerialPortInfo &info : infos) {
         ui->CB_SerialPort->addItem(info.portName());
+        qDebug() << info.portName();
+    }
 }

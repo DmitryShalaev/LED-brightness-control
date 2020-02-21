@@ -16,22 +16,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Buttonprocessing.cpp \
+    ButtonProcessing.cpp \
     CustomLabel.cpp \
     DataProcessing.cpp \
     Main.cpp \
-    MainWindow.cpp \
-    MainWindowMenu.cpp \
-    SettingWindow.cpp
+    MainWindow.cpp
 
 HEADERS += \
     CustomLabel.h \
-    MainWindow.h \
-    SettingWindow.h
+    MainWindow.h
 
 FORMS += \
-    MainWindow.ui \
-    SettingWindow.ui
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

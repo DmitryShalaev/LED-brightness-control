@@ -13,6 +13,8 @@ uint8_t NewPWM1, NewPWM2, NewPWM3;
 
 uint8_t dataToSend[8];
 
+uint16_t PWMSpeed, PWMStep;
+
 void ProcessingData(uint8_t Data[]);
 void SendData(uint8_t Data[]);
 

@@ -45,10 +45,9 @@ private slots:
     void on_S_PWM3_sliderReleased();
     void on_RB_Update_clicked(bool checked);
     void on_S_ALLPWM_sliderReleased();
-    void on_actionSetting_triggered();
-    void SettingWindowSignal();
     void on_B_Scan_clicked();
     void Connected();
+    void on_TE_PWMSpeed_userTimeChanged(const QTime &time);
 
 private:
 

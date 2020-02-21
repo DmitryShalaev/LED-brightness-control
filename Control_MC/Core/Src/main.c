@@ -74,6 +74,8 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Slave = false;
   Master = false;
+  PWMStep = 0;
+  PWMSpeed = 1;
   /* USER CODE END 1 */
   
 

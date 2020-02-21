@@ -13,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->L_DK1->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK1->width(),ui->L_DK1->height(),Qt::KeepAspectRatio));
     ui->L_DK2->setPixmap(QPixmap(":/IMG/Resource/Button_off.png").scaled(ui->L_DK2->width(),ui->L_DK2->height(),Qt::KeepAspectRatio));
 
+    connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
+    connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
+    connect(ui->L_REL1, SIGNAL(Clicked()), this, SLOT(L_REL1_clicked()));
+    connect(ui->L_REL2, SIGNAL(Clicked()), this, SLOT(L_REL2_clicked()));
+
     on_B_Scan_clicked();
 
     Init();
@@ -43,9 +48,10 @@ void MainWindow::Send()
         for (int i = 0; i < 8; i++) {
             str += static_cast<QString>(BufSend[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
         }
-        ui->TE_Log->append("Sent to : " + QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) + "  Message: " + str);
 
         Serial->write(Data);
+
+        qDebug() << "Sent to : " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " << str;
 
         qApp->processEvents();
     }
@@ -63,9 +69,10 @@ void MainWindow::RequestData()
         for (int i = 0; i < 8; i++) {
             str += static_cast<QString>(buffer.data()[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
         }
-        ui->TE_Log->append("Taken from: " + QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) + "  Message: " + str);
 
         ProcessingReceivedData(buffer.data());
+
+        qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << "  Message: " << str;
 
         qApp->processEvents();
     }
@@ -95,24 +102,23 @@ void MainWindow::RequestUpdateData()
 
 void MainWindow::Connected()
 {
+    ui->SB_ID->setEnabled(true);
     ui->S_PWM1->setEnabled(true);
     ui->S_PWM2->setEnabled(true);
     ui->S_PWM3->setEnabled(true);
+    ui->L_LED1->setEnabled(true);
+    ui->L_LED2->setEnabled(true);
+    ui->L_REL1->setEnabled(true);
+    ui->L_REL2->setEnabled(true);
+    ui->B_Scan->setEnabled(false);
     ui->S_ALLPWM->setEnabled(true);
     ui->RB_Update->setEnabled(true);
-    ui->actionSetting->setEnabled(true);
-    ui->B_Scan->setEnabled(false);
-    ui-> SB_ID->setEnabled(true);
+    ui->TE_PWMSpeed->setEnabled(true);
     ui->CB_SerialPort->setEnabled(false);
-
-    connect(ui->L_LED1, SIGNAL(Clicked()), this, SLOT(L_LED1_clicked()));
-    connect(ui->L_LED2, SIGNAL(Clicked()), this, SLOT(L_LED2_clicked()));
-    connect(ui->L_REL1, SIGNAL(Clicked()), this, SLOT(L_REL1_clicked()));
-    connect(ui->L_REL2, SIGNAL(Clicked()), this, SLOT(L_REL2_clicked()));
 
     ui->B_Connect->setText("Disconnect");
 
-    ui->TE_Log->append("Connect");
+    qDebug() << "Connect";
 
     memset(BufSend, 0, sizeof(BufSend));
 
@@ -122,30 +128,15 @@ void MainWindow::Connected()
 
     Send();
 
-    QSettings Settings("LightControl", "Main");
-
-    if(Settings.value("Save").toBool()){
-
-        memset(BufSend, 0, sizeof(BufSend));
-
-        BufSend[1] = TIME;
-
-        BufSend[2] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().minute());
-        BufSend[3] = static_cast<uint8_t> (Settings.value("TE_SpeedOnOffLight").toTime().second());
-
-        Send();
-
-    }else{
-
-        on_actionSetting_triggered();
-    }
+    QSettings Settings("Control", "Main");
+    ui->TE_PWMSpeed->setTime(Settings.value("TE_PWMSpeed").toTime());
 
     Connect = true;
 }
 
 void MainWindow::Init()
 {
-    connect(UpdateDataTimer, SIGNAL(timeout()), SLOT(RequestUpdateData()));
-
     connect(Serial, SIGNAL(readyRead()), this, SLOT(RequestData()));
+
+    connect(UpdateDataTimer, SIGNAL(timeout()), SLOT(RequestUpdateData()));
 }

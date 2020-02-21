@@ -86,9 +86,9 @@ void MX_TIM4_Init(void)
   TIM_OC_InitTypeDef sConfigOC = {0};
 
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 17644;
+  htim4.Init.Prescaler = 35293;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 15;
+  htim4.Init.Period = 7;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -217,44 +217,52 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-  
-  if (NewPWM1 != PWM1) {
-		if (NewPWM1 > PWM1) {
-			if (PWM1 < 255)
-				PWM1++;
-			TIM3->CCR1 = PWM1;
-		} else {
-			if (PWM1 > 0)
-				PWM1--;
-			TIM3->CCR1 = PWM1;
-		}
-	}
+{  
+  if((PWMSpeed - 1) == PWMStep){
 
-	if (NewPWM2 != PWM2) {
-		if (NewPWM2 > PWM2) {
-			if (PWM2 < 255)
-				PWM2++;
-			TIM3->CCR2 = PWM2;
-		} else {
-			if (PWM2 > 0)
-				PWM2--;
-			TIM3->CCR2 = PWM2;
-		}
-	}
+    PWMStep = 0;
 
-	if (NewPWM3 != PWM3) {
-		if (NewPWM3 > PWM3) {
-			if (PWM3 < 255)
-				PWM3++;
-			TIM3->CCR3 = PWM3;
-		} else {
-			if (PWM3 > 0)
-				PWM3--;
-			TIM3->CCR3 = PWM3;
-		}
-	}
+    if (NewPWM1 != PWM1) {
+      if (NewPWM1 > PWM1) {
+        if (PWM1 < 255)
+          PWM1++;
+        TIM3->CCR1 = PWM1;
+      } else {
+        if (PWM1 > 0)
+          PWM1--;
+        TIM3->CCR1 = PWM1;
+      }
+    }
+
+    if (NewPWM2 != PWM2) {
+      if (NewPWM2 > PWM2) {
+        if (PWM2 < 255)
+          PWM2++;
+        TIM3->CCR2 = PWM2;
+      } else {
+        if (PWM2 > 0)
+          PWM2--;
+        TIM3->CCR2 = PWM2;
+      }
+    }
+
+    if (NewPWM3 != PWM3) {
+      if (NewPWM3 > PWM3) {
+        if (PWM3 < 255)
+          PWM3++;
+        TIM3->CCR3 = PWM3;
+      } else {
+        if (PWM3 > 0)
+          PWM3--;
+        TIM3->CCR3 = PWM3;
+      }
+    }
+
+  } else {
+
+    PWMStep++;
+    
+  }
 }
 /* USER CODE END 1 */
 
