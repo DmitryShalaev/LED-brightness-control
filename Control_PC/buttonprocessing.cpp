@@ -169,9 +169,7 @@ void MainWindow::on_S_ALLPWM_sliderReleased()
 
 void MainWindow::on_TE_PWMSpeed_userTimeChanged(const QTime &time)
 {
-    QSettings Settings("Control", "Main");
-
-    Settings.setValue("TE_PWMSpeed", time);
+    Settings->setValue("TE_PWMSpeed", time);
 
     memset(BufSend, 0, sizeof(BufSend));
 
@@ -192,12 +190,18 @@ void MainWindow::on_RB_Update_clicked(bool checked)
 }
 
 void MainWindow::on_B_Scan_clicked()
-{              
+{
+    qDebug() << "Searching for compatible devices";
+
     ui->CB_SerialPort->clear();
     const QList<QSerialPortInfo> infos = QSerialPortInfo::availablePorts();
 
-    for (const QSerialPortInfo &info : infos) {
-        ui->CB_SerialPort->addItem(info.portName());
-        qDebug() << info.portName();
+    if(!infos.isEmpty()){
+        for (const QSerialPortInfo &info : infos) {
+            ui->CB_SerialPort->addItem(info.portName());
+            qDebug() << info.portName() << info.description();
+        }
+    }  else {
+        qDebug() << "Could not find compatible devices";
     }
 }

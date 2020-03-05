@@ -56,6 +56,7 @@ private:
     QTimer *UpdateDataTimer = new QTimer;
 
     QSerialPort *Serial = new QSerialPort;
+    QSettings *Settings = new QSettings(this);
 
     uint16_t MasterID = 0x0;
 

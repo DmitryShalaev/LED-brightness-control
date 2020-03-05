@@ -10,6 +10,9 @@ int main(int argc, char *argv[])
     freopen("CON", "w", stdout);
     freopen("CON", "w", stderr);
 
+    QApplication::setOrganizationName("Control");
+    QApplication::setApplicationName("Main");
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

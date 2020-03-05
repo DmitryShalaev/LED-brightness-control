@@ -28,6 +28,9 @@ MainWindow::~MainWindow()
     if (Serial->isOpen())
         Serial->close();
 
+    delete UpdateDataTimer;
+    delete Settings;
+    delete Serial;
     delete ui;
 }
 
@@ -45,9 +48,8 @@ void MainWindow::Send()
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
 
         QString str;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++)
             str += static_cast<QString>(BufSend[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
-        }
 
         Serial->write(Data);
 
@@ -66,9 +68,8 @@ void MainWindow::RequestData()
         std::vector<unsigned char> buffer(Data.begin(), Data.end());
 
         QString str;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++)
             str += static_cast<QString>(buffer.data()[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
-        }
 
         ProcessingReceivedData(buffer.data());
 
@@ -128,8 +129,7 @@ void MainWindow::Connected()
 
     Send();
 
-    QSettings Settings("Control", "Main");
-    ui->TE_PWMSpeed->setTime(Settings.value("TE_PWMSpeed").toTime());
+    ui->TE_PWMSpeed->setTime(Settings->value("TE_PWMSpeed").toTime());
 
     Connect = true;
 }
