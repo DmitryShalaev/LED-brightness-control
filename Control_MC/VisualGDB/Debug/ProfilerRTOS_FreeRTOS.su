@@ -1,2 +1,0 @@
-ProfilerRTOS_FreeRTOS.c:166:28:SysprogsRTOSHooks_FreeRTOS_traceQUEUE_SEND	16	static
-ProfilerRTOS_FreeRTOS.c:174:28:SysprogsRTOSHooks_FreeRTOS_traceQUEUE_RECEIVE	16	static
