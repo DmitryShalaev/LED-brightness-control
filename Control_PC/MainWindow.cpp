@@ -34,7 +34,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::Send()
+void MainWindow::Send(bool broadcast)
 {
     QSerialPortInfo *PortCheck = new QSerialPortInfo(ui->CB_SerialPort->currentText());
     if(PortCheck->isNull())
@@ -42,8 +42,8 @@ void MainWindow::Send()
 
     if (Serial->isOpen()){
 
-        BufSend[0] = static_cast<uint8_t>(ui->SB_ID->value() & 0x00FF);
-        BufSend[1] |= static_cast<uint8_t>((ui->SB_ID->value() & 0x0F00) >> 3);
+        BufSend[0] = static_cast<uint8_t>((broadcast ? 0 : ui->SB_ID->value()) & 0x00FF);
+        BufSend[1] |= static_cast<uint8_t>(((broadcast ? 0 : ui->SB_ID->value()) & 0x0F00) >> 3);
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
 
@@ -51,9 +51,9 @@ void MainWindow::Send()
         for (int i = 0; i < 8; i++)
             str += static_cast<QString>(BufSend[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
 
-        Serial->write(Data);
+        qDebug() << "Sent to :   " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " << str;
 
-        qDebug() << "Sent to : " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " << str;
+        Serial->write(Data);
 
         qApp->processEvents();
     }
@@ -71,9 +71,9 @@ void MainWindow::RequestData()
         for (int i = 0; i < 8; i++)
             str += static_cast<QString>(buffer.data()[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
 
-        ProcessingReceivedData(buffer.data());
+        qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: " << str;
 
-        qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << "  Message: " << str;
+        ProcessingReceivedData(buffer.data());
 
         qApp->processEvents();
     }
@@ -127,7 +127,7 @@ void MainWindow::Connected()
     BufSend[2] = MasterID & 0x0FF;
     BufSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
 
-    Send();
+    Send(true);
 
     ui->TE_PWMSpeed->setTime(Settings->value("TE_PWMSpeed").toTime());
 

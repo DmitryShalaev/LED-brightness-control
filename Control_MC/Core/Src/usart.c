@@ -114,19 +114,23 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  if(!Slave){
-    Master = true;
+	if (huart == &huart1)
+	{
+		if (!Slave) 
+		{
+			Master = true;
 
-    uint16_t ReceiveID = ((dataReceive[1] & 0xE0) << 3) | dataReceive[0];
+			uint16_t ReceiveID = ((dataReceive[1] & 0xE0) << 3) | dataReceive[0];
 
-    if ((ReceiveID != ID) || (ReceiveID == 0x000))
-      Send_CAN(ReceiveID, dataReceive);
+			if ((ReceiveID != ID) || (ReceiveID == 0x000))
+				Send_CAN(ReceiveID, dataReceive);
 
-    if((ReceiveID == ID) || (ReceiveID == 0x000))
-      ProcessingData(dataReceive);
+			if ((ReceiveID == ID) || (ReceiveID == 0x000))
+				ProcessingData(dataReceive);
 
-    HAL_UART_Receive_IT(&huart1, dataReceive, 8);
-  }
+			HAL_UART_Receive_IT(&huart1, dataReceive, 8);
+		}
+	}
 }
 
 /* USER CODE END 1 */

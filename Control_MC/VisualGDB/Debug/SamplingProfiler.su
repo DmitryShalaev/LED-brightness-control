@@ -1,0 +1,22 @@
+SamplingProfiler.cpp:69:19:int IsValidCodeAddress(void*)	16	static
+SamplingProfiler.cpp:75:19:int IsValidStackAddress(void**)	16	static
+SamplingProfiler.cpp:82:13:bool IsPotentialSavedFPSlot(void**)	24	static
+SmallNumberCoder.h:13:20:static int SmallNumberCoder::IsSignedIntConstrained(int, int)	24	static
+SmallNumberCoder.h:26:14:bool SmallNumberCoder::WriteSmallInteger(int, int)	24	static
+SmallNumberCoder.h:56:2:SmallNumberCoder::SmallNumberCoder(void*, unsigned int, void*, void*)	24	static
+SmallNumberCoder.h:61:14:bool SmallNumberCoder::WriteTinySIntWithFlag(int, bool)	40	static
+SmallNumberCoder.h:89:14:bool SmallNumberCoder::WriteTinySInt(int)	32	static
+SmallNumberCoder.h:108:14:bool SmallNumberCoder::WriteSmallMostLikelyEvenSInt(int)	40	static
+SmallNumberCoder.h:195:14:bool SmallNumberCoder::WritePackedUIntPair(short unsigned int, short unsigned int)	24	static
+SmallNumberCoder.h:224:14:bool SmallNumberCoder::WriteStackEntry(int, void*, bool)	32	static
+SmallNumberCoder.h:243:6:int SmallNumberCoder::GetOffset()	16	static
+SmallNumberCoder.h:248:8:void* SmallNumberCoder::GetBuffer()	16	static
+SmallNumberCoder.h:253:7:void SmallNumberCoder::ExportState(void**, void**)	24	static
+SmallNumberCoder.h:280:13:static int SmallNumberDecoder::SignExtend(int, int)	16	static
+SmallNumberCoder.h:285:18:unsigned int SmallNumberDecoder::PeekInt32(int)	24	static
+SmallNumberCoder.h:295:18:unsigned int SmallNumberDecoder::PeekInt16(int)	24	static
+SmallNumberCoder.h:306:2:SmallNumberDecoder::SmallNumberDecoder(const void*, unsigned int, void*, void*)	24	static
+SmallNumberCoder.h:311:14:bool SmallNumberDecoder::ReadTinySIntWithFlag(int*, bool*)	40	static
+SmallNumberCoder.h:358:7:bool SmallNumberDecoder::ReadSmallMostlyEvenSInt(int*)	40	static
+SmallNumberCoder.h:396:14:bool SmallNumberDecoder::ReadStackEntry(void***, void**)	40	static
+SamplingProfiler.cpp:103:17:void SysprogsProfiler_ProcessSample(void*, void*, void*, void*)	160	static

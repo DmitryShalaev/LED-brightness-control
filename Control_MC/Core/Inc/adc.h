@@ -34,7 +34,7 @@ extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
 
-volatile uint16_t ADC_Data[2];
+volatile uint16_t ADC_Data[4];
 
 /* USER CODE END Private defines */
 

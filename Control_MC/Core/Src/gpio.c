@@ -144,7 +144,6 @@ void Button(void)
       } else {
         DK1.State = true;
         DK1.Count = 0;
-
         dataToSend[1] = DK_1;
         dataToSend[2] = ON;
         SendData(dataToSend);

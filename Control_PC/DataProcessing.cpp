@@ -97,6 +97,8 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
         break;
 
     case ADC:
+        qDebug() << Data[2];
+        qDebug() << Data[3];
 
         ui->L_ADC1->setText(QString::number((static_cast<double>(((Data[2] & 0xF0) << 4) |
                                              Data[3])*3.3/4095),'f',3) + " V");

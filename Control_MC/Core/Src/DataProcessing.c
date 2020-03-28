@@ -150,10 +150,10 @@ void ProcessingData(uint8_t Data[])
 
 			dataToSend[1] |= ADC;
 
-			dataToSend[2] = (ADC_Data[0] & 0xFF00) >> 4;
+			dataToSend[2] = (ADC_Data[0] & 0x0F00) >> 4;
 			dataToSend[3] = ADC_Data[0] & 0x00FF;
 
-			dataToSend[2] = dataToSend[1] | ((ADC_Data[1] & 0xFF00) >> 8);
+			dataToSend[2] |= (ADC_Data[1] & 0x0F00) >> 8;
 			dataToSend[4] = ADC_Data[1] & 0x00FF;
 
 			SendData(dataToSend);

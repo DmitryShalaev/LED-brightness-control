@@ -1,0 +1,54 @@
+DebuggerChecker.h:5:13:bool CanInvokeSemihostingCalls()	4	static
+InstrumentingProfiler.cpp:72:17:unsigned int SysprogsInstrumentingProfiler_QueryAndResetPerformanceCounter_Inline()	16	static
+SmallNumberCoder.h:13:20:static int SysprogsInstrumentingProfiler::SmallNumberCoder::IsSignedIntConstrained(int, int)	24	static
+SmallNumberCoder.h:20:20:static int SysprogsInstrumentingProfiler::SmallNumberCoder::IsUnsignedIntConstrained(unsigned int, int)	24	static
+SmallNumberCoder.h:26:14:bool SysprogsInstrumentingProfiler::SmallNumberCoder::WriteSmallInteger(int, int)	24	static
+SmallNumberCoder.h:56:2:SysprogsInstrumentingProfiler::SmallNumberCoder::SmallNumberCoder(void*, unsigned int, void*, void*)	24	static
+SmallNumberCoder.h:132:14:bool SysprogsInstrumentingProfiler::SmallNumberCoder::WriteSmallUnsignedInt(unsigned int)	32	static
+SmallNumberCoder.h:153:14:bool SysprogsInstrumentingProfiler::SmallNumberCoder::WriteSmallUnsignedIntWithFlag(unsigned int, bool)	40	static
+SmallNumberCoder.h:174:14:bool SysprogsInstrumentingProfiler::SmallNumberCoder::WriteSmallSignedIntWithFlag(int, bool)	40	static
+SmallNumberCoder.h:195:14:bool SysprogsInstrumentingProfiler::SmallNumberCoder::WritePackedUIntPair(short unsigned int, short unsigned int)	24	static
+SmallNumberCoder.h:243:6:int SysprogsInstrumentingProfiler::SmallNumberCoder::GetOffset()	16	static
+SmallNumberCoder.h:248:8:void* SysprogsInstrumentingProfiler::SmallNumberCoder::GetBuffer()	16	static
+SmallNumberCoder.h:259:7:void SysprogsInstrumentingProfiler::SmallNumberCoder::SetOffset(int)	16	static
+SmallNumberCoder.h:264:11:unsigned int SysprogsInstrumentingProfiler::SmallNumberCoder::RemainingSize()	16	static
+InstrumentingProfiler.cpp:114:4:SysprogsInstrumentingProfiler::Chronometer::ProfilerTimeRegionRAII::ProfilerTimeRegionRAII()	24	static
+InstrumentingProfiler.cpp:122:4:SysprogsInstrumentingProfiler::Chronometer::ProfilerTimeRegionRAII::~ProfilerTimeRegionRAII()	40	static
+InstrumentingProfiler.cpp:133:21:ProfilerTimeType SysprogsInstrumentingProfiler::Chronometer::ProfilerTimeRegionRAII::GetApplicationTime()	16	static
+InstrumentingProfiler.cpp:138:28:static ProfilerTimeType SysprogsInstrumentingProfiler::Chronometer::ProfilerTimeRegionRAII::GetCurrentTimeForRealTimeWatch()	16	static
+InstrumentingProfiler.cpp:181:8:bool SysprogsInstrumentingProfiler::InstrumentedFrame::IsInterrupt() const	16	static
+InstrumentingProfiler.cpp:186:8:bool SysprogsInstrumentingProfiler::InstrumentedFrame::IsReported() const	16	static
+InstrumentingProfiler.cpp:191:8:void SysprogsInstrumentingProfiler::InstrumentedFrame::FlagAsReported() const	16	static
+InstrumentingProfiler.cpp:203:18:unsigned int SysprogsInstrumentingProfiler::ProfilerTimeToUInt32(ProfilerTimeType)	16	static
+InstrumentingProfiler.cpp:223:33:void SysprogsInstrumentingProfiler::RaiseError(SysprogsInstrumentingProfiler::InstrumentingProfilerErrorCode, uintptr_t)	16	static
+InstrumentingProfiler.cpp:245:22:SysprogsInstrumentingProfiler::InstrumentedFrame* SysprogsInstrumentingProfiler::InstrumentedFramePool::AllocateFrame()	24	static
+InstrumentingProfiler.cpp:263:8:void SysprogsInstrumentingProfiler::InstrumentedFramePool::ReleaseFrame(SysprogsInstrumentingProfiler::InstrumentedFrame*)	16	static
+InstrumentingProfiler.cpp:274:33:void SysprogsInstrumentingProfiler::ReportFramesToProfiler(const SysprogsInstrumentingProfiler::InstrumentedFrame*, ProfilerTimeType)	80	static
+InstrumentingProfiler.cpp:363:33:void SysprogsInstrumentingProfiler::ReportFunctionRunTimeToRealTimeWatch(const SysprogsInstrumentingProfiler::InstrumentedFrame*, ProfilerTimeType)	48	static
+InstrumentingProfiler.cpp:375:37:void SysprogsInstrumentingProfiler::ReturnHook()	0	static
+InstrumentingProfiler.cpp:405:7:void SysprogsInstrumentingProfiler::SysprogsInstrumentingProfilerReturnHookImpl(void**)	56	static
+InstrumentingProfiler.cpp:451:7:void SysprogsInstrumentingProfiler::SysprogsInstrumentingProfilerHookImpl(void**)	64	static
+InstrumentingProfiler.cpp:492:7:void SysprogsInstrumentingProfiler::ReportThreadCreated(void*, const char*)	40	static
+InstrumentingProfiler.cpp:506:13:int SysprogsInstrumentingProfiler::GetRelativeTimestamp()	24	static
+InstrumentingProfiler.cpp:514:7:void SysprogsInstrumentingProfiler::ReportThreadSwitch(void*)	40	static
+InstrumentingProfiler.cpp:576:40:void SysprogsInstrumentingProfilerHook()	0	static
+InstrumentingProfiler.cpp:610:40:void SysprogsStackVerifierHook()	0	static
+InstrumentingProfiler.cpp:635:40:void SysprogsTimingRecorderHook()	0	static
+InstrumentingProfiler.cpp:680:57:void OverheadMeasurementFunctions::NonInstrumented()	0	static
+InstrumentingProfiler.cpp:685:57:void OverheadMeasurementFunctions::Instrumented()	0	static
+InstrumentingProfiler.cpp:690:57:void OverheadMeasurementFunctions::InstrumentedAndReporting()	0	static
+InstrumentingProfiler.cpp:703:43:void InstrumentingProfilerInitialized(int)	40	static
+InstrumentingProfiler.cpp:730:6:void SysprogsProfiler_RTOSThreadSwitched(void*, const char*, void*)	32	static
+InstrumentingProfiler.cpp:765:6:void SysprogsProfiler_RTOSThreadDeleted(void*)	32	static
+InstrumentingProfiler.cpp:781:6:void SysprogsProfiler_ReportResourceTaken(void*, void*, unsigned int)	48	static
+InstrumentingProfiler.cpp:790:6:void SysprogsProfiler_ReportResourceReleased(void*, void*, unsigned int)	48	static
+InstrumentingProfiler.cpp:799:6:void SysprogsProfiler_ReportIntegralValue(void*, unsigned int, int)	48	static
+InstrumentingProfiler.cpp:808:6:void SysprogsProfiler_ReportFPValue(void*, double)	48	static
+InstrumentingProfiler.cpp:817:6:void SysprogsProfiler_ReportGenericEvent(void*, const char*)	40	static
+InstrumentingProfiler.cpp:827:6:void SysprogsProfiler_ReportGenericEventEx(void*, void*, RealTimeEventArgType, int)	48	static
+InstrumentingProfiler.cpp:836:39:void InitializeProfilerRTOSHooks()	4	static
+InstrumentingProfiler.cpp:840:39:void InitializeProfilerRTOSHooksAfterReportingInitialization()	4	static
+InstrumentingProfiler.cpp:843:43:void InitializeInstrumentingProfiler()	32	static
+InstrumentingProfiler.cpp:890:17:void ReportTicksPerSecond(unsigned int)	32	static
+InstrumentingProfiler.cpp:898:39:void ReportRealTimeAnalysisBufferOverflow()	32	static
+InstrumentingProfiler.cpp:914:17:void InitializeCustomRealTimeWatch()	24	static

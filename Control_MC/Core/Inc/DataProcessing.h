@@ -5,7 +5,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "adc.h"
-#include "../../../GENERAL/ID.h"
+#include "../../../GENERAL/id.h"
 
 uint8_t PWM1, PWM2, PWM3;
 

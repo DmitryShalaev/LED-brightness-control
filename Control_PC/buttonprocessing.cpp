@@ -19,7 +19,7 @@ void MainWindow::on_B_Connect_clicked()
             memset(BufSend, 0, sizeof(BufSend));
 
             BufSend[1] = CONNECTED;
-            Send();
+            Send(true);
 
         }else{
 
@@ -31,7 +31,6 @@ void MainWindow::on_B_Connect_clicked()
         if (Serial->isOpen())
             Serial->close();
 
-        ui->SB_ID->setValue(0);
         ui->SB_ID->setEnabled(false);
         ui->B_Scan->setEnabled(true);
         ui->L_LED1->setEnabled(false);
@@ -177,7 +176,7 @@ void MainWindow::on_TE_PWMSpeed_userTimeChanged(const QTime &time)
     BufSend[2] = static_cast<uint8_t> (time.minute());
     BufSend[3] = static_cast<uint8_t> (time.second());
 
-    Send();
+    Send(true);
 }
 
 void MainWindow::on_RB_Update_clicked(bool checked)

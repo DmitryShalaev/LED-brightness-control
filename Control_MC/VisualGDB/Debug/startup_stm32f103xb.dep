@@ -1,0 +1,8 @@
+VisualGDB/Debug/startup_stm32f103xb.o: \
+ C:/Users/Main/AppData/Local/VisualGDB/EmbeddedBSPs/arm-eabi/com.sysprogs.arm.stm32/STM32F1xxxx/StartupFiles/startup_stm32f103xb.c \
+ C:/Users/Main/AppData/Local/VisualGDB/EmbeddedEFPs/Profiler/ProfilerFreeRTOSHooks.h \
+ d:\programs\visualgdb\sysgcc\arm-eabi\lib\gcc\arm-none-eabi\9.2.1\include\stddef.h
+
+C:/Users/Main/AppData/Local/VisualGDB/EmbeddedEFPs/Profiler/ProfilerFreeRTOSHooks.h:
+
+d:\programs\visualgdb\sysgcc\arm-eabi\lib\gcc\arm-none-eabi\9.2.1\include\stddef.h:

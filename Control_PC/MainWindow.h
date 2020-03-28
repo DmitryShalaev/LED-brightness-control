@@ -31,7 +31,7 @@ public:
 private slots:
 
     void Init();
-    void Send();
+    void Send(bool broadcast = false);
     void RequestData();
     void RequestUpdateData();
     void ProcessingReceivedData(uint8_t Data[]);
