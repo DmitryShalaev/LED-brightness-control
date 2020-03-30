@@ -73,7 +73,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     GPIO_InitStruct.Pin = GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* USART1 interrupt Init */
@@ -116,21 +116,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart == &huart1)
 	{
-		if (!Slave) 
-		{
-			Master = true;
+		Master = true;
 
-			uint16_t ReceiveID = ((dataReceive[1] & 0xE0) << 3) | dataReceive[0];
+		uint16_t RecipientID = ((dataReceive[1] & 0xE0) << 3) | dataReceive[0];
 
-			if ((ReceiveID != ID) || (ReceiveID == 0x000))
-				Send_CAN(ReceiveID, dataReceive);
-
-			if ((ReceiveID == ID) || (ReceiveID == 0x000))
-				ProcessingData(dataReceive);
-
-			HAL_UART_Receive_IT(&huart1, dataReceive, 8);
-		}
+		if ((RecipientID != ID) || (RecipientID == 0x000))
+			Send_CAN(dataReceive, RecipientID);
+		
+		if ((RecipientID == ID) || (RecipientID == 0x000))
+			ProcessingData(dataReceive, RecipientID != 0x000);
 	}
+	
+	HAL_UART_Receive_IT(&huart1, dataReceive, 8);
 }
 
 /* USER CODE END 1 */

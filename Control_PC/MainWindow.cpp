@@ -42,8 +42,8 @@ void MainWindow::Send(bool broadcast)
 
     if (Serial->isOpen()){
 
-        BufSend[0] = static_cast<uint8_t>((broadcast ? 0 : ui->SB_ID->value()) & 0x00FF);
-        BufSend[1] |= static_cast<uint8_t>(((broadcast ? 0 : ui->SB_ID->value()) & 0x0F00) >> 3);
+        BufSend[0] = static_cast<uint8_t>((broadcast ? 0x0: ui->SB_ID->value()) & 0x00FF);
+        BufSend[1] |= static_cast<uint8_t>(((broadcast ? 0x0 : ui->SB_ID->value()) & 0x0F00) >> 3);
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
 

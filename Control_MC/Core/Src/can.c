@@ -53,7 +53,6 @@ void MX_CAN_Init(void)
 
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
-
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(canHandle->Instance==CAN1)
   {
@@ -91,7 +90,6 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
 void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 {
-
   if(canHandle->Instance==CAN1)
   {
   /* USER CODE BEGIN CAN1_MspDeInit 0 */
@@ -142,14 +140,16 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
   HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 
+	uint16_t RecipientID = ((RxData[1] & 0xE0) << 3) | RxData[0];
+	
   if (Master){
     HAL_UART_Transmit_IT(&huart1, RxData, 8);
   } else {
-    ProcessingData(RxData);
+	  ProcessingData(RxData, RecipientID != 0x000);
   }
 }
 
-void Send_CAN(uint16_t GetID, uint8_t Data[]) 
+void Send_CAN(uint8_t Data[], uint16_t GetID) 
 {
   TxHeader.StdId = GetID;
   TxHeader.RTR = CAN_RTR_DATA; 

@@ -1,7 +1,7 @@
 #include "DataProcessing.h"
 #include "can.h"
 
-void ProcessingData(uint8_t Data[]) 
+void ProcessingData(uint8_t Data[], bool toSend) 
 {
 	memset(dataToSend, 0, sizeof(dataToSend));
 
@@ -44,7 +44,7 @@ void ProcessingData(uint8_t Data[])
 			dataToSend[4] = 255 - PWM2;
 			dataToSend[5] = 255 - PWM3;
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -64,7 +64,7 @@ void ProcessingData(uint8_t Data[])
 				dataToSend[2] = OFF;
 			}
 			
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -84,7 +84,7 @@ void ProcessingData(uint8_t Data[])
 				dataToSend[2] = OFF;
 			}
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -104,7 +104,7 @@ void ProcessingData(uint8_t Data[])
 				dataToSend[2] = OFF;
 			}
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -124,7 +124,7 @@ void ProcessingData(uint8_t Data[])
 				dataToSend[2] = OFF;
 			}
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -156,7 +156,7 @@ void ProcessingData(uint8_t Data[])
 			dataToSend[2] |= (ADC_Data[1] & 0x0F00) >> 8;
 			dataToSend[4] = ADC_Data[1] & 0x00FF;
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -169,7 +169,7 @@ void ProcessingData(uint8_t Data[])
 			dataToSend[2] = I2C_Buffer[0];
 			dataToSend[3] = I2C_Buffer[1];
 
-			SendData(dataToSend);
+			SendData(dataToSend, toSend);
 
 		break;
 
@@ -190,12 +190,8 @@ void ProcessingData(uint8_t Data[])
 		
 		case CONNECTED:
 
-			if (Master){
-				dataToSend[1] |= CONNECTED;				
-				SendData(dataToSend);
-			} else {
-				Slave = true;
-			}
+			dataToSend[1] |= CONNECTED;				
+			SendData(dataToSend, toSend);
 		
 		break;
 
@@ -206,11 +202,13 @@ void ProcessingData(uint8_t Data[])
 
 }
 
-void SendData(uint8_t Data[]) 
+void SendData(uint8_t Data[], bool toSend) 
 {
-	if (Master){
+	if (Master) {
 		HAL_UART_Transmit_IT(&huart1, Data, 8);
-	} else {
-		Send_CAN(MasterID, Data);
+	}
+	else if (toSend)
+	{
+		Send_CAN(Data, MasterID);
 	}
 }

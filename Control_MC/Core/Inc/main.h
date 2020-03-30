@@ -35,7 +35,7 @@ extern "C" {
 
 #include "stdbool.h"
 
-#define ID 0x008 //MAX 0x7FF
+#define ID 0x001 //MAX 0x7FF
 
 /* USER CODE END Includes */
 
@@ -65,7 +65,6 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 bool Master;
-bool Slave;
 uint16_t MasterID;
 
 /* USER CODE END Private defines */

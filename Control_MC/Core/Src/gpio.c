@@ -131,7 +131,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			dataToSend[2] = OFF;
 		}
 
-    SendData(dataToSend);
+    SendData(dataToSend, true);
   }
 }
 
@@ -146,7 +146,7 @@ void Button(void)
         DK1.Count = 0;
         dataToSend[1] = DK_1;
         dataToSend[2] = ON;
-        SendData(dataToSend);
+	      SendData(dataToSend, true);
       }
     }
   } else {
@@ -158,7 +158,7 @@ void Button(void)
 
         dataToSend[1] = DK_1;
         dataToSend[2] = OFF;
-        SendData(dataToSend);
+	      SendData(dataToSend, true);
       }
     }
   }
@@ -173,7 +173,7 @@ void Button(void)
 
         dataToSend[1] = DK_2;
         dataToSend[2] = ON;
-        SendData(dataToSend);
+        SendData(dataToSend, true);
       }
     }
   } else {
@@ -185,7 +185,7 @@ void Button(void)
 
         dataToSend[1] = DK_2;
         dataToSend[2] = OFF;
-        SendData(dataToSend);
+        SendData(dataToSend, true);
       }
     }
   }

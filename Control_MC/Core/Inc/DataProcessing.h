@@ -15,7 +15,7 @@ uint8_t dataToSend[8];
 
 uint16_t PWMSpeed, PWMStep;
 
-void ProcessingData(uint8_t Data[]);
-void SendData(uint8_t Data[]);
+void ProcessingData(uint8_t Data[], bool toSend);
+void SendData(uint8_t Data[], bool toSend);
 
 #endif /* DATAPROCESSING_H_ */

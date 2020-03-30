@@ -97,8 +97,6 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
         break;
 
     case ADC:
-        qDebug() << Data[2];
-        qDebug() << Data[3];
 
         ui->L_ADC1->setText(QString::number((static_cast<double>(((Data[2] & 0xF0) << 4) |
                                              Data[3])*3.3/4095),'f',3) + " V");
@@ -147,6 +145,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
     case CONNECTED:
 
          MasterID = static_cast<uint16_t>(((Data[1] & 0xE0) << 3) | Data[0]);
+         qDebug() << "Master ID : " << QString().setNum(MasterID);
          Connected();
 
         break;
