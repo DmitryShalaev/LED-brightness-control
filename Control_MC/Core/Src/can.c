@@ -41,7 +41,7 @@ void MX_CAN_Init(void)
   hcan.Init.TimeTriggeredMode = DISABLE;
   hcan.Init.AutoBusOff = DISABLE;
   hcan.Init.AutoWakeUp = DISABLE;
-  hcan.Init.AutoRetransmission = DISABLE;
+  hcan.Init.AutoRetransmission = ENABLE;
   hcan.Init.ReceiveFifoLocked = DISABLE;
   hcan.Init.TransmitFifoPriority = DISABLE;
   if (HAL_CAN_Init(&hcan) != HAL_OK)
@@ -53,6 +53,7 @@ void MX_CAN_Init(void)
 
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
+
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(canHandle->Instance==CAN1)
   {
@@ -90,6 +91,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
 void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 {
+
   if(canHandle->Instance==CAN1)
   {
   /* USER CODE BEGIN CAN1_MspDeInit 0 */
@@ -157,8 +159,9 @@ void Send_CAN(uint8_t Data[], uint16_t GetID)
   TxHeader.DLC = 8; 
   TxHeader.TransmitGlobalTime = DISABLE;
 
-  HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox);
+	HAL_CAN_AddTxMessage(&hcan, &TxHeader, Data, &TxMailbox);
 }
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
