@@ -76,7 +76,6 @@ int main(void)
   PWMStep = 0;
   PWMSpeed = 1;
   /* USER CODE END 1 */
-  
 
   /* MCU Configuration--------------------------------------------------------*/
 

@@ -135,9 +135,6 @@
     <ClCompile Include="Core\Src\i2c.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Src\sys.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Src\tim.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -226,9 +223,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Inc\i2c.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Inc\sys.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Inc\tim.h">

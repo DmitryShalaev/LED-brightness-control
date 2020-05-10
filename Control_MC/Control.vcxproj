@@ -83,7 +83,6 @@
     <ClCompile Include="Core\Src\can.c" />
     <ClCompile Include="Core\Src\dma.c" />
     <ClCompile Include="Core\Src\i2c.c" />
-    <ClCompile Include="Core\Src\sys.c" />
     <ClCompile Include="Core\Src\tim.c" />
     <ClCompile Include="Core\Src\usart.c" />
     <ClCompile Include="Core\Src\stm32f1xx_it.c" />
@@ -116,7 +115,6 @@
     <ClInclude Include="Core\Inc\can.h" />
     <ClInclude Include="Core\Inc\dma.h" />
     <ClInclude Include="Core\Inc\i2c.h" />
-    <ClInclude Include="Core\Inc\sys.h" />
     <ClInclude Include="Core\Inc\tim.h" />
     <ClInclude Include="Core\Inc\usart.h" />
     <ClInclude Include="Core\Inc\stm32f1xx_it.h" />

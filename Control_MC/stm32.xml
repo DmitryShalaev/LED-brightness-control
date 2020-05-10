@@ -87,7 +87,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>Control.gpdsc</RelativePath>
-        <Timestamp>132300647892156983</Timestamp>
+        <Timestamp>132336149022754399</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -318,9 +318,6 @@
           <RelativePath>Core\Inc\i2c.h</RelativePath>
         </VirtualFileSnapshot>
         <VirtualFileSnapshot>
-          <RelativePath>Core\Inc\sys.h</RelativePath>
-        </VirtualFileSnapshot>
-        <VirtualFileSnapshot>
           <RelativePath>Core\Inc\tim.h</RelativePath>
         </VirtualFileSnapshot>
         <VirtualFileSnapshot>
@@ -351,9 +348,6 @@
           <RelativePath>Core\Src\i2c.c</RelativePath>
         </VirtualFileSnapshot>
         <VirtualFileSnapshot>
-          <RelativePath>Core\Src\sys.c</RelativePath>
-        </VirtualFileSnapshot>
-        <VirtualFileSnapshot>
           <RelativePath>Core\Src\tim.c</RelativePath>
         </VirtualFileSnapshot>
         <VirtualFileSnapshot>
@@ -375,11 +369,11 @@
         <IsStaticLibrary>false</IsStaticLibrary>
         <Settings>
           <IncludeDirectories>
-            <string>G:\Control\Control_MC\Core\Inc</string>
-            <string>G:\Control\Control_MC\Drivers\CMSIS\Device\ST\STM32F1xx\Include</string>
-            <string>G:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc</string>
-            <string>G:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Src</string>
-            <string>G:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</string>
+            <string>E:\Control\Control_MC\Core\Inc</string>
+            <string>E:\Control\Control_MC\Drivers\CMSIS\Device\ST\STM32F1xx\Include</string>
+            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc</string>
+            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Src</string>
+            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</string>
           </IncludeDirectories>
           <PreprocessorMacros>
             <string>$$com.sysprogs.bspoptions.primary_memory$$_layout</string>
