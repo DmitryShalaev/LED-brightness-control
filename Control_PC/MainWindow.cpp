@@ -47,11 +47,7 @@ void MainWindow::Send(bool broadcast)
 
         QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
 
-        QString str;
-        for (int i = 0; i < 8; i++)
-            str += static_cast<QString>(BufSend[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
-
-        qDebug() << "Sent to :   " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " << str;
+        qDebug() << "Sent to :   " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " << ByteArrayToString(Data);
 
         Serial->write(Data);
 
@@ -67,11 +63,7 @@ void MainWindow::RequestData()
 
         std::vector<unsigned char> buffer(Data.begin(), Data.end());
 
-        QString str;
-        for (int i = 0; i < 8; i++)
-            str += static_cast<QString>(buffer.data()[i]).toLocal8Bit().toHex() + (i == 7 ? "" : ":");
-
-        qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: " << str;
+        qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: " << ByteArrayToString(Data);
 
         ProcessingReceivedData(buffer.data());
 

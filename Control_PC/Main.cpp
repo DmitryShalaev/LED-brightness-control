@@ -19,3 +19,13 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
+QString MainWindow::ByteArrayToString(const QByteArray &arr) {
+    QString str;
+    for (int i = 0; i < 8; i++)
+        if (i != 7)
+            str += QString("%1:").arg((unsigned char)arr[i], 2, 16, QChar('0')).toUpper();
+        else
+            str += QString("%1").arg((unsigned char)arr[i], 2, 16, QChar('0')).toUpper();
+    return str;
+}

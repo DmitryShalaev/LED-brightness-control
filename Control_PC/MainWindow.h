@@ -13,7 +13,7 @@
 #include <QSerialPort>
 
 #include "CustomLabel.h"
-#include "../GENERAL/id.h"
+#include "../general/id.h"
 
 namespace Ui {
     class MainWindow;
@@ -48,6 +48,7 @@ private slots:
     void on_B_Scan_clicked();
     void Connected();
     void on_TE_PWMSpeed_userTimeChanged(const QTime &time);
+    QString ByteArrayToString(const QByteArray &arr);
 
 private:
 
