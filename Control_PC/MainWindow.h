@@ -2,18 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMessageBox>
-#include "ui_MainWindow.h"
-#include <QDebug>
 #include <QTimer>
-#include <QTime>
-#include <QPixmap>
 #include <QSettings>
 #include <QSerialPortInfo>
 #include <QSerialPort>
 
-#include "CustomLabel.h"
-#include "../general/id.h"
+//#include "CustomLabel.h"
 
 namespace Ui {
     class MainWindow;

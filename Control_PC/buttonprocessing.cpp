@@ -1,4 +1,8 @@
 #include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include <QDebug>
+
+#include "../general/id.h"
 
 void MainWindow::on_B_Connect_clicked()
 {

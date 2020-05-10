@@ -1,4 +1,5 @@
 #include "CustomLabel.h"
+#include <QMouseEvent>
 
 CustomLabel::CustomLabel(QWidget *parent) : QLabel(parent)
 {

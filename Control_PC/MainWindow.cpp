@@ -1,4 +1,8 @@
 #include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include <QDebug>
+
+#include "../general/id.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {

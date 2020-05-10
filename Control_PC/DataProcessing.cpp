@@ -1,4 +1,8 @@
 #include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include <QDebug>
+
+#include "../general/id.h"
 
 void MainWindow::ProcessingReceivedData(uint8_t Data[])
 {
