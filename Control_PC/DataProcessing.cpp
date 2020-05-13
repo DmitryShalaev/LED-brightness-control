@@ -52,7 +52,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case LED_1:
+    case OUT_1:
 
         if (Data[2] == ON) {
             ui->L_LED1->setPixmap(QPixmap(":/IMG/Resource/lamp_on.png").scaled(ui->L_LED1->width(),ui->L_LED1->height(),Qt::KeepAspectRatio));
@@ -64,7 +64,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case LED_2:
+    case OUT_2:
 
         if (Data[2] == ON) {
             ui->L_LED2->setPixmap(QPixmap(":/IMG/Resource/lamp_on.png").scaled(ui->L_LED2->width(),ui->L_LED2->height(),Qt::KeepAspectRatio));
@@ -76,7 +76,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case REL_1:
+    case OUT_3:
 
         if (Data[2] == ON) {
             ui->L_REL1->setPixmap(QPixmap(":/IMG/Resource/Relay_on.png").scaled(ui->L_REL1->width(),ui->L_REL1->height(),Qt::KeepAspectRatio));
@@ -88,7 +88,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case REL_2:
+    case OUT_4:
 
         if (Data[2] == ON) {
             ui->L_REL2->setPixmap(QPixmap(":/IMG/Resource/Relay_on.png").scaled(ui->L_REL2->width(),ui->L_REL2->height(),Qt::KeepAspectRatio));
@@ -110,7 +110,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case DK_1:
+    case IN_1:
 
         if (Data[2] == ON) {
             ui->L_DK1->setPixmap(QPixmap(":/IMG/Resource/Button_on.png").scaled(ui->L_DK1->width(),ui->L_DK1->height(),Qt::KeepAspectRatio));
@@ -120,7 +120,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
 
         break;
 
-    case DK_2:
+    case IN_2:
 
         if (Data[2] == ON) {
             ui->L_DK2->setPixmap(QPixmap(":/IMG/Resource/Button_on.png").scaled(ui->L_DK2->width(),ui->L_DK2->height(),Qt::KeepAspectRatio));
@@ -136,7 +136,7 @@ void MainWindow::ProcessingReceivedData(uint8_t Data[])
                                                Data[3])/1.2),'f',2) + " lx.");
         break;
 
-    case MOTION:
+    case IN_3:
 
         if (Data[2] == ON) {
             ui->L_MOTION->setPixmap(QPixmap(":/IMG/Resource/Open_eye.png").scaled(ui->L_MOTION->width(),ui->L_MOTION->height(),Qt::KeepAspectRatio));

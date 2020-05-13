@@ -376,7 +376,7 @@ void HAL_PWR_DisablePVD(void)
   * @brief Enables the WakeUp PINx functionality.
   * @param WakeUpPinx: Specifies the Power Wake-Up pin to enable.
   *        This parameter can be one of the following values:
-  *           @arg PWR_WAKEUP_PIN1
+  *           @arg PWR_WAKEUP_PIN_1
   * @retval None
   */
 void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinx)
@@ -391,7 +391,7 @@ void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinx)
   * @brief Disables the WakeUp PINx functionality.
   * @param WakeUpPinx: Specifies the Power Wake-Up pin to disable.
   *        This parameter can be one of the following values:
-  *           @arg PWR_WAKEUP_PIN1
+  *           @arg PWR_WAKEUP_PIN_1
   * @retval None
   */
 void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx)

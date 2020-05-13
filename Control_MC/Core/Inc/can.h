@@ -46,7 +46,7 @@ void MX_CAN_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 void CAN_Config(void);
-void Send_CAN(uint8_t Data[], uint16_t GetID);
+void Send_CAN(uint8_t Data[8], uint8_t GetID);
 
 /* USER CODE END Prototypes */
 

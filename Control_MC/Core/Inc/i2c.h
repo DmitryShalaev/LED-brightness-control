@@ -28,9 +28,6 @@
 
 /* USER CODE BEGIN Includes */
 
-#include <stdbool.h>
-#include <string.h>
-
 /* USER CODE END Includes */
 
 extern I2C_HandleTypeDef hi2c1;

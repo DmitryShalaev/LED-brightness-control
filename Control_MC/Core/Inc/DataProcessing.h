@@ -1,11 +1,8 @@
 #ifndef DATAPROCESSING_H_
 #define DATAPROCESSING_H_
 
-#include "i2c.h"
-#include "tim.h"
-#include "usart.h"
-#include "adc.h"
-#include "../../../GENERAL/id.h"
+#include "stdbool.h"
+#include "stdint.h"
 
 uint8_t PWM1, PWM2, PWM3;
 
@@ -15,7 +12,7 @@ uint8_t dataToSend[8];
 
 uint16_t PWMSpeed, PWMStep;
 
-void ProcessingData(uint8_t Data[], bool toSend);
-void SendData(uint8_t Data[], bool toSend);
+void ProcessingData(const uint8_t Data[8], bool toSend);
+void SendData(uint8_t Data[8], bool toSend);
 
 #endif /* DATAPROCESSING_H_ */

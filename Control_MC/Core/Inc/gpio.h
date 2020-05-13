@@ -29,25 +29,19 @@
 
 /* USER CODE BEGIN Includes */
 
-#include "DataProcessing.h"
-
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
 
-struct
-{
-  bool State; 
-  uint16_t Count; 
-}DK1, DK2 ;
+bool activatedEXTI2;
+bool activatedEXTI4;
+bool activatedEXTI5;
 
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
-void Button(void);
 
 /* USER CODE END Prototypes */
 

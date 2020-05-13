@@ -64,7 +64,7 @@ void MainWindow::L_LED1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = LED_1;
+    BufSend[1] = OUT_1;
 
     if(LED1){
         BufSend[2] = OFF;
@@ -79,7 +79,7 @@ void MainWindow::L_LED2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = LED_2;
+    BufSend[1] = OUT_2;
 
     if(LED2){
         BufSend[2] = OFF;
@@ -94,7 +94,7 @@ void MainWindow::L_REL1_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = REL_1;
+    BufSend[1] = OUT_3;
 
     if(REL1){
         BufSend[2] = OFF;
@@ -109,7 +109,7 @@ void MainWindow::L_REL2_clicked()
 {
     memset(BufSend, 0, sizeof(BufSend));
 
-    BufSend[1] = REL_2;
+    BufSend[1] = OUT_4;
 
     if(REL2){
         BufSend[2] = OFF;

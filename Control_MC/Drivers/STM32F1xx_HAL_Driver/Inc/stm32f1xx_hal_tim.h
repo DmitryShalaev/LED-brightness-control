@@ -259,7 +259,7 @@ typedef struct
 
 /**
   * @brief  TIM Break input(s) and Dead time configuration Structure definition
-  * @note   2 break inputs can be configured (BKIN and BKIN2) with configurable
+  * @note   2 break inputs can be configured (BKIN and BKIN_2) with configurable
   *        filter and polarity.
   */
 typedef struct
