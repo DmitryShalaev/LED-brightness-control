@@ -2,11 +2,7 @@
     <qresource prefix="/IMG">
         <file>Resource/Closed_eye.png</file>
         <file>Resource/Open_eye.png</file>
-        <file>Resource/lamp_off.png</file>
-        <file>Resource/lamp_on.png</file>
-        <file>Resource/Relay_off.png</file>
-        <file>Resource/Relay_on.png</file>
-        <file>Resource/Button_off.png</file>
-        <file>Resource/Button_on.png</file>
+        <file>Resource/Out_off.png</file>
+        <file>Resource/Out_on.png</file>
     </qresource>
 </RCC>

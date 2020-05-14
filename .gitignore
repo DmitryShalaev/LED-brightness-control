@@ -1,3 +1,6 @@
 Control_MC/VisualGDB/*
 Control_MC/.vs/*
-Control_PC-Build/*
+Control_PC/.vs/*
+Control_PC/x64/*
+Control_PC/debug/*
+Control_PC/release/*

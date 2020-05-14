@@ -3,20 +3,17 @@
 
 #include <QLabel>
 
-class CustomLabel : public QLabel
-{
-    Q_OBJECT
+class CustomLabel final : public QLabel {
+	Q_OBJECT
 
-public:
+	public:
 
-    explicit CustomLabel(QWidget *parent = nullptr);
+	explicit CustomLabel(QWidget* parent = nullptr);
 
-    void mousePressEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event) override;
 
-signals:
-    void Clicked();
-
-public slots:
+	signals:
+	void Clicked();
 };
 
 
