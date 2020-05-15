@@ -44,18 +44,16 @@ void MainWindow::Send(const bool broadcast) {
 }
 
 void MainWindow::RequestData() {
-	if (Serial->isOpen()) {
-		QByteArray Data = Serial->readAll();
+	QByteArray Data = Serial->readAll();
 
-		std::vector<unsigned char> buffer(Data.begin(), Data.end());
+	std::vector<unsigned char> buffer(Data.begin(), Data.end());
 
-		qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: "
-			<< ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+	qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: "
+		<< ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
-		ProcessingReceivedData(buffer.data());
+	ProcessingReceivedData(buffer.data());
 
-		qApp->processEvents();
-	}
+	qApp->processEvents();
 }
 
 void MainWindow::RequestUpdateData() {

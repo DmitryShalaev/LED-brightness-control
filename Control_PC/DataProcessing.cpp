@@ -101,43 +101,43 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 		case ADC:
 
 			ui->L_ADC1->setText(QString::number((static_cast<double>(((Data[2] & 0xF0) << 4) |
-				                                    Data[3]) * 3.3 / 4095), 'f', 3) + " V");
+																						Data[3]) * 3.3 / 4095), 'f', 3) + " V");
 
 			ui->L_ADC2->setText(QString::number((static_cast<double>(((Data[2] & 0x0F) << 8) |
-				                                    Data[4]) * 3.3 / 4095), 'f', 3) + " V");
+																						Data[4]) * 3.3 / 4095), 'f', 3) + " V");
 
 			break;
 
 		case IN_1:
 
 			if (Data[2] == ON)
-				ChangePixmap(ui->L_IN1, "::/IMG/Resource/Open_eye.png");
+				ChangePixmap(ui->L_IN1, ":/IMG/Resource/Open_eye.png");
 			else
-				ChangePixmap(ui->L_IN1, "::/IMG/Resource/Closed_eye.png");
+				ChangePixmap(ui->L_IN1, ":/IMG/Resource/Closed_eye.png");
 
 			break;
 
 		case IN_2:
 
 			if (Data[2] == ON)
-				ChangePixmap(ui->L_IN2, "::/IMG/Resource/Open_eye.png");
+				ChangePixmap(ui->L_IN2, ":/IMG/Resource/Open_eye.png");
 			else
-				ChangePixmap(ui->L_IN2, "::/IMG/Resource/Closed_eye.png");
+				ChangePixmap(ui->L_IN2, ":/IMG/Resource/Closed_eye.png");
 
 			break;
 
 		case LUX:
 
 			ui->L_BH1750->setText(QString::number((static_cast<double>((Data[2] << 8) |
-				                                      Data[3]) / 1.2), 'f', 2) + " lx.");
+																							Data[3]) / 1.2), 'f', 2) + " lx.");
 			break;
 
 		case IN_3:
 
 			if (Data[2] == ON)
-				ChangePixmap(ui->L_IN3, "::/IMG/Resource/Open_eye.png");
+				ChangePixmap(ui->L_IN3, ":/IMG/Resource/Open_eye.png");
 			else
-				ChangePixmap(ui->L_IN3, "::/IMG/Resource/Closed_eye.png");
+				ChangePixmap(ui->L_IN3, ":/IMG/Resource/Closed_eye.png");
 
 			break;
 

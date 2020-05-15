@@ -210,8 +210,7 @@
   <ItemGroup>
     <QtMoc Include="CustomLabel.h">
     </QtMoc>
-    <QtMoc Include="MainWindow.h">
-    </QtMoc>
+    <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">

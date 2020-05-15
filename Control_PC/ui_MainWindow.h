@@ -543,13 +543,13 @@ public:
         label_3->setText(QCoreApplication::translate("MainWindow", "PWM3", nullptr));
         label_11->setText(QCoreApplication::translate("MainWindow", "ALL PWM", nullptr));
         B_Connect->setText(QCoreApplication::translate("MainWindow", "Connect", nullptr));
-        L_OUT1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">LED1</p></body></html>", nullptr));
+        L_OUT1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT1</p></body></html>", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT1</p></body></html>", nullptr));
-        L_OUT2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">LED2</p></body></html>", nullptr));
+        L_OUT2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT2</p></body></html>", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT2</p></body></html>", nullptr));
-        L_OUT3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">REL1</p></body></html>", nullptr));
+        L_OUT3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT3</p></body></html>", nullptr));
         label_15->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT3</p></body></html>", nullptr));
-        L_OUT4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">REL2</p></body></html>", nullptr));
+        L_OUT4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT4</p></body></html>", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">OUT4</p></body></html>", nullptr));
         B_Scan->setText(QCoreApplication::translate("MainWindow", "Scan", nullptr));
         label_10->setText(QCoreApplication::translate("MainWindow", "PWM Speed:", nullptr));
