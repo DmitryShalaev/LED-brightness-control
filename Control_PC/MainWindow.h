@@ -46,7 +46,7 @@ class MainWindow final : public QMainWindow {
 	static QString ByteArrayToString(const QByteArray& arr);
 
 	template <typename T>
-	static void ChangePixmap(T* Label, const QString& str) {
+	static void ChangePixmap(T& Label, const QString& str) {
 		Label->setPixmap(QPixmap(str).scaled(Label->width(), Label->height(), Qt::KeepAspectRatio));
 	}
 

@@ -123,15 +123,13 @@ void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 2 */
 
-void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin)
-{
+void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin) {
 	memset(dataToSend, 0, sizeof(dataToSend));
 
 	dataToSend[0] = ID & 0x0FF;
 	dataToSend[1] = (ID & 0xF00) >> 3;
 
-	if (GPIO_Pin == GPIO_PIN_2)
-	{
+	if (GPIO_Pin == GPIO_PIN_2) {
 		HAL_NVIC_DisableIRQ(EXTI2_IRQn);
 
 		dataToSend[1] |= IN_3;
@@ -149,8 +147,7 @@ void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin)
 		return;
 	}
 
-	if (GPIO_Pin == GPIO_PIN_4)
-	{
+	if (GPIO_Pin == GPIO_PIN_4) {
 		HAL_NVIC_DisableIRQ(EXTI4_IRQn);
 
 		dataToSend[1] |= IN_1;
@@ -168,8 +165,7 @@ void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin)
 		return;
 	}
 
-	if (GPIO_Pin == GPIO_PIN_5)
-	{
+	if (GPIO_Pin == GPIO_PIN_5) {
 		HAL_NVIC_DisableIRQ(EXTI9_5_IRQn);
 
 		dataToSend[1] |= IN_2;

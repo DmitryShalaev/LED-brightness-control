@@ -101,23 +101,18 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 
 /* USER CODE BEGIN 1 */
 
-void I2C_launchBH1750(void)
-{
+void I2C_launchBH1750(void) {
 	I2C_included = false;
 
-	I2C_Buffer[0] = 0x01; //POWER_ON
-	I2C_Buffer[1] = 0x07;
-
-	if (HAL_I2C_Master_Transmit(&hi2c1, 0x23 << 1, I2C_Buffer, 2, 100) == HAL_OK)
-	{
+	I2C_Buffer[0] = 0x01;
+	if (HAL_I2C_Master_Transmit(&hi2c1, 0x23 << 1, I2C_Buffer, 1, 100) == HAL_OK) {
 		I2C_Buffer[0] = 0x11;
 		if (HAL_I2C_Master_Transmit(&hi2c1, 0x23 << 1, I2C_Buffer, 1, 100) == HAL_OK)
 			I2C_included = true;
 	}
 }
 
-void I2C_ReadBH1750(void)
-{
+void I2C_ReadBH1750(void) {
 	memset(I2C_Buffer, 0, sizeof(I2C_Buffer));
 
 	if (I2C_included)

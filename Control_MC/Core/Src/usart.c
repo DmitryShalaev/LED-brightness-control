@@ -112,10 +112,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
-{
-	if (huart == &huart1)
-	{
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+	if (huart == &huart1) {
 		Master = true;
 
 		const uint16_t RecipientID = ((dataReceive[1] & 0xE0) << 3) | dataReceive[0];

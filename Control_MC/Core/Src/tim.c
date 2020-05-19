@@ -293,80 +293,62 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-	if (htim->Instance == TIM4)
-	{
-		if ((PWMSpeed - 1) == PWMStep)
-		{
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+	if (htim->Instance == TIM4) {
+		if ((PWMSpeed - 1) == PWMStep) {
 			PWMStep = 0;
 
-			if (NewPWM1 != PWM1)
-			{
-				if (NewPWM1 > PWM1)
-				{
+			if (NewPWM1 != PWM1) {
+				if (NewPWM1 > PWM1) {
 					if (PWM1 < 255)
 						PWM1++;
-				}
-				else
-				{
+				} else {
 					if (PWM1 > 0)
 						PWM1--;
 				}
 				TIM3->CCR1 = PWM1;
 			}
 
-			if (NewPWM2 != PWM2)
-			{
-				if (NewPWM2 > PWM2)
-				{
+			if (NewPWM2 != PWM2) {
+				if (NewPWM2 > PWM2) {
 					if (PWM2 < 255)
 						PWM2++;
-				}
-				else
-				{
+				} else {
 					if (PWM2 > 0)
 						PWM2--;
 				}
 				TIM3->CCR2 = PWM2;
 			}
 
-			if (NewPWM3 != PWM3)
-			{
-				if (NewPWM3 > PWM3)
-				{
+			if (NewPWM3 != PWM3) {
+				if (NewPWM3 > PWM3) {
 					if (PWM3 < 255)
 						PWM3++;
-				}
-				else
-				{
+				} else {
 					if (PWM3 > 0)
 						PWM3--;
 				}
 				TIM3->CCR3 = PWM3;
 			}
+		} else {
+			PWMStep++;
 		}
-		else { PWMStep++; }
 
 		return;
 	}
 
-	if (htim->Instance == TIM2)
-	{
-		if (activatedEXTI2)
-		{
+	if (htim->Instance == TIM2) {
+		if (activatedEXTI2) {
 			HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 			activatedEXTI2 = false;
 		}
 
-		if (activatedEXTI4)
-		{
+		if (activatedEXTI4) {
 			HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 			activatedEXTI2 = false;
 		}
 
-		if (activatedEXTI5)
-		{
+		if (activatedEXTI5) {
 			HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 			activatedEXTI2 = false;
 		}

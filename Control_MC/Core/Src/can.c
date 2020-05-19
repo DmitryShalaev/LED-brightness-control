@@ -117,8 +117,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 
 /* USER CODE BEGIN 1 */
 
-void CAN_Config(void)
-{
+void CAN_Config(void) {
 	CAN_FilterTypeDef sFilterConfig;
 
 	sFilterConfig.FilterBank = 0;
@@ -139,24 +138,19 @@ void CAN_Config(void)
 	HAL_CAN_Start(&hcan);
 }
 
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
-{
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
 	HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 
 	const uint16_t RecipientID = ((RxData[1] & 0xE0) << 3) | RxData[0];
 
-	if (Master)
-	{
+	if (Master) {
 		HAL_UART_Transmit_IT(&huart1, RxData, 8);
-	}
-	else
-	{
+	} else {
 		ProcessingData(RxData, RecipientID != 0x000);
 	}
 }
 
-void Send_CAN(uint8_t Data[8], const uint8_t GetID)
-{
+void Send_CAN(uint8_t Data[8], const uint8_t GetID) {
 	TxHeader.StdId = GetID;
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
