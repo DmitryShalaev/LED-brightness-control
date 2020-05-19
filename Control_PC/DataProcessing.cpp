@@ -101,10 +101,10 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 		case ADC:
 
 			ui->L_ADC1->setText(QString::number((static_cast<double>(((Data[2] & 0xF0) << 4) |
-																						Data[3]) * 3.3 / 4095), 'f', 3) + " V");
+				                                    Data[3]) * 3.3 / 4095), 'f', 3) + " V");
 
 			ui->L_ADC2->setText(QString::number((static_cast<double>(((Data[2] & 0x0F) << 8) |
-																						Data[4]) * 3.3 / 4095), 'f', 3) + " V");
+				                                    Data[4]) * 3.3 / 4095), 'f', 3) + " V");
 
 			break;
 
@@ -129,7 +129,7 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 		case LUX:
 
 			ui->L_BH1750->setText(QString::number((static_cast<double>((Data[2] << 8) |
-																							Data[3]) / 1.2), 'f', 2) + " lx.");
+				                                      Data[3]) / 1.2), 'f', 2) + " lx.");
 			break;
 
 		case IN_3:
