@@ -139,8 +139,6 @@ void CAN_Config(void) {
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
-	uint8_t RxData[8] = {0};
-	
 	HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
 
 	const uint16_t RecipientID = ((RxData[1] & 0xE0) << 3) | RxData[0];

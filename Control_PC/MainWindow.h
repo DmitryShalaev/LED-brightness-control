@@ -39,7 +39,7 @@ class MainWindow final : public QMainWindow {
 	private:
 
 	void Init();
-	void Send(uint8_t* BufSend, bool broadcast = false);
+	void Send(bool broadcast = false);
 	void ProcessingReceivedData(const uint8_t Data[8]);
 	void Connected();
 
@@ -59,6 +59,8 @@ class MainWindow final : public QMainWindow {
 
 	uint16_t MasterID = 0x0;
 
+	uint8_t BufSend[8] = {0};
+
 	bool Connect = false;
 
 	bool OUT1 = false;
@@ -68,6 +70,11 @@ class MainWindow final : public QMainWindow {
 
 	bool RequestUpdateDataFlag = false;
 
+	uint8_t PWM1 = 0;
+	uint8_t PWM2 = 0;
+	uint8_t PWM3 = 0;
+
+	uint8_t MeanPWM = 0;
 };
 
 #endif // MAINWINDOW_H

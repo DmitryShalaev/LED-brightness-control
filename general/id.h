@@ -22,5 +22,4 @@
 
 #define CONNECTED   0x1F
 
-
 #endif // ID_H

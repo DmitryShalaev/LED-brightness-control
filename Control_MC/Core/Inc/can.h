@@ -36,6 +36,7 @@ extern CAN_HandleTypeDef hcan;
 
 CAN_TxHeaderTypeDef TxHeader;
 CAN_RxHeaderTypeDef RxHeader;
+uint8_t RxData[8];
 uint32_t TxMailbox;
 
 /* USER CODE END Private defines */

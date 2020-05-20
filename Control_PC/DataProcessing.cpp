@@ -40,9 +40,13 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 				OUT4 = false;
 			}
 
-			ui->S_PWM1->setValue(Data[3]);
-			ui->S_PWM2->setValue(Data[4]);
-			ui->S_PWM3->setValue(Data[5]);
+			PWM1 = Data[3];
+			PWM2 = Data[4];
+			PWM3 = Data[5];
+
+			ui->S_PWM1->setValue(PWM1);
+			ui->S_PWM2->setValue(PWM2);
+			ui->S_PWM3->setValue(PWM3);
 
 			break;
 
