@@ -115,7 +115,7 @@ typedef struct
   * @{
   */
 
-#define PWR_WAKEUP_PIN_1                 PWR_CSR_EWUP
+#define PWR_WAKEUP_PIN1                 PWR_CSR_EWUP
 
 /**
   * @}
@@ -300,7 +300,7 @@ typedef struct
                               ((MODE) == PWR_PVD_MODE_EVENT_FALLING) || ((MODE) == PWR_PVD_MODE_EVENT_RISING_FALLING) || \
                               ((MODE) == PWR_PVD_MODE_NORMAL)) 
 
-#define IS_PWR_WAKEUP_PIN(PIN) (((PIN) == PWR_WAKEUP_PIN_1))
+#define IS_PWR_WAKEUP_PIN(PIN) (((PIN) == PWR_WAKEUP_PIN1))
 
 #define IS_PWR_REGULATOR(REGULATOR) (((REGULATOR) == PWR_MAINREGULATOR_ON) || \
                                      ((REGULATOR) == PWR_LOWPOWERREGULATOR_ON))

@@ -3,12 +3,12 @@
 #include "adc.h"
 #include "can.h"
 #include "i2c.h"
-#include "string.h"
+#include "tim.h"
 #include "usart.h"
 #include "../../../general/id.h"
 
 void ProcessingData(const uint8_t Data[8], const bool toSend) {
-	memset(dataToSend, 0, sizeof(dataToSend));
+	uint8_t dataToSend[8] = {0};
 
 	dataToSend[0] = ID & 0x0FF;
 	dataToSend[1] = (ID & 0xF00) >> 3;
@@ -154,12 +154,9 @@ void ProcessingData(const uint8_t Data[8], const bool toSend) {
 
 		case LUX:
 
-			I2C_ReadBH1750();
+			I2C_ReadBH1750(&dataToSend[2]);
 
 			dataToSend[1] |= LUX;
-
-			dataToSend[2] = I2C_Buffer[0];
-			dataToSend[3] = I2C_Buffer[1];
 
 			SendData(dataToSend, toSend);
 

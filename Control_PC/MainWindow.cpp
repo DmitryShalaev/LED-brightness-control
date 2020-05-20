@@ -23,7 +23,7 @@ MainWindow::~MainWindow() {
 	delete ui;
 }
 
-void MainWindow::Send(const bool broadcast) {
+void MainWindow::Send(uint8_t* BufSend, const bool broadcast) {
 	const QSerialPortInfo* PortCheck = new QSerialPortInfo(ui->CB_SerialPort->currentText());
 	if (PortCheck->isNull())
 		on_B_Connect_clicked();
@@ -57,16 +57,16 @@ void MainWindow::RequestData() {
 }
 
 void MainWindow::RequestUpdateData() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	if (RequestUpdateDataFlag) {
 		BufSend[1] = LUX;
-		Send();
+		Send(BufSend);
 
 		RequestUpdateDataFlag = false;
 	} else {
 		BufSend[1] = ADC;
-		Send();
+		Send(BufSend);
 
 		RequestUpdateDataFlag = true;
 	}
@@ -91,13 +91,13 @@ void MainWindow::Connected() {
 
 	qDebug() << "Connect";
 
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = INIT;
 	BufSend[2] = MasterID & 0x0FF;
 	BufSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
 
-	Send(true);
+	Send(BufSend, true);
 
 	ui->TE_PWMSpeed->setTime(Settings->value("TE_PWMSpeed").toTime());
 

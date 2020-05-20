@@ -17,10 +17,11 @@ void MainWindow::on_B_Connect_clicked() {
 		Serial->setFlowControl(QSerialPort::NoFlowControl);
 
 		if (Serial->open(QIODevice::ReadWrite)) {
-			memset(BufSend, 0, sizeof(BufSend));
 
+			uint8_t BufSend[8] = {0};
 			BufSend[1] = CONNECTED;
-			Send(true);
+			Send(BufSend, true);
+
 		} else {
 			qDebug() << "Connect error";
 		}
@@ -54,7 +55,7 @@ void MainWindow::on_B_Connect_clicked() {
 }
 
 void MainWindow::L_OUT1_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = OUT_1;
 
@@ -63,11 +64,11 @@ void MainWindow::L_OUT1_clicked() {
 	else
 		BufSend[2] = ON;
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::L_OUT2_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = OUT_2;
 
@@ -76,11 +77,11 @@ void MainWindow::L_OUT2_clicked() {
 	else
 		BufSend[2] = ON;
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::L_OUT3_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = OUT_3;
 
@@ -89,11 +90,11 @@ void MainWindow::L_OUT3_clicked() {
 	else
 		BufSend[2] = ON;
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::L_OUT4_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = OUT_4;
 
@@ -102,44 +103,38 @@ void MainWindow::L_OUT4_clicked() {
 	else
 		BufSend[2] = ON;
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::on_S_PWM1_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
-
-	PWM1 = static_cast<uint8_t>(ui->S_PWM1->value());
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = PWM_1;
-	BufSend[2] = PWM1;
+	BufSend[2] = static_cast<uint8_t>(ui->S_PWM1->value());
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::on_S_PWM2_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
-
-	PWM2 = static_cast<uint8_t>(ui->S_PWM2->value());
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = PWM_2;
-	BufSend[2] = PWM2;
+	BufSend[2] = static_cast<uint8_t>(ui->S_PWM2->value());
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::on_S_PWM3_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
-
-	PWM3 = static_cast<uint8_t>(ui->S_PWM3->value());
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = PWM_3;
-	BufSend[2] = PWM3;
+	BufSend[2] = static_cast<uint8_t>(ui->S_PWM3->value());
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::on_S_ALLPWM_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	ui->S_PWM1->setValue(ui->S_ALLPWM->value());
 	ui->S_PWM2->setValue(ui->S_ALLPWM->value());
@@ -148,19 +143,19 @@ void MainWindow::on_S_ALLPWM_sliderReleased() {
 	BufSend[1] = ALLPWM;
 	BufSend[2] = static_cast<uint8_t>(ui->S_ALLPWM->value());
 
-	Send();
+	Send(BufSend);
 }
 
 void MainWindow::on_TE_PWMSpeed_userTimeChanged(const QTime& time) {
 	Settings->setValue("TE_PWMSpeed", time);
 
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t BufSend[8] = {0};
 
 	BufSend[1] = TIME;
 	BufSend[2] = static_cast<uint8_t>(time.minute());
 	BufSend[3] = static_cast<uint8_t>(time.second());
 
-	Send(true);
+	Send(BufSend, true);
 }
 
 void MainWindow::on_RB_Update_clicked(const bool checked) {

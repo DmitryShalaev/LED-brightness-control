@@ -34,7 +34,6 @@ extern I2C_HandleTypeDef hi2c1;
 
 /* USER CODE BEGIN Private defines */
 
-uint8_t I2C_Buffer[2];
 bool I2C_included;
 
 /* USER CODE END Private defines */
@@ -44,7 +43,7 @@ void MX_I2C1_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 void I2C_launchBH1750(void);
-void I2C_ReadBH1750(void);
+void I2C_ReadBH1750(uint8_t* I2C_Buffer);
 
 /* USER CODE END Prototypes */
 
