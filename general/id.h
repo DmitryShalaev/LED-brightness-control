@@ -22,4 +22,6 @@
 
 #define CONNECTED   0x1F
 
+#define PACKET_SIZE 6
+
 #endif // ID_H

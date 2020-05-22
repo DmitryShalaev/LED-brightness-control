@@ -23,24 +23,27 @@ MainWindow::~MainWindow() {
 	delete ui;
 }
 
-void MainWindow::Send(const bool broadcast) {
+void MainWindow::Send(uint8_t dataToSend[], const bool broadcast) {
 	const QSerialPortInfo* PortCheck = new QSerialPortInfo(ui->CB_SerialPort->currentText());
-	if (PortCheck->isNull())
-		on_B_Connect_clicked();
+	
+	if (!PortCheck->isNull() && Serial->isOpen()) {
+		
+		dataToSend[0] = static_cast<uint8_t>((broadcast ? 0x0 : ui->SB_ID->value()) & 0x00FF);
+		dataToSend[1] |= static_cast<uint8_t>(((broadcast ? 0x0 : ui->SB_ID->value()) & 0x0F00) >> 3);
 
-	if (Serial->isOpen()) {
-		BufSend[0] = static_cast<uint8_t>((broadcast ? 0x0 : ui->SB_ID->value()) & 0x00FF);
-		BufSend[1] |= static_cast<uint8_t>(((broadcast ? 0x0 : ui->SB_ID->value()) & 0x0F00) >> 3);
+		QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(dataToSend), sizeof(dataToSend));
+		Data.resize(PACKET_SIZE);
 
-		const QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(BufSend), sizeof(BufSend));
-
-		qDebug() << "Sent to :   " << QString().setNum(((BufSend[1] & 0xE0) << 3) | BufSend[0]) << " Message: " <<
-			ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+		qDebug() << "Sent to :   " << QString().setNum(((dataToSend[1] & 0xE0) << 3) | dataToSend[0]) << " Message: " <<
+								ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
 		Serial->write(Data);
-
-		qApp->processEvents();
+		
+	} else {
+		on_B_Connect_clicked();
 	}
+
+	qApp->processEvents();
 }
 
 void MainWindow::RequestData() {
@@ -48,28 +51,26 @@ void MainWindow::RequestData() {
 
 	std::vector<unsigned char> buffer(Data.begin(), Data.end());
 
-	qDebug() << "Taken from: " << QString().setNum(((buffer.data()[1] & 0xE0) << 3) | buffer.data()[0]) << " Message: "
-		<< ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+	qDebug() << "Taken from: " << QString().setNum(((buffer[1] & 0xE0) << 3) | buffer[0]) << " Message: " << 
+							ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
 	ProcessingReceivedData(buffer.data());
-
+	
 	qApp->processEvents();
 }
 
 void MainWindow::RequestUpdateData() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
 	if (RequestUpdateDataFlag) {
-		BufSend[1] = LUX;
-		Send();
-
+		dataToSend[1] = LUX;
 		RequestUpdateDataFlag = false;
 	} else {
-		BufSend[1] = ADC;
-		Send();
-
+		dataToSend[1] = ADC;
 		RequestUpdateDataFlag = true;
 	}
+	
+	Send(dataToSend);
 }
 
 void MainWindow::Connected() {
@@ -91,13 +92,13 @@ void MainWindow::Connected() {
 
 	qDebug() << "Connect";
 
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = INIT;
-	BufSend[2] = MasterID & 0x0FF;
-	BufSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
+	dataToSend[1] = INIT;
+	dataToSend[2] = MasterID & 0x0FF;
+	dataToSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
 
-	Send(true);
+	Send(dataToSend, true);
 
 	ui->TE_PWMSpeed->setTime(Settings->value("TE_PWMSpeed").toTime());
 

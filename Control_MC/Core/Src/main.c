@@ -121,7 +121,7 @@ int main(void)
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADC_Data, 4);
 
-	HAL_UART_Receive_IT(&huart1, dataReceive, 8);
+	HAL_UART_Receive_IT(&huart1, dataReceive, PACKET_SIZE);
 	
   /* USER CODE END 2 */
 

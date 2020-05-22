@@ -36,7 +36,6 @@ extern CAN_HandleTypeDef hcan;
 
 CAN_TxHeaderTypeDef TxHeader;
 CAN_RxHeaderTypeDef RxHeader;
-uint8_t RxData[8];
 uint32_t TxMailbox;
 
 /* USER CODE END Private defines */
@@ -46,7 +45,7 @@ void MX_CAN_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 void CAN_Config(void);
-void Send_CAN(uint8_t Data[8], uint8_t GetID);
+void Send_CAN(uint8_t Data[], uint8_t GetID);
 
 /* USER CODE END Prototypes */
 

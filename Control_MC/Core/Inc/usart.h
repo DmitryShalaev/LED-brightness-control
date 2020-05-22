@@ -28,13 +28,15 @@
 
 /* USER CODE BEGIN Includes */
 
+#include "../../../general/id.h"
+
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
 
-uint8_t dataReceive[8];
+uint8_t dataReceive[PACKET_SIZE];
 
 /* USER CODE END Private defines */
 

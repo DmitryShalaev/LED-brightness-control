@@ -1,6 +1,6 @@
+#include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QDebug>
 
 #include "../general/id.h"
 
@@ -17,13 +17,17 @@ void MainWindow::on_B_Connect_clicked() {
 		Serial->setFlowControl(QSerialPort::NoFlowControl);
 
 		if (Serial->open(QIODevice::ReadWrite)) {
-			memset(BufSend, 0, sizeof(BufSend));
 
-			BufSend[1] = CONNECTED;
-			Send(true);
+			uint8_t dataToSend[PACKET_SIZE] = {0};
+
+			dataToSend[1] = CONNECTED;
+
+			Send(dataToSend, true);
+
 		} else {
 			qDebug() << "Connect error";
 		}
+
 	} else {
 		if (Serial->isOpen())
 			Serial->close();
@@ -54,113 +58,107 @@ void MainWindow::on_B_Connect_clicked() {
 }
 
 void MainWindow::L_OUT1_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = OUT_1;
+	dataToSend[1] = OUT_1;
 
 	if (OUT1)
-		BufSend[2] = OFF;
+		dataToSend[2] = OFF;
 	else
-		BufSend[2] = ON;
+		dataToSend[2] = ON;
 
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::L_OUT2_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = OUT_2;
+	dataToSend[1] = OUT_2;
 
 	if (OUT2)
-		BufSend[2] = OFF;
+		dataToSend[2] = OFF;
 	else
-		BufSend[2] = ON;
+		dataToSend[2] = ON;
 
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::L_OUT3_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = OUT_3;
+	dataToSend[1] = OUT_3;
 
 	if (OUT3)
-		BufSend[2] = OFF;
+		dataToSend[2] = OFF;
 	else
-		BufSend[2] = ON;
+		dataToSend[2] = ON;
 
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::L_OUT4_clicked() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = OUT_4;
+	dataToSend[1] = OUT_4;
 
 	if (OUT4)
-		BufSend[2] = OFF;
+		dataToSend[2] = OFF;
 	else
-		BufSend[2] = ON;
+		dataToSend[2] = ON;
 
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::on_S_PWM1_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	PWM1 = static_cast<uint8_t>(ui->S_PWM1->value());
+	dataToSend[1] = PWM_1;
+	dataToSend[2] = static_cast<uint8_t>(ui->S_PWM1->value());
 
-	BufSend[1] = PWM_1;
-	BufSend[2] = PWM1;
-
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::on_S_PWM2_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	PWM2 = static_cast<uint8_t>(ui->S_PWM2->value());
+	dataToSend[1] = PWM_2;
+	dataToSend[2] = static_cast<uint8_t>(ui->S_PWM2->value());
 
-	BufSend[1] = PWM_2;
-	BufSend[2] = PWM2;
-
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::on_S_PWM3_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	PWM3 = static_cast<uint8_t>(ui->S_PWM3->value());
+	dataToSend[1] = PWM_3;
+	dataToSend[2] = static_cast<uint8_t>(ui->S_PWM3->value());
 
-	BufSend[1] = PWM_3;
-	BufSend[2] = PWM3;
-
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::on_S_ALLPWM_sliderReleased() {
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
 	ui->S_PWM1->setValue(ui->S_ALLPWM->value());
 	ui->S_PWM2->setValue(ui->S_ALLPWM->value());
 	ui->S_PWM3->setValue(ui->S_ALLPWM->value());
 
-	BufSend[1] = ALLPWM;
-	BufSend[2] = static_cast<uint8_t>(ui->S_ALLPWM->value());
+	dataToSend[1] = ALLPWM;
+	dataToSend[2] = static_cast<uint8_t>(ui->S_ALLPWM->value());
 
-	Send();
+	Send(dataToSend);
 }
 
 void MainWindow::on_TE_PWMSpeed_userTimeChanged(const QTime& time) {
 	Settings->setValue("TE_PWMSpeed", time);
 
-	memset(BufSend, 0, sizeof(BufSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
-	BufSend[1] = TIME;
-	BufSend[2] = static_cast<uint8_t>(time.minute());
-	BufSend[3] = static_cast<uint8_t>(time.second());
+	dataToSend[1] = TIME;
+	dataToSend[2] = static_cast<uint8_t>(time.minute());
+	dataToSend[3] = static_cast<uint8_t>(time.second());
 
-	Send(true);
+	Send(dataToSend, true);
 }
 
 void MainWindow::on_RB_Update_clicked(const bool checked) {

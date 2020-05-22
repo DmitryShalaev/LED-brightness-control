@@ -23,7 +23,6 @@
 
 #include <DataProcessing.h>
 
-#include "string.h"
 #include "tim.h"
 #include "../../../general/id.h"
 
@@ -124,7 +123,7 @@ void MX_GPIO_Init(void)
 /* USER CODE BEGIN 2 */
 
 void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin) {
-	memset(dataToSend, 0, sizeof(dataToSend));
+	uint8_t dataToSend[PACKET_SIZE] = {0};
 
 	dataToSend[0] = ID & 0x0FF;
 	dataToSend[1] = (ID & 0xF00) >> 3;

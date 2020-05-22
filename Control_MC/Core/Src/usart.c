@@ -113,6 +113,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+
 	if (huart == &huart1) {
 		Master = true;
 
@@ -125,7 +126,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
 			ProcessingData(dataReceive, RecipientID != 0x000);
 	}
 
-	HAL_UART_Receive_IT(&huart1, dataReceive, 8);
+	HAL_UART_Receive_IT(&huart1, dataReceive, PACKET_SIZE);
 }
 
 /* USER CODE END 1 */

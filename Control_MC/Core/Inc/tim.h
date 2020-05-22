@@ -36,6 +36,10 @@ extern TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN Private defines */
 
+uint8_t PWM1, PWM2, PWM3;
+uint8_t NewPWM1, NewPWM2, NewPWM3;
+uint16_t PWMSpeed, PWMStep;
+ 	
 /* USER CODE END Private defines */
 
 void MX_TIM2_Init(void);

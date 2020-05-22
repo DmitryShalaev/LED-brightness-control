@@ -1,7 +1,8 @@
-#include "MainWindow.h"
 #include <QApplication>
-#include <Windows.h>
 #include <stdio.h>
+#include <Windows.h>
+#include "MainWindow.h"
+#include "../general/id.h"
 
 int main(int argc, char* argv[]) {
 	FreeConsole();
@@ -22,8 +23,8 @@ int main(int argc, char* argv[]) {
 
 QString MainWindow::ByteArrayToString(const QByteArray& arr) {
 	QString str;
-	for (int i = 0; i < 8; i++)
-		if (i != 7)
+	for (int i = 0; i < PACKET_SIZE; i++)
+		if (i != PACKET_SIZE - 1)
 			str += QString("%1:").arg(static_cast<unsigned char>(arr[i]), 2, 16, QChar('0')).toUpper();
 		else
 			str += QString("%1").arg(static_cast<unsigned char>(arr[i]), 2, 16, QChar('0')).toUpper();

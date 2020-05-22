@@ -1,10 +1,10 @@
+#include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QDebug>
 
 #include "../general/id.h"
 
-void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
+void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 	switch (Data[1] & 0x1F) {
 		case INIT:
 
@@ -40,13 +40,9 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 				OUT4 = false;
 			}
 
-			PWM1 = Data[3];
-			PWM2 = Data[4];
-			PWM3 = Data[5];
-
-			ui->S_PWM1->setValue(PWM1);
-			ui->S_PWM2->setValue(PWM2);
-			ui->S_PWM3->setValue(PWM3);
+			ui->S_PWM1->setValue(Data[3]);
+			ui->S_PWM2->setValue(Data[4]);
+			ui->S_PWM3->setValue(Data[5]);
 
 			break;
 
@@ -101,10 +97,10 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 		case ADC:
 
 			ui->L_ADC1->setText(QString::number((static_cast<double>(((Data[2] & 0xF0) << 4) |
-				                                    Data[3]) * 3.3 / 4095), 'f', 3) + " V");
+																						Data[3]) * 3.3 / 4095), 'f', 3) + " V");
 
 			ui->L_ADC2->setText(QString::number((static_cast<double>(((Data[2] & 0x0F) << 8) |
-				                                    Data[4]) * 3.3 / 4095), 'f', 3) + " V");
+																						Data[4]) * 3.3 / 4095), 'f', 3) + " V");
 
 			break;
 
@@ -129,7 +125,7 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[8]) {
 		case LUX:
 
 			ui->L_BH1750->setText(QString::number((static_cast<double>((Data[2] << 8) |
-				                                      Data[3]) / 1.2), 'f', 2) + " lx.");
+																							Data[3]) / 1.2), 'f', 2) + " lx.");
 			break;
 
 		case IN_3:
