@@ -20,7 +20,6 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -92,7 +91,7 @@ public:
     QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_16;
-    QSpinBox *SB_ID;
+    QComboBox *CB_ID;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -221,6 +220,8 @@ public:
         RB_Update->setObjectName(QString::fromUtf8("RB_Update"));
         RB_Update->setEnabled(false);
         RB_Update->setGeometry(QRect(290, 90, 61, 19));
+        RB_Update->setCheckable(true);
+        RB_Update->setChecked(false);
         RB_Update->setAutoExclusive(false);
         layoutWidget212 = new QWidget(centralWidget);
         layoutWidget212->setObjectName(QString::fromUtf8("layoutWidget212"));
@@ -245,6 +246,9 @@ public:
         S_PWM1->setEnabled(false);
         S_PWM1->setMinimumSize(QSize(172, 16));
         S_PWM1->setMaximumSize(QSize(172, 16));
+        S_PWM1->setMouseTracking(false);
+        S_PWM1->setTabletTracking(false);
+        S_PWM1->setAcceptDrops(false);
         S_PWM1->setMinimum(0);
         S_PWM1->setMaximum(255);
         S_PWM1->setSingleStep(1);
@@ -457,7 +461,9 @@ public:
 
         CB_SerialPort = new QComboBox(centralWidget);
         CB_SerialPort->setObjectName(QString::fromUtf8("CB_SerialPort"));
+        CB_SerialPort->setEnabled(true);
         CB_SerialPort->setGeometry(QRect(20, 270, 80, 20));
+        CB_SerialPort->setEditable(false);
         B_Scan = new QPushButton(centralWidget);
         B_Scan->setObjectName(QString::fromUtf8("B_Scan"));
         B_Scan->setGeometry(QRect(110, 270, 80, 20));
@@ -498,7 +504,7 @@ public:
 
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(370, 190, 75, 25));
+        layoutWidget1->setGeometry(QRect(360, 190, 75, 25));
         horizontalLayout_10 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_10->setSpacing(6);
         horizontalLayout_10->setContentsMargins(11, 11, 11, 11);
@@ -507,20 +513,32 @@ public:
         label_16 = new QLabel(layoutWidget1);
         label_16->setObjectName(QString::fromUtf8("label_16"));
         label_16->setMinimumSize(QSize(0, 0));
-        label_16->setMaximumSize(QSize(999999, 999999));
+        label_16->setMaximumSize(QSize(16, 23));
 
         horizontalLayout_10->addWidget(label_16);
 
-        SB_ID = new QSpinBox(layoutWidget1);
-        SB_ID->setObjectName(QString::fromUtf8("SB_ID"));
-        SB_ID->setEnabled(false);
-        SB_ID->setMaximum(2047);
+        CB_ID = new QComboBox(layoutWidget1);
+        CB_ID->setObjectName(QString::fromUtf8("CB_ID"));
+        CB_ID->setEnabled(false);
+        CB_ID->setMaximumSize(QSize(51, 20));
+        CB_ID->setEditable(true);
 
-        horizontalLayout_10->addWidget(SB_ID);
+        horizontalLayout_10->addWidget(CB_ID);
 
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
+        QObject::connect(B_Connect, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
+        QObject::connect(B_Scan, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
+        QObject::connect(S_PWM1, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
+        QObject::connect(S_PWM2, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
+        QObject::connect(S_PWM3, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
+        QObject::connect(S_ALLPWM, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
+        QObject::connect(RB_Update, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
+        QObject::connect(TE_PWMSpeed, SIGNAL(userTimeChanged(QTime)), MainWindow, SLOT(PWMSpeedChange(QTime)));
+
+        CB_ID->setCurrentIndex(-1);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -555,6 +573,7 @@ public:
         label_10->setText(QCoreApplication::translate("MainWindow", "PWM Speed:", nullptr));
         TE_PWMSpeed->setDisplayFormat(QCoreApplication::translate("MainWindow", "mm:ss", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "ID:", nullptr));
+        CB_ID->setCurrentText(QString());
     } // retranslateUi
 
 };

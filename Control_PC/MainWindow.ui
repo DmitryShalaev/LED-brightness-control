@@ -212,6 +212,12 @@
     <property name="text">
      <string>Update</string>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
     <property name="autoExclusive">
      <bool>false</bool>
     </property>
@@ -263,6 +269,15 @@
            <width>172</width>
            <height>16</height>
           </size>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="tabletTracking">
+          <bool>false</bool>
+         </property>
+         <property name="acceptDrops">
+          <bool>false</bool>
          </property>
          <property name="minimum">
           <number>0</number>
@@ -713,6 +728,9 @@
     </layout>
    </widget>
    <widget class="QComboBox" name="CB_SerialPort">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -720,6 +738,9 @@
       <width>80</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="editable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="B_Scan">
@@ -835,7 +856,7 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>360</x>
       <y>190</y>
       <width>75</width>
       <height>25</height>
@@ -852,8 +873,8 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>999999</width>
-         <height>999999</height>
+         <width>16</width>
+         <height>23</height>
         </size>
        </property>
        <property name="text">
@@ -862,12 +883,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="SB_ID">
+      <widget class="QComboBox" name="CB_ID">
        <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="maximum">
-        <number>2047</number>
+       <property name="maximumSize">
+        <size>
+         <width>51</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
       </widget>
      </item>
@@ -884,5 +917,139 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>B_Connect</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ButtonProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>85</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>B_Scan</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ButtonProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>156</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>S_PWM1</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SliderProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>S_PWM2</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SliderProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>S_PWM3</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SliderProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>320</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>S_ALLPWM</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SliderProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>348</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>355</x>
+     <y>352</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RB_Update</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ButtonProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>297</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TE_PWMSpeed</sender>
+   <signal>userTimeChanged(QTime)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>PWMSpeedChange(QTime)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>198</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>ButtonProcessing()</slot>
+  <slot>SliderProcessing()</slot>
+  <slot>PWMSpeedChange(QTime)</slot>
+ </slots>
 </ui>

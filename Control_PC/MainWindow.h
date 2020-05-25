@@ -23,26 +23,20 @@ class MainWindow final : public QMainWindow {
 
 	void RequestData();
 	void RequestUpdateData();
-	void on_B_Connect_clicked();
-	void L_OUT1_clicked();
-	void L_OUT2_clicked();
-	void L_OUT3_clicked();
-	void L_OUT4_clicked();
-	void on_S_PWM1_sliderReleased();
-	void on_S_PWM2_sliderReleased();
-	void on_S_PWM3_sliderReleased();
-	void on_RB_Update_clicked(bool checked);
-	void on_S_ALLPWM_sliderReleased();
-	void on_B_Scan_clicked();
-	void on_TE_PWMSpeed_userTimeChanged(const QTime& time);
+	void PWMSpeedChange(const QTime& time);
+	void ButtonProcessing();
+	void SliderProcessing();
 
 	private:
 
 	void Init();
+	void ConnectionCheck();
 	void Send(uint8_t dataToSend[], bool broadcast = false);
 	void ProcessingReceivedData(const uint8_t Data[]);
+	void SearchForUARTDevices();
 	void Connected();
 
+	uint16_t RecipientID();
 	static QString ByteArrayToString(const QByteArray& arr);
 
 	template <typename T>
@@ -60,6 +54,14 @@ class MainWindow final : public QMainWindow {
 	uint16_t MasterID = 0x0;
 
 	bool Connect = false;
+
+	struct NodeState { //TODO
+		uint16_t ID = 0x0;
+		uint8_t logicIO = 0x0;
+		uint8_t PWM1 = 0;
+		uint8_t PWM2 = 0;
+		uint8_t PWM3 = 0;
+	};
 
 	bool OUT1 = false;
 	bool OUT2 = false;
