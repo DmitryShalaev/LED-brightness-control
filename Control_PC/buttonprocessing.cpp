@@ -1,6 +1,6 @@
-#include <QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include	<QDebug>
 
 #include "../general/id.h"
 
@@ -18,7 +18,6 @@ void MainWindow::ButtonProcessing() {
 			dataToSend[2] = ON;
 
 		Send(dataToSend);
-		return;
 	}
 
 	if (SenderName == "L_OUT2") {
@@ -66,7 +65,9 @@ void MainWindow::ButtonProcessing() {
 	}
 
 	if (SenderName == "B_Connect") {
-		ConnectionCheck();
+		if (LoadingJSONFile())
+			ConnectionCheck();
+		
 		return;
 	}
 
@@ -118,8 +119,6 @@ void MainWindow::SliderProcessing() {
 }
 
 void MainWindow::PWMSpeedChange(const QTime& time) {
-	Settings->setValue("TE_PWMSpeed", time);
-
 	uint8_t dataToSend[PACKET_SIZE] = {0};
 
 	dataToSend[1] = TIME;

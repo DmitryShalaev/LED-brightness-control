@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QCoreApplication>
 #include <QMainWindow>
 #include <QSerialPort>
 #include <QSerialPortInfo>
@@ -36,8 +37,8 @@ class MainWindow final : public QMainWindow {
 	void SearchForUARTDevices();
 	void Connected();
 
-	uint16_t RecipientID();
 	static QString ByteArrayToString(const QByteArray& arr);
+	bool LoadingJSONFile();
 
 	template <typename T>
 	static void ChangePixmap(T& Label, const QString& str) {
@@ -49,13 +50,13 @@ class MainWindow final : public QMainWindow {
 	QTimer* UpdateDataTimer = new QTimer(this);
 
 	QSerialPort* Serial = new QSerialPort(this);
-	QSettings* Settings = new QSettings(this);
+	QSettings* Settings = new QSettings(QCoreApplication::applicationDirPath() + "/Settings.ini", QSettings::IniFormat, this);
 
 	uint16_t MasterID = 0x0;
 
 	bool Connect = false;
 
-	struct NodeState { //TODO
+	struct NodeState {
 		uint16_t ID = 0x0;
 		uint8_t logicIO = 0x0;
 		uint8_t PWM1 = 0;

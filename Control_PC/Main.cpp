@@ -13,8 +13,8 @@ int main(int argc, char* argv[]) {
 	freopen_s(&FileStream, "CON", "w", stdout);
 	freopen_s(&FileStream, "CON", "w", stderr);
 
-	QApplication::setOrganizationName("Control");
-	QApplication::setApplicationName("Main");
+	QApplication::setOrganizationName("DmitryShalaev");
+	QApplication::setApplicationName("Control");
 	
 	QApplication a(argc, argv);
 	MainWindow w;

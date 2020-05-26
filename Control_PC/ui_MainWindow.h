@@ -486,17 +486,17 @@ public:
         TE_PWMSpeed->setObjectName(QString::fromUtf8("TE_PWMSpeed"));
         TE_PWMSpeed->setEnabled(false);
         TE_PWMSpeed->setMinimumSize(QSize(0, 0));
-        TE_PWMSpeed->setMaximumSize(QSize(9999999, 999999));
+        TE_PWMSpeed->setMaximumSize(QSize(56, 23));
+        TE_PWMSpeed->setAcceptDrops(true);
         TE_PWMSpeed->setWrapping(true);
-        TE_PWMSpeed->setFrame(true);
-        TE_PWMSpeed->setReadOnly(false);
         TE_PWMSpeed->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
-        TE_PWMSpeed->setAccelerated(false);
-        TE_PWMSpeed->setKeyboardTracking(true);
         TE_PWMSpeed->setProperty("showGroupSeparator", QVariant(false));
+        TE_PWMSpeed->setMaximumDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 59, 59)));
+        TE_PWMSpeed->setMaximumTime(QTime(0, 59, 59));
         TE_PWMSpeed->setMinimumTime(QTime(0, 0, 1));
         TE_PWMSpeed->setCurrentSection(QDateTimeEdit::MinuteSection);
         TE_PWMSpeed->setCalendarPopup(false);
+        TE_PWMSpeed->setCurrentSectionIndex(0);
         TE_PWMSpeed->setTimeSpec(Qt::LocalTime);
         TE_PWMSpeed->setTime(QTime(0, 0, 1));
 
@@ -521,7 +521,7 @@ public:
         CB_ID->setObjectName(QString::fromUtf8("CB_ID"));
         CB_ID->setEnabled(false);
         CB_ID->setMaximumSize(QSize(51, 20));
-        CB_ID->setEditable(true);
+        CB_ID->setEditable(false);
 
         horizontalLayout_10->addWidget(CB_ID);
 

@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 	setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
 	Init();
-
 	SearchForUARTDevices();
 }
 
@@ -44,7 +43,7 @@ void MainWindow::ConnectionCheck() {
 			Send(dataToSend, true);
 
 		} else {
-			qDebug() << "Connect error";
+			qCritical() << "Connect error";
 		}
 
 	} else {
@@ -103,7 +102,7 @@ void MainWindow::Connected() {
 
 	Send(dataToSend, true);
 
-	ui->TE_PWMSpeed->setTime(Settings->value("TE_PWMSpeed").toTime());
+	ui->TE_PWMSpeed->setTime(Settings->value("PWMSpeed").toTime());
 
 	Connect = true;
 }
@@ -129,15 +128,15 @@ void MainWindow::Send(uint8_t dataToSend[], const bool broadcast) {
 
 	if (!PortCheck->isNull() && Serial->isOpen()) {
 
-		const uint16_t R_ID = RecipientID();
+		const uint16_t R_ID = ui->CB_ID->currentText().toInt();
 		dataToSend[0] = static_cast<uint8_t>((broadcast ? 0x0 : R_ID) & 0x00FF);
 		dataToSend[1] |= static_cast<uint8_t>(((broadcast ? 0x0 : R_ID) & 0x0F00) >> 3);
 
 		QByteArray Data = QByteArray::fromRawData(reinterpret_cast<const char*>(dataToSend), sizeof(dataToSend));
 		Data.resize(PACKET_SIZE);
 
-		qDebug() << "Sent to :   " << QString().setNum(((dataToSend[1] & 0xE0) << 3) | dataToSend[0]) << " Message: " <<
-			ByteArrayToString(Data) << " Time: " << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+		qDebug() << "Sent to :   " << QString().setNum(R_ID) << " Message: " << ByteArrayToString(Data) << " Time: " <<
+			QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
 		Serial->write(Data);
 

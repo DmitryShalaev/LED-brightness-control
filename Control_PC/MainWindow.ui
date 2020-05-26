@@ -798,30 +798,38 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>9999999</width>
-         <height>999999</height>
+         <width>56</width>
+         <height>23</height>
         </size>
+       </property>
+       <property name="acceptDrops">
+        <bool>true</bool>
        </property>
        <property name="wrapping">
         <bool>true</bool>
        </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
        <property name="buttonSymbols">
         <enum>QAbstractSpinBox::UpDownArrows</enum>
        </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
        <property name="showGroupSeparator" stdset="0">
         <bool>false</bool>
+       </property>
+       <property name="maximumDateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>59</minute>
+         <second>59</second>
+         <year>2000</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="maximumTime">
+        <time>
+         <hour>0</hour>
+         <minute>59</minute>
+         <second>59</second>
+        </time>
        </property>
        <property name="minimumTime">
         <time>
@@ -838,6 +846,9 @@
        </property>
        <property name="calendarPopup">
         <bool>false</bool>
+       </property>
+       <property name="currentSectionIndex">
+        <number>0</number>
        </property>
        <property name="timeSpec">
         <enum>Qt::LocalTime</enum>
@@ -894,7 +905,7 @@
         </size>
        </property>
        <property name="editable">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="currentText">
         <string/>
