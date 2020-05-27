@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QCoreApplication>
+#include <QJsonArray>
 #include <QMainWindow>
 #include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QSettings>
 #include <QTimer>
 
@@ -50,19 +50,22 @@ class MainWindow final : public QMainWindow {
 	QTimer* UpdateDataTimer = new QTimer(this);
 
 	QSerialPort* Serial = new QSerialPort(this);
-	QSettings* Settings = new QSettings(QCoreApplication::applicationDirPath() + "/Settings.ini", QSettings::IniFormat, this);
+	QSettings* Settings = new QSettings(QCoreApplication::applicationDirPath() +
+																			"/Settings.ini", QSettings::IniFormat, this);
 
 	uint16_t MasterID = 0x0;
 
 	bool Connect = false;
 
-	struct NodeState {
-		uint16_t ID = 0x0;
+	struct NodeStatus {
 		uint8_t logicIO = 0x0;
 		uint8_t PWM1 = 0;
 		uint8_t PWM2 = 0;
 		uint8_t PWM3 = 0;
+		QJsonArray SlavesNodes;
 	};
+
+	QHash<uint16_t, NodeStatus> *HashNodesStatus = new QHash<uint16_t, NodeStatus>;
 
 	bool OUT1 = false;
 	bool OUT2 = false;

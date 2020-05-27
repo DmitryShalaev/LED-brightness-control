@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QDebug>
+#include <QSerialPortInfo>
 #include "ui_MainWindow.h"
 
 #include "../general/id.h"

@@ -1,6 +1,6 @@
+#include	<QDebug>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include	<QDebug>
 
 #include "../general/id.h"
 
@@ -64,10 +64,14 @@ void MainWindow::ButtonProcessing() {
 		return;
 	}
 
-	if (SenderName == "B_Connect") {
-		if (LoadingJSONFile())
+	if (SenderName == "B_Connect") {		
+		if (ui->B_Connect->text() == "Connect") {
+			if (LoadingJSONFile())
+				ConnectionCheck();
+		} else {
 			ConnectionCheck();
-		
+		}
+
 		return;
 	}
 
