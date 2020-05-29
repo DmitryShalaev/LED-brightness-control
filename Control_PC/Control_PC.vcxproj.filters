@@ -65,6 +65,9 @@
     <ClCompile Include="Additional.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Serial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CustomLabel.h">

@@ -28,7 +28,7 @@ bool MainWindow::LoadingJSONFile() {
 			qDebug() << "An example configuration file \"Node Settings.json\"" <<
 				"was created in the folder with the executable file";
 		} else {
-			qCritical() << "Failed to create sample configuration file \"NodeSettings.json\"";
+			qCritical() << "ERROR: Failed to create sample configuration file \"NodeSettings.json\"";
 			return false;
 		}
 		File.close();

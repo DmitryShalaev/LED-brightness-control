@@ -43,7 +43,7 @@ public:
     QHBoxLayout *horizontalLayout_8;
     QHBoxLayout *horizontalLayout_9;
     QLabel *label_6;
-    QLabel *L_BH1750;
+    QLabel *L_LUX;
     QWidget *layoutWidget111;
     QHBoxLayout *horizontalLayout_16;
     QLabel *L_IN1;
@@ -92,6 +92,7 @@ public:
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_16;
     QComboBox *CB_ID;
+    QPushButton *B_Debug;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -173,10 +174,10 @@ public:
 
         horizontalLayout_9->addWidget(label_6);
 
-        L_BH1750 = new QLabel(layoutWidget47454);
-        L_BH1750->setObjectName(QString::fromUtf8("L_BH1750"));
+        L_LUX = new QLabel(layoutWidget47454);
+        L_LUX->setObjectName(QString::fromUtf8("L_LUX"));
 
-        horizontalLayout_9->addWidget(L_BH1750);
+        horizontalLayout_9->addWidget(L_LUX);
 
 
         horizontalLayout_8->addLayout(horizontalLayout_9);
@@ -525,6 +526,15 @@ public:
 
         horizontalLayout_10->addWidget(CB_ID);
 
+        B_Debug = new QPushButton(centralWidget);
+        B_Debug->setObjectName(QString::fromUtf8("B_Debug"));
+        B_Debug->setGeometry(QRect(450, 0, 10, 10));
+        B_Debug->setMinimumSize(QSize(10, 10));
+        B_Debug->setMaximumSize(QSize(10, 10));
+        B_Debug->setFocusPolicy(Qt::NoFocus);
+        B_Debug->setContextMenuPolicy(Qt::NoContextMenu);
+        B_Debug->setAutoDefault(false);
+        B_Debug->setFlat(true);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -536,8 +546,11 @@ public:
         QObject::connect(S_ALLPWM, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
         QObject::connect(RB_Update, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
         QObject::connect(TE_PWMSpeed, SIGNAL(userTimeChanged(QTime)), MainWindow, SLOT(PWMSpeedChange(QTime)));
+        QObject::connect(CB_ID, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(ChangeRecipientID()));
+        QObject::connect(B_Debug, SIGNAL(clicked()), MainWindow, SLOT(DebugButton()));
 
         CB_ID->setCurrentIndex(-1);
+        B_Debug->setDefault(false);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -551,7 +564,7 @@ public:
         label_5->setText(QCoreApplication::translate("MainWindow", "ADC 2", nullptr));
         L_ADC2->setText(QCoreApplication::translate("MainWindow", "0.000 V.", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "BH1750", nullptr));
-        L_BH1750->setText(QCoreApplication::translate("MainWindow", "00.00 lx.", nullptr));
+        L_LUX->setText(QCoreApplication::translate("MainWindow", "00.00 lx.", nullptr));
         L_IN1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN1</p></body></html>", nullptr));
         L_IN2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN2</p></body></html>", nullptr));
         L_IN3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN3</p></body></html>", nullptr));
@@ -574,6 +587,7 @@ public:
         TE_PWMSpeed->setDisplayFormat(QCoreApplication::translate("MainWindow", "mm:ss", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "ID:", nullptr));
         CB_ID->setCurrentText(QString());
+        B_Debug->setText(QString());
     } // retranslateUi
 
 };

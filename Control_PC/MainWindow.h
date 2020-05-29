@@ -27,6 +27,8 @@ class MainWindow final : public QMainWindow {
 	void PWMSpeedChange(const QTime& time);
 	void ButtonProcessing();
 	void SliderProcessing();
+	void ChangeRecipientID();
+	void DebugButton();
 
 	private:
 
@@ -34,6 +36,7 @@ class MainWindow final : public QMainWindow {
 	void ConnectionCheck();
 	void Send(uint8_t dataToSend[], bool broadcast = false);
 	void ProcessingReceivedData(const uint8_t Data[]);
+	void UpdateMainWindow();
 	void SearchForUARTDevices();
 	void Connected();
 
@@ -62,6 +65,9 @@ class MainWindow final : public QMainWindow {
 		uint8_t PWM1 = 0;
 		uint8_t PWM2 = 0;
 		uint8_t PWM3 = 0;
+		double ADC1 = 0.0;
+		double ADC2 = 0.0;
+		double LX = 0.0;
 		QJsonArray SlavesNodes;
 	};
 

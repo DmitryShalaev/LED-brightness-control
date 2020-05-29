@@ -107,7 +107,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="L_BH1750">
+          <widget class="QLabel" name="L_LUX">
            <property name="text">
             <string>00.00 lx.</string>
            </property>
@@ -917,6 +917,46 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="B_Debug">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>0</y>
+      <width>10</width>
+      <height>10</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>10</width>
+      <height>10</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>10</width>
+      <height>10</height>
+     </size>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -1057,10 +1097,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>CB_ID</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ChangeRecipientID()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>430</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>B_Debug</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>DebugButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>451</x>
+     <y>6</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>14</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>ButtonProcessing()</slot>
   <slot>SliderProcessing()</slot>
   <slot>PWMSpeedChange(QTime)</slot>
+  <slot>ChangeRecipientID()</slot>
+  <slot>DebugButton()</slot>
  </slots>
 </ui>
