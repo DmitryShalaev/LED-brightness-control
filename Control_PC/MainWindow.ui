@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
+    <width>648</width>
     <height>388</height>
    </rect>
   </property>
@@ -24,13 +24,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>460</width>
+    <width>648</width>
     <height>388</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>460</width>
+    <width>648</width>
     <height>388</height>
    </size>
   </property>
@@ -759,8 +759,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>190</y>
+      <x>480</x>
+      <y>20</y>
       <width>125</width>
       <height>25</height>
      </rect>
@@ -867,7 +867,7 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>280</x>
       <y>190</y>
       <width>75</width>
       <height>25</height>
@@ -920,8 +920,8 @@
    <widget class="QPushButton" name="B_Debug">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>0</y>
+      <x>640</x>
+      <y>380</y>
       <width>10</width>
       <height>10</height>
      </rect>
@@ -956,6 +956,75 @@
     <property name="flat">
      <bool>true</bool>
     </property>
+   </widget>
+   <widget class="QRadioButton" name="RB_AutoControl">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>180</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Automatic control</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>100</y>
+      <width>129</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_11">
+     <item>
+      <widget class="QLabel" name="label_17">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>999999</width>
+         <height>999999</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Maintain LUX:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="SB_MaintainLUX">
+       <property name="minimumSize">
+        <size>
+         <width>56</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>56</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>65535</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
@@ -1076,8 +1145,8 @@
      <y>101</y>
     </hint>
     <hint type="destinationlabel">
-     <x>352</x>
-     <y>100</y>
+     <x>354</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -1088,12 +1157,12 @@
    <slot>PWMSpeedChange(QTime)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>299</x>
-     <y>198</y>
+     <x>548</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
-     <x>346</x>
-     <y>202</y>
+     <x>538</x>
+     <y>33</y>
     </hint>
    </hints>
   </connection>
@@ -1104,12 +1173,12 @@
    <slot>ChangeRecipientID()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>192</y>
+     <x>353</x>
+     <y>194</y>
     </hint>
     <hint type="destinationlabel">
-     <x>430</x>
-     <y>184</y>
+     <x>357</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
@@ -1120,12 +1189,28 @@
    <slot>DebugButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>451</x>
-     <y>6</y>
+     <x>631</x>
+     <y>386</y>
     </hint>
     <hint type="destinationlabel">
-     <x>454</x>
-     <y>14</y>
+     <x>484</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RB_AutoControl</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ButtonProcessing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>520</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>511</x>
+     <y>76</y>
     </hint>
    </hints>
   </connection>

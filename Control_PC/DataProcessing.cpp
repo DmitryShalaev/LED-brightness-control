@@ -40,6 +40,8 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 			Node.PWM2 = Data[4];
 			Node.PWM3 = Data[5];
 
+			InitialState.Timer->stop();
+			InitialStateRequest();
 			break;
 
 		case OUT_1:
@@ -117,6 +119,21 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 
 			Node.LX = static_cast<double>(((Data[2] << 8) | Data[3]) / 1.2);
 
+			if (ui->RB_AutoControl->isChecked()) {
+				HashNodesStatus->insert(R_ID, Node);
+				Automatically.Timer->stop();
+				AutomationCallback();
+			}
+
+			break;
+
+		case PWMConfirm:
+
+			if (Data[2] == ALLPWM && ui->RB_AutoControl->isChecked()) {
+				Automatically.Timer->stop();
+				AutomationCallback();
+			}
+
 			break;
 
 		case CONNECTED:
@@ -130,7 +147,9 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 		default: ;
 	}
 
-	HashNodesStatus->insert(R_ID, Node);
+	if (!(ui->RB_AutoControl->isChecked() && (Data[1] & 0x1F) == LUX))
+		HashNodesStatus->insert(R_ID, Node);
+
 	if (ui->CB_ID->currentText().toUInt() == R_ID) {
 		UpdateMainWindow();
 	}

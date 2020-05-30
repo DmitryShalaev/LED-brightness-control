@@ -22,6 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 
+#include <string.h>
 #include "DataProcessing.h"
 #include "usart.h"
 
@@ -139,7 +140,8 @@ void CAN_Config(void) {
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
-	uint8_t canRxData[PACKET_SIZE] = {0};
+	static uint8_t canRxData[PACKET_SIZE] = {0};
+	memset(canRxData, 0, sizeof(canRxData));
 
 	HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, canRxData);
 

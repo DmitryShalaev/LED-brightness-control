@@ -3,12 +3,13 @@
 #include "adc.h"
 #include "can.h"
 #include "i2c.h"
-#include "usart.h"
-#include "tim.h"
 #include "string.h"
+#include "tim.h"
+#include "usart.h"
 #include "../../../general/id.h"
 
 void ProcessingData(const uint8_t Data[], const bool toSend) {
+	static uint8_t dataToSend[PACKET_SIZE] = {0};
 	memset(dataToSend, 0, sizeof(dataToSend));
 
 	dataToSend[0] = ID & 0x0FF;
@@ -124,17 +125,36 @@ void ProcessingData(const uint8_t Data[], const bool toSend) {
 		case PWM_1:
 
 			NewPWM1 = Data[2];
+
+			dataToSend[1] |= PWMConfirm;
+
+			dataToSend[2] = Data[1] & 0x1F;
+
+			SendData(dataToSend, toSend);
+		
 			break;
 
 		case PWM_2:
 
 			NewPWM2 = Data[2];
 
+			dataToSend[1] |= PWMConfirm;
+
+			dataToSend[2] = Data[1] & 0x1F;
+
+			SendData(dataToSend, toSend);
+
 			break;
 
 		case PWM_3:
 
 			NewPWM3 = Data[2];
+
+			dataToSend[1] |= PWMConfirm;
+
+			dataToSend[2] = Data[1] & 0x1F;
+
+			SendData(dataToSend, toSend);
 
 			break;
 
@@ -154,9 +174,12 @@ void ProcessingData(const uint8_t Data[], const bool toSend) {
 
 		case LUX:
 
+			I2C_ReadBH1750();
+
 			dataToSend[1] |= LUX;
 
-			I2C_ReadBH1750(&dataToSend[2]);
+			dataToSend[2] = I2C_Buffer[0];
+			dataToSend[3] = I2C_Buffer[1];
 
 			SendData(dataToSend, toSend);
 
@@ -174,6 +197,12 @@ void ProcessingData(const uint8_t Data[], const bool toSend) {
 			NewPWM1 = Data[2];
 			NewPWM2 = Data[2];
 			NewPWM3 = Data[2];
+
+			dataToSend[1] |= PWMConfirm;
+
+			dataToSend[2] = Data[1] & 0x1F;
+
+			SendData(dataToSend, toSend);
 
 			break;
 

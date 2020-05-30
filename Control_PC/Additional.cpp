@@ -51,40 +51,57 @@ bool MainWindow::LoadingJSONFile() {
 	HashNodesStatus->clear();
 	ui->CB_ID->clear();
 
-	const QJsonArray jArrID = QJsonValue(jDoc.object().value("ID_OfAllNodes")).toArray();
-	if (!jArrID.isEmpty()) {
-		for (uint16_t i = 0; i < static_cast<uint16_t>(jArrID.count()); i++) {
-			ui->CB_ID->addItem(QString::number(jArrID.at(i).toInt()));
-
-			NodeStatus Node;
-			HashNodesStatus->insert(jArrID.at(i).toInt(), Node);
+	jID_OfAllNodes = QJsonValue(jDoc.object().value("ID_OfAllNodes")).toArray();
+	if (!jID_OfAllNodes.isEmpty()) {
+		for (uint16_t i = 0; i < static_cast<uint16_t>(jID_OfAllNodes.count()); i++) {
+			const uint16_t ID = jID_OfAllNodes.at(i).toInt();
+			if (ID != 0) {
+				if (!HashNodesStatus->contains(ID)) {
+					ui->CB_ID->addItem(QString::number(jID_OfAllNodes.at(i).toInt()));
+					NodeStatus Node;
+					HashNodesStatus->insert(jID_OfAllNodes.at(i).toInt(), Node);
+				} else {
+					qWarning() << "WARNING: Duplicate node ID(" << ID << ") in \"ID_OfAllNodes\" was ignored";
+				}
+			} else {
+				qWarning() << "WARNING: The null node ID(" << ID << ") in \"ID_OfAllNodes\" was ignored";
+			}
 		}
 	} else {
 		qCritical() << "ERROR: Syntax error in Node-Settings.json file, \"ID_OfAllNode\" field not found";
 		return false;
 	}
 
+	uint16_t CountHost = 0;
 	const QJsonArray jArrConf = QJsonValue(jDoc.object().value("Configurations")).toArray();
 	if (!jArrConf.isEmpty()) {
 		for (uint16_t i = 0; i < static_cast<uint16_t>(jArrConf.count()); i++) {
 			const QJsonArray jArrConfSlave = QJsonValue(jArrConf.at(i).toObject().value("Slaves")).toArray();
 			const uint16_t ConfHostID = jArrConf.at(i).toObject().value("Host").toInt();
 			if (!jArrConfSlave.isEmpty()) {
-				NodeStatus Node;
-				Node.SlavesNodes = jArrConfSlave;
-				if (HashNodesStatus->contains(ConfHostID))
-					HashNodesStatus->insert(ConfHostID, Node);
-				else
-					qWarning() << "WARNING: An error occurred in the configuration of the nodes, node" << ConfHostID <<
-						"was not declared in \"ID_OfAllNodes\"";
+				if (ConfHostID != 0) {
+					NodeStatus Node;
+					if (HashNodesStatus->contains(ConfHostID)) {
+						Node.SlavesNodes = jArrConfSlave;
+						HashNodesStatus->insert(ConfHostID, Node);
+						CountHost++;
+					} else {
+						qWarning() << "WARNING: An error occurred in the configuration of the nodes, node" << ConfHostID <<
+							"was not declared in \"ID_OfAllNodes\"";
+					}
+				} else {
+					qWarning() << "WARNING: A node with a null identifier cannot be declared in the \"Host\"";
+				}
 			} else {
 				qWarning() << "WARNING: The \"Slaves\" field of node" << ConfHostID << "is empty or not declared";
 			}
-
 		}
-	} else {
-		qWarning() << "WARNING: \"Configurations\" field is not declared or is empty, automatic control is blocked";
 	}
-
+	if (CountHost == 0) {
+		Automatically.CanAutomatically = false;
+		qWarning() << "WARNING: \"Configurations\" field is not declared or is empty, automatic control is blocked";
+	} else {
+		Automatically.CanAutomatically = true;
+	}
 	return true;
 }

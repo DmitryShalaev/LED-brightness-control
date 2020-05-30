@@ -22,6 +22,8 @@
 
 /* USER CODE BEGIN 0 */
 
+#include "string.h"
+
 /* USER CODE END 0 */
 
 I2C_HandleTypeDef hi2c1;
@@ -100,7 +102,8 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 /* USER CODE BEGIN 1 */
 
 void I2C_launchBH1750(void) {
-	uint8_t I2C_Buffer[2] = {0};
+	memset(I2C_Buffer, 0, sizeof(I2C_Buffer));
+	
 	I2C_included = false;
 
 	I2C_Buffer[0] = 0x01;
@@ -111,9 +114,11 @@ void I2C_launchBH1750(void) {
 	}
 }
 
-void I2C_ReadBH1750(uint8_t* Buffer) {
+void I2C_ReadBH1750() {
+	memset(I2C_Buffer, 0, sizeof(I2C_Buffer));
+	
 	if (I2C_included)
-		HAL_I2C_Master_Receive(&hi2c1, 0x23 << 1, Buffer, 2, 100);
+		HAL_I2C_Master_Receive(&hi2c1, 0x23 << 1, I2C_Buffer, 2, 100);
 }
 
 /* USER CODE END 1 */

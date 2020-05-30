@@ -11,7 +11,7 @@ void MainWindow::ButtonProcessing() {
 	const uint16_t R_ID = ui->CB_ID->currentText().toUInt();
 	const uint8_t logicIO = HashNodesStatus->value(R_ID).logicIO;
 
-	uint8_t dataToSend[PACKET_SIZE] = {0};
+	memset(dataToSend, 0, sizeof(dataToSend));
 
 	if (SenderName == "L_OUT1") {
 		dataToSend[1] = OUT_1;
@@ -68,6 +68,36 @@ void MainWindow::ButtonProcessing() {
 		return;
 	}
 
+	if (SenderName == "RB_AutoControl") {
+		if (ui->RB_AutoControl->isChecked()) {
+			ui->L_OUT1->setEnabled(false);
+			ui->L_OUT2->setEnabled(false);
+			ui->L_OUT3->setEnabled(false);
+			ui->L_OUT4->setEnabled(false);
+			ui->S_PWM1->setEnabled(false);
+			ui->S_PWM2->setEnabled(false);
+			ui->S_PWM3->setEnabled(false);
+			ui->S_ALLPWM->setEnabled(false);
+			ui->RB_Update->setEnabled(false);
+
+			AutomationCallback(true);
+		} else {
+			Automatically.Timer->stop();
+
+			ui->L_OUT1->setEnabled(true);
+			ui->L_OUT2->setEnabled(true);
+			ui->L_OUT3->setEnabled(true);
+			ui->L_OUT4->setEnabled(true);
+			ui->S_PWM1->setEnabled(true);
+			ui->S_PWM2->setEnabled(true);
+			ui->S_PWM3->setEnabled(true);
+			ui->S_ALLPWM->setEnabled(true);
+			ui->RB_Update->setEnabled(true);
+		}
+
+		return;
+	}
+
 	if (SenderName == "B_Connect") {
 		if (ui->B_Connect->text() == "Connect") {
 			if (LoadingJSONFile())
@@ -75,7 +105,6 @@ void MainWindow::ButtonProcessing() {
 		} else {
 			ConnectionCheck();
 		}
-
 		return;
 	}
 
@@ -92,7 +121,7 @@ void MainWindow::SliderProcessing() {
 
 	NodeStatus Node = HashNodesStatus->value(R_ID);
 
-	uint8_t dataToSend[PACKET_SIZE] = {0};
+	memset(dataToSend, 0, sizeof(dataToSend));
 
 	if (SenderName == "S_PWM1") {
 		Node.PWM1 = ui->S_PWM1->value();
@@ -134,9 +163,7 @@ void MainWindow::SliderProcessing() {
 	}
 
 	if (SenderName == "S_ALLPWM") {
-		Node.PWM1 = ui->S_ALLPWM->value();
-		Node.PWM2 = ui->S_ALLPWM->value();
-		Node.PWM3 = ui->S_ALLPWM->value();
+		Node.PWM1 = Node.PWM2 = Node.PWM3 = ui->S_ALLPWM->value();
 
 		dataToSend[1] = ALLPWM;
 		dataToSend[2] = static_cast<uint8_t>(ui->S_ALLPWM->value());
@@ -149,17 +176,20 @@ void MainWindow::SliderProcessing() {
 }
 
 void MainWindow::PWMSpeedChange(const QTime& time) {
-	uint8_t dataToSend[PACKET_SIZE] = {0};
+	if (ui->TE_PWMSpeed->underMouse() || ui->TE_PWMSpeed->hasFocus()) {
+		memset(dataToSend, 0, sizeof(dataToSend));
 
-	dataToSend[1] = TIME;
-	dataToSend[2] = static_cast<uint8_t>(time.minute());
-	dataToSend[3] = static_cast<uint8_t>(time.second());
+		dataToSend[1] = TIME;
+		dataToSend[2] = static_cast<uint8_t>(time.minute());
+		dataToSend[3] = static_cast<uint8_t>(time.second());
 
-	Send(dataToSend, true);
+		Send(dataToSend, true);
+	}
 }
 
 void MainWindow::ChangeRecipientID() {
-	UpdateMainWindow();
+	if (ui->CB_ID->underMouse() || ui->CB_ID->hasFocus())
+		UpdateMainWindow();
 }
 
 void MainWindow::ConnectionCheck() {
@@ -176,7 +206,7 @@ void MainWindow::ConnectionCheck() {
 
 		if (Serial->open(QIODevice::ReadWrite)) {
 
-			uint8_t dataToSend[PACKET_SIZE] = {0};
+			memset(dataToSend, 0, sizeof(dataToSend));
 
 			dataToSend[1] = CONNECTED;
 
@@ -199,18 +229,22 @@ void MainWindow::ConnectionCheck() {
 		ui->S_PWM1->setEnabled(false);
 		ui->S_PWM2->setEnabled(false);
 		ui->S_PWM3->setEnabled(false);
-		ui->B_Debug->setEnabled(false);
 		ui->S_ALLPWM->setEnabled(false);
 		ui->RB_Update->setEnabled(false);
 		ui->RB_Update->setChecked(false);
 		ui->TE_PWMSpeed->setEnabled(false);
 		ui->CB_SerialPort->setEnabled(true);
+		ui->RB_AutoControl->setEnabled(false);
+		ui->RB_AutoControl->setChecked(false);
 
 		ui->B_Connect->setText("Connect");
 
-		qDebug() << "Disconnect";
-
 		UpdateDataTimer->stop();
+		Automatically.Timer->stop();
+		InitialState.Timer->stop();
+		InitialState.Counter = 0;
+
+		qDebug() << "Disconnect";
 
 		Connect = false;
 	}
@@ -226,25 +260,29 @@ void MainWindow::Connected() {
 	ui->L_OUT3->setEnabled(true);
 	ui->L_OUT4->setEnabled(true);
 	ui->B_Scan->setEnabled(false);
-	ui->B_Debug->setEnabled(true);
 	ui->S_ALLPWM->setEnabled(true);
 	ui->RB_Update->setEnabled(true);
 	ui->TE_PWMSpeed->setEnabled(true);
 	ui->CB_SerialPort->setEnabled(false);
 
+	if (Automatically.CanAutomatically)
+		ui->RB_AutoControl->setEnabled(true);
+
 	ui->B_Connect->setText("Disconnect");
 
 	qDebug() << "Connect";
 
-	uint8_t dataToSend[PACKET_SIZE] = {0};
+	ui->TE_PWMSpeed->setTime(Settings->value("PWMSpeed").toTime());
 
-	dataToSend[1] = INIT;
-	dataToSend[2] = MasterID & 0x0FF;
-	dataToSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
+	memset(dataToSend, 0, sizeof(dataToSend));
+
+	dataToSend[1] = TIME;
+	dataToSend[2] = static_cast<uint8_t>(ui->TE_PWMSpeed->time().minute());
+	dataToSend[3] = static_cast<uint8_t>(ui->TE_PWMSpeed->time().second());
 
 	Send(dataToSend, true);
 
-	ui->TE_PWMSpeed->setTime(Settings->value("PWMSpeed").toTime());
+	InitialStateRequest();
 
 	Connect = true;
 }
@@ -266,7 +304,7 @@ void MainWindow::SearchForUARTDevices() {
 }
 
 void MainWindow::RequestUpdateData() {
-	uint8_t dataToSend[PACKET_SIZE] = {0};
+	memset(dataToSend, 0, sizeof(dataToSend));
 
 	if (RequestUpdateDataFlag) {
 		dataToSend[1] = LUX;
@@ -291,7 +329,8 @@ void MainWindow::DebugButton() {
 			HashNodesStatus->value(key).LX << "PWM1:" <<
 			HashNodesStatus->value(key).PWM1 << "PWM2:" <<
 			HashNodesStatus->value(key).PWM2 << "PWM3:" <<
-			HashNodesStatus->value(key).PWM3;
+			HashNodesStatus->value(key).PWM3 << "EstimatedValue:" <<
+			HashNodesStatus->value(key).EstimatedValue;
 
 	qDebug() << "";
 	qDebug() << "";

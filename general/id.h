@@ -19,6 +19,7 @@
 #define TIME        0x0C
 #define ALLPWM      0x0D
 #define IN_3        0x0E
+#define PWMConfirm	0x0F
 
 #define CONNECTED   0x1F
 

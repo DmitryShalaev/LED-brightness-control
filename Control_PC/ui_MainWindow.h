@@ -20,6 +20,7 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -93,6 +94,8 @@ public:
     QLabel *label_16;
     QComboBox *CB_ID;
     QPushButton *B_Debug;
+    QRadioButton *RB_AutoControl;
+    QSpinBox *SB_MaintainLUX;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -100,14 +103,14 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
         MainWindow->setEnabled(true);
-        MainWindow->resize(460, 388);
+        MainWindow->resize(648, 388);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(460, 388));
-        MainWindow->setMaximumSize(QSize(460, 388));
+        MainWindow->setMinimumSize(QSize(648, 388));
+        MainWindow->setMaximumSize(QSize(648, 388));
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
@@ -470,7 +473,7 @@ public:
         B_Scan->setGeometry(QRect(110, 270, 80, 20));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(210, 190, 125, 25));
+        layoutWidget->setGeometry(QRect(480, 20, 125, 25));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -505,7 +508,7 @@ public:
 
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(360, 190, 75, 25));
+        layoutWidget1->setGeometry(QRect(280, 190, 75, 25));
         horizontalLayout_10 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_10->setSpacing(6);
         horizontalLayout_10->setContentsMargins(11, 11, 11, 11);
@@ -528,13 +531,24 @@ public:
 
         B_Debug = new QPushButton(centralWidget);
         B_Debug->setObjectName(QString::fromUtf8("B_Debug"));
-        B_Debug->setGeometry(QRect(450, 0, 10, 10));
+        B_Debug->setGeometry(QRect(640, 380, 10, 10));
         B_Debug->setMinimumSize(QSize(10, 10));
         B_Debug->setMaximumSize(QSize(10, 10));
         B_Debug->setFocusPolicy(Qt::NoFocus);
         B_Debug->setContextMenuPolicy(Qt::NoContextMenu);
         B_Debug->setAutoDefault(false);
         B_Debug->setFlat(true);
+        RB_AutoControl = new QRadioButton(centralWidget);
+        RB_AutoControl->setObjectName(QString::fromUtf8("RB_AutoControl"));
+        RB_AutoControl->setEnabled(false);
+        RB_AutoControl->setGeometry(QRect(480, 60, 111, 21));
+        SB_MaintainLUX = new QSpinBox(centralWidget);
+        SB_MaintainLUX->setObjectName(QString::fromUtf8("SB_MaintainLUX"));
+        SB_MaintainLUX->setGeometry(QRect(540, 100, 56, 23));
+        SB_MaintainLUX->setMinimumSize(QSize(56, 23));
+        SB_MaintainLUX->setMaximumSize(QSize(56, 23));
+        SB_MaintainLUX->setMaximum(65535);
+        SB_MaintainLUX->setValue(65535);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -548,6 +562,7 @@ public:
         QObject::connect(TE_PWMSpeed, SIGNAL(userTimeChanged(QTime)), MainWindow, SLOT(PWMSpeedChange(QTime)));
         QObject::connect(CB_ID, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(ChangeRecipientID()));
         QObject::connect(B_Debug, SIGNAL(clicked()), MainWindow, SLOT(DebugButton()));
+        QObject::connect(RB_AutoControl, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
 
         CB_ID->setCurrentIndex(-1);
         B_Debug->setDefault(false);
@@ -588,6 +603,7 @@ public:
         label_16->setText(QCoreApplication::translate("MainWindow", "ID:", nullptr));
         CB_ID->setCurrentText(QString());
         B_Debug->setText(QString());
+        RB_AutoControl->setText(QCoreApplication::translate("MainWindow", "Automatic control", nullptr));
     } // retranslateUi
 
 };
