@@ -23,7 +23,7 @@ bool MainWindow::LoadingJSONFile() {
 	if (!File.exists()) {
 		if (File.open(QIODevice::WriteOnly)) {
 			File.write("{\n\t\"ID_OfAllNodes\": [ 1, 2, 3, 4 ],\n\t\"Configurations\": [\n\t");
-			File.write("\t{\n\t\t\t\"Host\": 2,\n\t\t\t\"Slaves\": [ 1, 3, 4 ]\n\t\t}\n\t]\n}");
+			File.write("\t{\n\t\t\t\"Host\": 2,\n\t\t\t\"Slaves\": [ 1, 2, 3, 4 ]\n\t\t}\n\t]\n}");
 
 			qDebug() << "An example configuration file \"Node Settings.json\"" <<
 				"was created in the folder with the executable file";
@@ -48,6 +48,7 @@ bool MainWindow::LoadingJSONFile() {
 		return false;
 	}
 
+	VectorHostNodes.clear();
 	HashNodesStatus->clear();
 	ui->CB_ID->clear();
 
@@ -84,6 +85,7 @@ bool MainWindow::LoadingJSONFile() {
 					if (HashNodesStatus->contains(ConfHostID)) {
 						Node.SlavesNodes = jArrConfSlave;
 						HashNodesStatus->insert(ConfHostID, Node);
+						VectorHostNodes.append(ConfHostID);
 						CountHost++;
 					} else {
 						qWarning() << "WARNING: An error occurred in the configuration of the nodes, node" << ConfHostID <<

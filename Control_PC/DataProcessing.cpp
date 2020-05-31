@@ -42,6 +42,7 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 
 			InitialState.Timer->stop();
 			InitialStateRequest();
+
 			break;
 
 		case OUT_1:
@@ -99,10 +100,29 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 
 		case IN_2:
 
-			if (Data[2] == ON)
+			if (Data[2] == ON) {
 				Node.logicIO |= 0x20;
-			else
+
+				if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked()) {
+					Automatically.DetectMovementTimer->stop();
+					if (!Node.DetectMovement) {
+						Node.DetectMovement = true;
+						HashNodesStatus->insert(R_ID, Node);
+						AutomationCallback(true);
+						return;
+					}
+				}
+			} else {
 				Node.logicIO &= ~0x20;
+
+				if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked() && Node.DetectMovement) {
+					Automatically.DetectMovementTimer->start((ui->TE_TurnOffLight->time().minute() * 60 +
+						ui->TE_TurnOffLight->time().second()) * 1000);
+
+					if (!Automatically.DetectMovementID.contains(R_ID))
+						Automatically.DetectMovementID.append(R_ID);
+				}
+			}
 
 			break;
 
@@ -119,10 +139,10 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 
 			Node.LX = static_cast<double>(((Data[2] << 8) | Data[3]) / 1.2);
 
-			if (ui->RB_AutoControl->isChecked()) {
+			if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked()) {
 				HashNodesStatus->insert(R_ID, Node);
-				Automatically.Timer->stop();
 				AutomationCallback();
+				return;
 			}
 
 			break;
@@ -130,7 +150,6 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 		case PWMConfirm:
 
 			if (Data[2] == ALLPWM && ui->RB_AutoControl->isChecked()) {
-				Automatically.Timer->stop();
 				AutomationCallback();
 			}
 
@@ -147,9 +166,7 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 		default: ;
 	}
 
-	if (!(ui->RB_AutoControl->isChecked() && (Data[1] & 0x1F) == LUX))
-		HashNodesStatus->insert(R_ID, Node);
-
+	HashNodesStatus->insert(R_ID, Node);
 	if (ui->CB_ID->currentText().toUInt() == R_ID) {
 		UpdateMainWindow();
 	}

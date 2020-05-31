@@ -79,6 +79,13 @@ void MainWindow::ButtonProcessing() {
 			ui->S_PWM3->setEnabled(false);
 			ui->S_ALLPWM->setEnabled(false);
 			ui->RB_Update->setEnabled(false);
+			ui->RB_Update->setChecked(false);
+			ui->TE_PWMSpeed->setEnabled(false);
+			ui->SB_MaintainLux->setEnabled(false);
+			ui->TE_TurnOffLight->setEnabled(false);
+			ui->RB_TurnOffLight->setEnabled(false);
+			ui->SB_MaintainLuxStep->setEnabled(false);
+			ui->SB_MaintainLuxDeadband->setEnabled(false);
 
 			AutomationCallback(true);
 		} else {
@@ -93,6 +100,12 @@ void MainWindow::ButtonProcessing() {
 			ui->S_PWM3->setEnabled(true);
 			ui->S_ALLPWM->setEnabled(true);
 			ui->RB_Update->setEnabled(true);
+			ui->TE_PWMSpeed->setEnabled(true);
+			ui->SB_MaintainLux->setEnabled(true);
+			ui->TE_TurnOffLight->setEnabled(true);
+			ui->RB_TurnOffLight->setEnabled(true);
+			ui->SB_MaintainLuxStep->setEnabled(true);
+			ui->SB_MaintainLuxDeadband->setEnabled(true);
 		}
 
 		return;
@@ -110,6 +123,10 @@ void MainWindow::ButtonProcessing() {
 
 	if (SenderName == "B_Scan") {
 		SearchForUARTDevices();
+	}
+
+	if (SenderName == "RB_TurnOffLight") {
+		Settings->setValue("TurnOffLightBool", ui->RB_TurnOffLight->isChecked());
 	}
 
 }
@@ -175,15 +192,41 @@ void MainWindow::SliderProcessing() {
 	}
 }
 
-void MainWindow::PWMSpeedChange(const QTime& time) {
-	if (ui->TE_PWMSpeed->underMouse() || ui->TE_PWMSpeed->hasFocus()) {
-		memset(dataToSend, 0, sizeof(dataToSend));
+void MainWindow::SpinBoxProcessing(const int value) {
+	const QString SenderName = sender()->objectName();
 
+	if (SenderName == "SB_MaintainLux" && (ui->SB_MaintainLux->underMouse() || ui->SB_MaintainLux->hasFocus())) {
+		Settings->setValue("MaintainLux", value);
+		return;
+	}
+
+	if (SenderName == "SB_MaintainLuxStep" && (ui->SB_MaintainLuxStep->underMouse() ||
+		ui->SB_MaintainLuxStep->hasFocus())) {
+		Settings->setValue("Step", value);
+	}
+
+	if (SenderName == "SB_MaintainLuxDeadband" && (ui->SB_MaintainLuxDeadband->underMouse() ||
+		ui->SB_MaintainLuxDeadband->hasFocus())) {
+		Settings->setValue("Deadband", value);
+	}
+}
+
+void MainWindow::TimeEditProcessing(const QTime& time) {
+	const QString SenderName = sender()->objectName();
+
+	if (SenderName == "TE_PWMSpeed" && (ui->TE_PWMSpeed->underMouse() || ui->TE_PWMSpeed->hasFocus())) {
+		Settings->setValue("PWMSpeed", time.toString());
+
+		memset(dataToSend, 0, sizeof(dataToSend));
 		dataToSend[1] = TIME;
 		dataToSend[2] = static_cast<uint8_t>(time.minute());
 		dataToSend[3] = static_cast<uint8_t>(time.second());
-
 		Send(dataToSend, true);
+		return;
+	}
+
+	if (SenderName == "TE_TurnOffLight" && (ui->TE_TurnOffLight->underMouse() || ui->TE_TurnOffLight->hasFocus())) {
+		Settings->setValue("TurnOffLight", time.toString());
 	}
 }
 
@@ -215,7 +258,6 @@ void MainWindow::ConnectionCheck() {
 		} else {
 			qCritical() << "Connect error";
 		}
-
 	} else {
 		if (Serial->isOpen())
 			Serial->close();
@@ -236,12 +278,18 @@ void MainWindow::ConnectionCheck() {
 		ui->CB_SerialPort->setEnabled(true);
 		ui->RB_AutoControl->setEnabled(false);
 		ui->RB_AutoControl->setChecked(false);
+		ui->SB_MaintainLux->setEnabled(false);
+		ui->TE_TurnOffLight->setEnabled(false);
+		ui->RB_TurnOffLight->setEnabled(false);
+		ui->SB_MaintainLuxStep->setEnabled(false);
+		ui->SB_MaintainLuxDeadband->setEnabled(false);
 
 		ui->B_Connect->setText("Connect");
 
 		UpdateDataTimer->stop();
-		Automatically.Timer->stop();
 		InitialState.Timer->stop();
+		Automatically.Timer->stop();
+		Automatically.DetectMovementTimer->stop();
 		InitialState.Counter = 0;
 
 		qDebug() << "Disconnect";
@@ -264,6 +312,11 @@ void MainWindow::Connected() {
 	ui->RB_Update->setEnabled(true);
 	ui->TE_PWMSpeed->setEnabled(true);
 	ui->CB_SerialPort->setEnabled(false);
+	ui->SB_MaintainLux->setEnabled(true);
+	ui->TE_TurnOffLight->setEnabled(true);
+	ui->RB_TurnOffLight->setEnabled(true);
+	ui->SB_MaintainLuxStep->setEnabled(true);
+	ui->SB_MaintainLuxDeadband->setEnabled(true);
 
 	if (Automatically.CanAutomatically)
 		ui->RB_AutoControl->setEnabled(true);
@@ -273,6 +326,11 @@ void MainWindow::Connected() {
 	qDebug() << "Connect";
 
 	ui->TE_PWMSpeed->setTime(Settings->value("PWMSpeed").toTime());
+	ui->SB_MaintainLux->setValue(Settings->value("MaintainLUX").toInt());
+	ui->SB_MaintainLuxStep->setValue(Settings->value("Step").toInt());
+	ui->SB_MaintainLuxDeadband->setValue(Settings->value("Deadband").toInt());
+	ui->TE_TurnOffLight->setTime(Settings->value("TurnOffLight").toTime());
+	ui->RB_TurnOffLight->setChecked(Settings->value("TurnOffLightBool").toBool());
 
 	memset(dataToSend, 0, sizeof(dataToSend));
 
@@ -315,23 +373,4 @@ void MainWindow::RequestUpdateData() {
 	}
 
 	Send(dataToSend);
-}
-
-void MainWindow::DebugButton() {
-	qDebug() << "";
-	qDebug() << "";
-
-	foreach(uint16_t key, HashNodesStatus->keys())
-		qDebug() << "ID:" << key << "IO:" << HashNodesStatus->value(key).logicIO << "SN:" <<
-			HashNodesStatus->value(key).SlavesNodes << "\t\tADC1:" <<
-			HashNodesStatus->value(key).ADC1 << "ADC2:" <<
-			HashNodesStatus->value(key).ADC2 << "LX:" <<
-			HashNodesStatus->value(key).LX << "PWM1:" <<
-			HashNodesStatus->value(key).PWM1 << "PWM2:" <<
-			HashNodesStatus->value(key).PWM2 << "PWM3:" <<
-			HashNodesStatus->value(key).PWM3 << "EstimatedValue:" <<
-			HashNodesStatus->value(key).EstimatedValue;
-
-	qDebug() << "";
-	qDebug() << "";
 }

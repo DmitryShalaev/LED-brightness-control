@@ -27,7 +27,7 @@ void MainWindow::Send(uint8_t dataToSend[], const bool broadcast, uint16_t R_ID)
 	} else {
 		ConnectionCheck();
 	}
-
+	
 	qApp->processEvents();
 }
 

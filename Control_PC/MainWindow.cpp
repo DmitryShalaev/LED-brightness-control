@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QDebug>
+
 #include "ui_MainWindow.h"
 
 #include "../general/id.h"
@@ -76,10 +77,7 @@ void MainWindow::UpdateMainWindow() {
 }
 
 void MainWindow::InitialStateRequest() {
-	do {
-		if (InitialState.Counter >= jID_OfAllNodes.count()) {
-			continue;
-		}
+	if (jID_OfAllNodes.count() > InitialState.Counter) {
 		InitialState.Counter++;
 
 		memset(dataToSend, 0, sizeof(dataToSend));
@@ -88,12 +86,10 @@ void MainWindow::InitialStateRequest() {
 		dataToSend[2] = MasterID & 0x0FF;
 		dataToSend[3] = static_cast<uint8_t>((MasterID & 0x0F00) >> 3);
 
-		Send(dataToSend, false, jID_OfAllNodes.at(InitialState.Counter - 1).toInt()); //TODO
+		Send(dataToSend, false, jID_OfAllNodes.at(InitialState.Counter - 1).toInt());
 
 		InitialState.Timer->start(1000);
-		return;
 	}
-	while (jID_OfAllNodes.count() > InitialState.Counter);
 }
 
 void MainWindow::Init() {
@@ -106,20 +102,32 @@ void MainWindow::Init() {
 	ChangePixmap(ui->L_IN2, ":/IMG/Resource/Closed_eye.png");
 	ChangePixmap(ui->L_IN3, ":/IMG/Resource/Closed_eye.png");
 
-	connect(ui->L_OUT1, SIGNAL(Clicked()), this, SLOT(ButtonProcessing()));
-	connect(ui->L_OUT2, SIGNAL(Clicked()), this, SLOT(ButtonProcessing()));
-	connect(ui->L_OUT3, SIGNAL(Clicked()), this, SLOT(ButtonProcessing()));
-	connect(ui->L_OUT4, SIGNAL(Clicked()), this, SLOT(ButtonProcessing()));
+	connect(ui->L_OUT1, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_OUT2, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_OUT3, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_OUT4, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
 
-	connect(Serial, SIGNAL(readyRead()), this, SLOT(RequestData()));
+	connect(Serial, &QSerialPort::readyRead, this, &MainWindow::RequestData);
 
-	connect(UpdateDataTimer, SIGNAL(timeout()), this, SLOT(RequestUpdateData()));
+	connect(UpdateDataTimer, &QTimer::timeout, this, &MainWindow::RequestUpdateData);
 
 	Automatically.Timer = new QTimer(this);
-	connect(Automatically.Timer, SIGNAL(timeout()), this, SLOT(AutomationCallback()));
+	connect(Automatically.Timer, &QTimer::timeout, [&] {
+		AutomationCallback();
+	});
 	Automatically.Timer->setSingleShot(true);
 
+	Automatically.DetectMovementTimer = new QTimer(this);
+	connect(Automatically.DetectMovementTimer, &QTimer::timeout, [&] {
+		foreach(uint16_t ID, Automatically.DetectMovementID) {
+			NodeStatus Node = HashNodesStatus->value(ID);
+			Node.DetectMovement = false;
+			HashNodesStatus->insert(ID, Node);
+		}
+	});
+	Automatically.DetectMovementTimer->setSingleShot(true);
+
 	InitialState.Timer = new QTimer(this);
-	connect(InitialState.Timer, SIGNAL(timeout()), this, SLOT(InitialStateRequest()));
+	connect(InitialState.Timer, &QTimer::timeout, this, &MainWindow::InitialStateRequest);
 	InitialState.Timer->setSingleShot(true);
 }
