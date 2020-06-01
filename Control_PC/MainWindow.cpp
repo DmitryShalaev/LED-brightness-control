@@ -19,7 +19,6 @@ MainWindow::~MainWindow() {
 
 	delete Automatically.Timer;
 	delete InitialState.Timer;
-	delete UpdateDataTimer;
 	delete Settings;
 	delete Serial;
 	delete ui;
@@ -106,10 +105,11 @@ void MainWindow::Init() {
 	connect(ui->L_OUT2, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
 	connect(ui->L_OUT3, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
 	connect(ui->L_OUT4, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_ADC1, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_ADC2, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
+	connect(ui->L_LUX, &CustomLabel::Clicked, this, &MainWindow::ButtonProcessing);
 
 	connect(Serial, &QSerialPort::readyRead, this, &MainWindow::RequestData);
-
-	connect(UpdateDataTimer, &QTimer::timeout, this, &MainWindow::RequestUpdateData);
 
 	Automatically.Timer = new QTimer(this);
 	connect(Automatically.Timer, &QTimer::timeout, [&] {
@@ -120,6 +120,7 @@ void MainWindow::Init() {
 	Automatically.DetectMovementTimer = new QTimer(this);
 	connect(Automatically.DetectMovementTimer, &QTimer::timeout, [&] {
 		foreach(uint16_t ID, Automatically.DetectMovementID) {
+			Automatically.DetectMovementID.removeAll(ID);
 			NodeStatus Node = HashNodesStatus->value(ID);
 			Node.DetectMovement = false;
 			HashNodesStatus->insert(ID, Node);

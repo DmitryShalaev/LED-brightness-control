@@ -60,11 +60,17 @@ void MainWindow::ButtonProcessing() {
 		return;
 	}
 
-	if (SenderName == "RB_Update") {
-		if (ui->RB_Update->isChecked())
-			UpdateDataTimer->start(500);
-		else
-			UpdateDataTimer->stop();
+	if (SenderName == "L_ADC1" || SenderName == "L_ADC2") {
+		dataToSend[1] = ADC;
+
+		Send(dataToSend);
+		return;
+	}
+
+	if (SenderName == "L_LUX") {
+		dataToSend[1] = LUX;
+
+		Send(dataToSend);
 		return;
 	}
 
@@ -78,8 +84,6 @@ void MainWindow::ButtonProcessing() {
 			ui->S_PWM2->setEnabled(false);
 			ui->S_PWM3->setEnabled(false);
 			ui->S_ALLPWM->setEnabled(false);
-			ui->RB_Update->setEnabled(false);
-			ui->RB_Update->setChecked(false);
 			ui->TE_PWMSpeed->setEnabled(false);
 			ui->SB_MaintainLux->setEnabled(false);
 			ui->TE_TurnOffLight->setEnabled(false);
@@ -99,7 +103,6 @@ void MainWindow::ButtonProcessing() {
 			ui->S_PWM2->setEnabled(true);
 			ui->S_PWM3->setEnabled(true);
 			ui->S_ALLPWM->setEnabled(true);
-			ui->RB_Update->setEnabled(true);
 			ui->TE_PWMSpeed->setEnabled(true);
 			ui->SB_MaintainLux->setEnabled(true);
 			ui->TE_TurnOffLight->setEnabled(true);
@@ -264,16 +267,17 @@ void MainWindow::ConnectionCheck() {
 
 		ui->CB_ID->setEnabled(false);
 		ui->B_Scan->setEnabled(true);
+		ui->L_LUX->setEnabled(false);
 		ui->L_OUT1->setEnabled(false);
 		ui->L_OUT2->setEnabled(false);
 		ui->L_OUT3->setEnabled(false);
 		ui->L_OUT4->setEnabled(false);
+		ui->L_ADC1->setEnabled(false);
+		ui->L_ADC2->setEnabled(false);
 		ui->S_PWM1->setEnabled(false);
 		ui->S_PWM2->setEnabled(false);
 		ui->S_PWM3->setEnabled(false);
 		ui->S_ALLPWM->setEnabled(false);
-		ui->RB_Update->setEnabled(false);
-		ui->RB_Update->setChecked(false);
 		ui->TE_PWMSpeed->setEnabled(false);
 		ui->CB_SerialPort->setEnabled(true);
 		ui->RB_AutoControl->setEnabled(false);
@@ -286,7 +290,6 @@ void MainWindow::ConnectionCheck() {
 
 		ui->B_Connect->setText("Connect");
 
-		UpdateDataTimer->stop();
 		InitialState.Timer->stop();
 		Automatically.Timer->stop();
 		Automatically.DetectMovementTimer->stop();
@@ -300,6 +303,7 @@ void MainWindow::ConnectionCheck() {
 
 void MainWindow::Connected() {
 	ui->CB_ID->setEnabled(true);
+	ui->L_LUX->setEnabled(true);
 	ui->S_PWM1->setEnabled(true);
 	ui->S_PWM2->setEnabled(true);
 	ui->S_PWM3->setEnabled(true);
@@ -307,9 +311,10 @@ void MainWindow::Connected() {
 	ui->L_OUT2->setEnabled(true);
 	ui->L_OUT3->setEnabled(true);
 	ui->L_OUT4->setEnabled(true);
+	ui->L_ADC1->setEnabled(true);
+	ui->L_ADC2->setEnabled(true);
 	ui->B_Scan->setEnabled(false);
 	ui->S_ALLPWM->setEnabled(true);
-	ui->RB_Update->setEnabled(true);
 	ui->TE_PWMSpeed->setEnabled(true);
 	ui->CB_SerialPort->setEnabled(false);
 	ui->SB_MaintainLux->setEnabled(true);
@@ -359,18 +364,4 @@ void MainWindow::SearchForUARTDevices() {
 	} else {
 		qDebug() << "Could not find compatible devices";
 	}
-}
-
-void MainWindow::RequestUpdateData() {
-	memset(dataToSend, 0, sizeof(dataToSend));
-
-	if (RequestUpdateDataFlag) {
-		dataToSend[1] = LUX;
-		RequestUpdateDataFlag = false;
-	} else {
-		dataToSend[1] = ADC;
-		RequestUpdateDataFlag = true;
-	}
-
-	Send(dataToSend);
 }

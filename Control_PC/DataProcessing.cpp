@@ -102,9 +102,11 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 
 			if (Data[2] == ON) {
 				Node.logicIO |= 0x20;
-
 				if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked()) {
-					Automatically.DetectMovementTimer->stop();
+
+					if (Automatically.DetectMovementID.contains(R_ID))
+						Automatically.DetectMovementID.removeAll(R_ID);
+
 					if (!Node.DetectMovement) {
 						Node.DetectMovement = true;
 						HashNodesStatus->insert(R_ID, Node);

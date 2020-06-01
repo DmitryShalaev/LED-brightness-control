@@ -37,7 +37,6 @@ class MainWindow final : public QMainWindow {
 	void RequestData();
 	void ConnectionCheck();
 	void UpdateMainWindow();
-	void RequestUpdateData();
 	void InitialStateRequest();
 	void SearchForUARTDevices();
 	void AutomationCallback(bool init = false);
@@ -53,8 +52,6 @@ class MainWindow final : public QMainWindow {
 	}
 
 	Ui::MainWindow* ui;
-
-	QTimer* UpdateDataTimer = new QTimer(this);
 
 	QSerialPort* Serial = new QSerialPort(this);
 	QSettings* Settings = new QSettings(QCoreApplication::applicationDirPath() +

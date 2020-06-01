@@ -58,22 +58,35 @@ public:
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_9;
+    QSpacerItem *horizontalSpacer_16;
     QLabel *label_4;
-    QLabel *L_ADC1;
+    QSpacerItem *horizontalSpacer_15;
+    CustomLabel *L_ADC1;
+    QSpacerItem *horizontalSpacer_19;
     QHBoxLayout *horizontalLayout_8;
+    QSpacerItem *horizontalSpacer_20;
     QLabel *label_5;
-    QLabel *L_ADC2;
+    QSpacerItem *horizontalSpacer_21;
+    CustomLabel *L_ADC2;
+    QSpacerItem *horizontalSpacer_22;
     QHBoxLayout *horizontalLayout_7;
+    QSpacerItem *horizontalSpacer_23;
     QLabel *label_6;
-    QLabel *L_LUX;
-    QHBoxLayout *horizontalLayout_10;
-    QSpacerItem *horizontalSpacer;
-    QRadioButton *RB_Update;
-    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *horizontalSpacer_24;
+    CustomLabel *L_LUX;
+    QSpacerItem *horizontalSpacer_25;
+    QSpacerItem *verticalSpacer_11;
     QHBoxLayout *horizontalLayout_6;
+    QVBoxLayout *verticalLayout_12;
     QLabel *L_IN1;
+    QLabel *label_20;
+    QVBoxLayout *verticalLayout_13;
     QLabel *L_IN2;
+    QLabel *label_22;
+    QVBoxLayout *verticalLayout_14;
     QLabel *L_IN3;
+    QLabel *label_23;
+    QSpacerItem *verticalSpacer_12;
     QHBoxLayout *horizontalLayout_11;
     QSpacerItem *horizontalSpacer_3;
     QHBoxLayout *horizontalLayout_5;
@@ -149,20 +162,20 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
         MainWindow->setEnabled(true);
-        MainWindow->resize(701, 431);
+        MainWindow->resize(722, 451);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(701, 431));
-        MainWindow->setMaximumSize(QSize(701, 431));
+        MainWindow->setMinimumSize(QSize(722, 451));
+        MainWindow->setMaximumSize(QSize(722, 451));
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 20, 661, 391));
+        layoutWidget->setGeometry(QRect(20, 20, 681, 411));
         horizontalLayout_13 = new QHBoxLayout(layoutWidget);
         horizontalLayout_13->setSpacing(30);
         horizontalLayout_13->setContentsMargins(11, 11, 11, 11);
@@ -328,21 +341,39 @@ public:
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(0);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        horizontalSpacer_16 = new QSpacerItem(57, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_9->addItem(horizontalSpacer_16);
+
         label_4 = new QLabel(layoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setMinimumSize(QSize(41, 23));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy1);
+        label_4->setMinimumSize(QSize(0, 23));
         label_4->setMaximumSize(QSize(41, 23));
         label_4->setMouseTracking(true);
 
         horizontalLayout_9->addWidget(label_4);
 
-        L_ADC1 = new QLabel(layoutWidget);
+        horizontalSpacer_15 = new QSpacerItem(20, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_9->addItem(horizontalSpacer_15);
+
+        L_ADC1 = new CustomLabel(layoutWidget);
         L_ADC1->setObjectName(QString::fromUtf8("L_ADC1"));
+        L_ADC1->setEnabled(false);
         L_ADC1->setMinimumSize(QSize(80, 23));
         L_ADC1->setMaximumSize(QSize(80, 23));
         L_ADC1->setMouseTracking(true);
 
         horizontalLayout_9->addWidget(L_ADC1);
+
+        horizontalSpacer_19 = new QSpacerItem(32, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_9->addItem(horizontalSpacer_19);
 
 
         verticalLayout_2->addLayout(horizontalLayout_9);
@@ -350,21 +381,36 @@ public:
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setSpacing(0);
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
+        horizontalSpacer_20 = new QSpacerItem(57, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_8->addItem(horizontalSpacer_20);
+
         label_5 = new QLabel(layoutWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setMinimumSize(QSize(41, 23));
+        sizePolicy1.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy1);
+        label_5->setMinimumSize(QSize(0, 23));
         label_5->setMaximumSize(QSize(41, 23));
         label_5->setMouseTracking(true);
 
         horizontalLayout_8->addWidget(label_5);
 
-        L_ADC2 = new QLabel(layoutWidget);
+        horizontalSpacer_21 = new QSpacerItem(20, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_8->addItem(horizontalSpacer_21);
+
+        L_ADC2 = new CustomLabel(layoutWidget);
         L_ADC2->setObjectName(QString::fromUtf8("L_ADC2"));
+        L_ADC2->setEnabled(false);
         L_ADC2->setMinimumSize(QSize(80, 23));
         L_ADC2->setMaximumSize(QSize(80, 23));
         L_ADC2->setMouseTracking(true);
 
         horizontalLayout_8->addWidget(L_ADC2);
+
+        horizontalSpacer_22 = new QSpacerItem(32, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_8->addItem(horizontalSpacer_22);
 
 
         verticalLayout_2->addLayout(horizontalLayout_8);
@@ -372,21 +418,36 @@ public:
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(0);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalSpacer_23 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_23);
+
         label_6 = new QLabel(layoutWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setMinimumSize(QSize(41, 23));
-        label_6->setMaximumSize(QSize(41, 23));
+        sizePolicy1.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy1);
+        label_6->setMinimumSize(QSize(0, 23));
+        label_6->setMaximumSize(QSize(65, 23));
         label_6->setMouseTracking(true);
 
         horizontalLayout_7->addWidget(label_6);
 
-        L_LUX = new QLabel(layoutWidget);
+        horizontalSpacer_24 = new QSpacerItem(20, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_24);
+
+        L_LUX = new CustomLabel(layoutWidget);
         L_LUX->setObjectName(QString::fromUtf8("L_LUX"));
+        L_LUX->setEnabled(false);
         L_LUX->setMinimumSize(QSize(80, 23));
         L_LUX->setMaximumSize(QSize(80, 23));
         L_LUX->setMouseTracking(true);
 
         horizontalLayout_7->addWidget(L_LUX);
+
+        horizontalSpacer_25 = new QSpacerItem(32, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_25);
 
 
         verticalLayout_2->addLayout(horizontalLayout_7);
@@ -394,60 +455,85 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
-        horizontalLayout_10 = new QHBoxLayout();
-        horizontalLayout_10->setSpacing(0);
-        horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        verticalSpacer_11 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        horizontalLayout_10->addItem(horizontalSpacer);
-
-        RB_Update = new QRadioButton(layoutWidget);
-        RB_Update->setObjectName(QString::fromUtf8("RB_Update"));
-        RB_Update->setEnabled(false);
-        RB_Update->setMinimumSize(QSize(61, 23));
-        RB_Update->setMaximumSize(QSize(61, 23));
-        RB_Update->setCheckable(true);
-        RB_Update->setChecked(false);
-        RB_Update->setAutoExclusive(false);
-
-        horizontalLayout_10->addWidget(RB_Update);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_10->addItem(horizontalSpacer_2);
-
-
-        verticalLayout_3->addLayout(horizontalLayout_10);
+        verticalLayout_3->addItem(verticalSpacer_11);
 
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setSpacing(15);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        verticalLayout_12 = new QVBoxLayout();
+        verticalLayout_12->setSpacing(0);
+        verticalLayout_12->setObjectName(QString::fromUtf8("verticalLayout_12"));
         L_IN1 = new QLabel(layoutWidget);
         L_IN1->setObjectName(QString::fromUtf8("L_IN1"));
         L_IN1->setMinimumSize(QSize(70, 70));
         L_IN1->setMaximumSize(QSize(70, 70));
         L_IN1->setStyleSheet(QString::fromUtf8(""));
 
-        horizontalLayout_6->addWidget(L_IN1);
+        verticalLayout_12->addWidget(L_IN1);
 
+        label_20 = new QLabel(layoutWidget);
+        label_20->setObjectName(QString::fromUtf8("label_20"));
+        label_20->setMinimumSize(QSize(70, 23));
+        label_20->setMaximumSize(QSize(70, 23));
+        label_20->setMouseTracking(true);
+
+        verticalLayout_12->addWidget(label_20);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_12);
+
+        verticalLayout_13 = new QVBoxLayout();
+        verticalLayout_13->setSpacing(0);
+        verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
         L_IN2 = new QLabel(layoutWidget);
         L_IN2->setObjectName(QString::fromUtf8("L_IN2"));
         L_IN2->setMinimumSize(QSize(70, 70));
         L_IN2->setMaximumSize(QSize(70, 70));
         L_IN2->setStyleSheet(QString::fromUtf8(""));
 
-        horizontalLayout_6->addWidget(L_IN2);
+        verticalLayout_13->addWidget(L_IN2);
 
+        label_22 = new QLabel(layoutWidget);
+        label_22->setObjectName(QString::fromUtf8("label_22"));
+        label_22->setMinimumSize(QSize(70, 23));
+        label_22->setMaximumSize(QSize(70, 23));
+        label_22->setMouseTracking(true);
+
+        verticalLayout_13->addWidget(label_22);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_13);
+
+        verticalLayout_14 = new QVBoxLayout();
+        verticalLayout_14->setSpacing(0);
+        verticalLayout_14->setObjectName(QString::fromUtf8("verticalLayout_14"));
         L_IN3 = new QLabel(layoutWidget);
         L_IN3->setObjectName(QString::fromUtf8("L_IN3"));
         L_IN3->setMinimumSize(QSize(70, 70));
         L_IN3->setMaximumSize(QSize(70, 70));
         L_IN3->setStyleSheet(QString::fromUtf8(""));
 
-        horizontalLayout_6->addWidget(L_IN3);
+        verticalLayout_14->addWidget(L_IN3);
+
+        label_23 = new QLabel(layoutWidget);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_23->setMinimumSize(QSize(70, 23));
+        label_23->setMaximumSize(QSize(70, 23));
+        label_23->setMouseTracking(true);
+
+        verticalLayout_14->addWidget(label_23);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_14);
 
 
         verticalLayout_3->addLayout(horizontalLayout_6);
+
+        verticalSpacer_12 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer_12);
 
         horizontalLayout_11 = new QHBoxLayout();
         horizontalLayout_11->setSpacing(0);
@@ -729,8 +815,9 @@ public:
         SB_MaintainLuxDeadband->setEnabled(false);
         SB_MaintainLuxDeadband->setMinimumSize(QSize(56, 23));
         SB_MaintainLuxDeadband->setMaximumSize(QSize(56, 23));
-        SB_MaintainLuxDeadband->setMaximum(65535);
-        SB_MaintainLuxDeadband->setValue(0);
+        SB_MaintainLuxDeadband->setMinimum(1);
+        SB_MaintainLuxDeadband->setMaximum(1000);
+        SB_MaintainLuxDeadband->setValue(1);
 
         horizontalLayout_26->addWidget(SB_MaintainLuxDeadband);
 
@@ -766,8 +853,9 @@ public:
         SB_MaintainLuxStep->setEnabled(false);
         SB_MaintainLuxStep->setMinimumSize(QSize(56, 23));
         SB_MaintainLuxStep->setMaximumSize(QSize(56, 23));
-        SB_MaintainLuxStep->setMaximum(65535);
-        SB_MaintainLuxStep->setValue(0);
+        SB_MaintainLuxStep->setMinimum(1);
+        SB_MaintainLuxStep->setMaximum(255);
+        SB_MaintainLuxStep->setValue(1);
 
         horizontalLayout_17->addWidget(SB_MaintainLuxStep);
 
@@ -913,7 +1001,6 @@ public:
         QObject::connect(S_PWM2, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
         QObject::connect(S_PWM3, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
         QObject::connect(S_ALLPWM, SIGNAL(sliderReleased()), MainWindow, SLOT(SliderProcessing()));
-        QObject::connect(RB_Update, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
         QObject::connect(TE_PWMSpeed, SIGNAL(userTimeChanged(QTime)), MainWindow, SLOT(TimeEditProcessing(QTime)));
         QObject::connect(CB_ID, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(ChangeRecipientID()));
         QObject::connect(RB_AutoControl, SIGNAL(clicked()), MainWindow, SLOT(ButtonProcessing()));
@@ -943,15 +1030,17 @@ public:
         B_Scan->setText(QCoreApplication::translate("MainWindow", "Scan", nullptr));
         B_Connect->setText(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">ADC 1:</p></body></html>", nullptr));
-        L_ADC1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">0.000 V.</p></body></html>", nullptr));
+        L_ADC1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>0.000 V.</p></body></html>", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">ADC 2:</p></body></html>", nullptr));
-        L_ADC2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">0.000 V.</p></body></html>", nullptr));
-        label_6->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">BH1750:</p></body></html>", nullptr));
-        L_LUX->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">00.00 lx.</p></body></html>", nullptr));
-        RB_Update->setText(QCoreApplication::translate("MainWindow", "Update", nullptr));
+        L_ADC2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>0.000 V.</p></body></html>", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">Light meter:</p></body></html>", nullptr));
+        L_LUX->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>00.00 lx.</p></body></html>", nullptr));
         L_IN1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN1</p></body></html>", nullptr));
+        label_20->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN1</p></body></html>", nullptr));
         L_IN2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN2</p></body></html>", nullptr));
+        label_22->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN2</p></body></html>", nullptr));
         L_IN3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN3</p></body></html>", nullptr));
+        label_23->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">IN3</p></body></html>", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "ID:", nullptr));
         CB_ID->setCurrentText(QString());
         label->setText(QCoreApplication::translate("MainWindow", "PWM1", nullptr));
