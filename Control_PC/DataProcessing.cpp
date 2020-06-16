@@ -117,13 +117,13 @@ void MainWindow::ProcessingReceivedData(const uint8_t Data[]) {
 			} else {
 				Node.logicIO &= ~0x20;
 
-				if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked() && Node.DetectMovement) {
+				if (!Automatically.DetectMovementID.contains(R_ID))
+					Automatically.DetectMovementID.append(R_ID);
+
+				if (VectorHostNodes.contains(R_ID) && ui->RB_AutoControl->isChecked() && Node.DetectMovement)
 					Automatically.DetectMovementTimer->start((ui->TE_TurnOffLight->time().minute() * 60 +
 						ui->TE_TurnOffLight->time().second()) * 1000);
 
-					if (!Automatically.DetectMovementID.contains(R_ID))
-						Automatically.DetectMovementID.append(R_ID);
-				}
 			}
 
 			break;

@@ -124,6 +124,12 @@ void MainWindow::Init() {
 			NodeStatus Node = HashNodesStatus->value(ID);
 			Node.DetectMovement = false;
 			HashNodesStatus->insert(ID, Node);
+			foreach(QJsonValue jID, Node.SlavesNodes) {
+				memset(dataToSend, 0, sizeof(dataToSend));
+				dataToSend[1] = ALLPWM;
+				dataToSend[2] = 0;
+				Send(dataToSend, false, jID.toInt());
+			}
 		}
 	});
 	Automatically.DetectMovementTimer->setSingleShot(true);
