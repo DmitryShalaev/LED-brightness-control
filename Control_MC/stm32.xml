@@ -3,11 +3,11 @@
   <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
   <ToolchainVersion>
     <GCC>9.3.1</GCC>
-    <GDB>8.3.1</GDB>
-    <Revision>1</Revision>
+    <GDB>9.2.0</GDB>
+    <Revision>2</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
-  <BspVersion>2020.06</BspVersion>
+  <BspVersion>2021.02</BspVersion>
   <McuID>STM32F103C8</McuID>
   <MCUDefinitionFile>STM32F1xxxx/DeviceDefinitions/stm32f103xb.xml</MCUDefinitionFile>
   <MCUProperties>
@@ -87,7 +87,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>Control.gpdsc</RelativePath>
-        <Timestamp>132354696522958807</Timestamp>
+        <Timestamp>132722287640405854</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -369,11 +369,11 @@
         <IsStaticLibrary>false</IsStaticLibrary>
         <Settings>
           <IncludeDirectories>
-            <string>E:\Control\Control_MC\Core\Inc</string>
-            <string>E:\Control\Control_MC\Drivers\CMSIS\Device\ST\STM32F1xx\Include</string>
-            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc</string>
-            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Src</string>
-            <string>E:\Control\Control_MC\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</string>
+            <string>Core\Inc</string>
+            <string>Drivers\CMSIS\Device\ST\STM32F1xx\Include</string>
+            <string>Drivers\STM32F1xx_HAL_Driver\Inc</string>
+            <string>Drivers\STM32F1xx_HAL_Driver\Src</string>
+            <string>Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</string>
           </IncludeDirectories>
           <PreprocessorMacros>
             <string>$$com.sysprogs.bspoptions.primary_memory$$_layout</string>
